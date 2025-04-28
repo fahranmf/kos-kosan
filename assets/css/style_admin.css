@@ -1,0 +1,171 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container utama */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background-color: #343a40;
+    padding: 20px;
+    color: white;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease;
+    z-index: 100;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-header h2 {
+    color: #ffffff;
+    font-size: 24px;
+    display: none; /* 28 - 4 - 2025 BUAT SEMENTARA AJA YGY KARNA GW UDAH BUNTU EUY*/
+    margin-left: 10px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding-left: 0;
+    display: none; /* 28 - 4 - 2025 BUAT SEMENTARA AJA YGY KARNA GW UDAH BUNTU EUY*/
+}
+
+.sidebar-menu li {
+    margin-bottom: 20px;
+}
+
+.sidebar-menu li a {
+    color: #b0b8b1;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+}
+
+/* Hamburger Button */
+.sidebar-toggle {
+    display: block;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* Main content */
+.main-content {
+    margin-left: 270px;
+    padding: 30px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* Stats section */
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    width: 30%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: scale(1.05);
+}
+
+.stat-card h3 {
+    color: #333;
+}
+
+.stat-card p {
+    font-size: 2em;
+    color: #007BFF;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Sidebar behavior: always toggleable */
+.sidebar.active {
+    width: 40px;
+}
+
+
+@media (max-width: 768px) {
+    /* Sidebar pada perangkat kecil, tertutup secara default */
+    .sidebar {
+        width: 40px;
+        position: fixed;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar.active {
+        width: 240px; /* Sidebar terbuka saat tombol hamburger ditekan */
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    /* Sidebar selalu terbuka di perangkat besar */
+    .sidebar {
+        width: 40px;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar.active {
+        width: 240px; /* Sidebar terbuka saat tombol hamburger ditekan */
+    }
+
+    .main-content {
+        margin-left: 270px;
+    }
+}

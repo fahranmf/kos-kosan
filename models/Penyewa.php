@@ -31,4 +31,13 @@ class Penyewa {
         $stmt->bindParam(':status_akun', $this->status_akun);
         $stmt->execute();
     }
+
+    public static function getTotalPenyewa(): int {
+        $db = Database::getConnection();
+        $query = "SELECT COUNT(*) AS total FROM penyewa";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) $result['total'];  // Mengembalikan total penyewa
+    }
 }
