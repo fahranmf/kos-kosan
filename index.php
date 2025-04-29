@@ -89,6 +89,19 @@ switch ($page) {
         $controller->verifikasi();
         break;
 
+    case 'edit_kamar':
+        checkRole('admin');
+        $controller = new AdminController();
+        $id = $_GET['id'];
+        $controller->editKamar($id);
+        break;
+
+    case 'update_kamar':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->updateKamar();
+        break;
+
     // --- Routing Penyewa ---
     case 'penyewa_dashboard':
         checkRole('penyewa');

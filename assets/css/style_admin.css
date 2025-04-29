@@ -12,75 +12,6 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar */
-.sidebar {
-    width: 240px;
-    background-color: #343a40;
-    padding: 20px;
-    color: white;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    transition: width 0.3s ease;
-    z-index: 100;
-}
-
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.sidebar-header h2 {
-    color: #ffffff;
-    font-size: 24px;
-    display: none; /* 28 - 4 - 2025 BUAT SEMENTARA AJA YGY KARNA GW UDAH BUNTU EUY*/
-    margin-left: 10px;
-}
-
-.sidebar-menu {
-    list-style: none;
-    padding-left: 0;
-    display: none; /* 28 - 4 - 2025 BUAT SEMENTARA AJA YGY KARNA GW UDAH BUNTU EUY*/
-}
-
-.sidebar-menu li {
-    margin-bottom: 20px;
-}
-
-.sidebar-menu li a {
-    color: #b0b8b1;
-    text-decoration: none;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    border-radius: 5px;
-}
-
-.sidebar-menu li a:hover {
-    background-color: #007bff;
-    color: white;
-}
-
-.sidebar-menu li a i {
-    margin-right: 10px;
-}
-
-/* Hamburger Button */
-.sidebar-toggle {
-    display: block;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-}
-
 /* Main content */
 .main-content {
     margin-left: 270px;
@@ -124,28 +55,8 @@ body {
     font-weight: bold;
 }
 
-/* Sidebar behavior: always toggleable */
-.sidebar.active {
-    width: 40px;
-}
-
 
 @media (max-width: 768px) {
-    /* Sidebar pada perangkat kecil, tertutup secara default */
-    .sidebar {
-        width: 40px;
-        position: fixed;
-        transition: width 0.3s ease;
-    }
-
-    .sidebar.active {
-        width: 240px; /* Sidebar terbuka saat tombol hamburger ditekan */
-    }
-
-    .sidebar-menu {
-        display: flex;
-        flex-direction: column;
-    }
 
     .main-content {
         margin-left: 0;
@@ -155,15 +66,6 @@ body {
 }
 
 @media (min-width: 768px) {
-    /* Sidebar selalu terbuka di perangkat besar */
-    .sidebar {
-        width: 40px;
-        transition: width 0.3s ease;
-    }
-
-    .sidebar.active {
-        width: 240px; /* Sidebar terbuka saat tombol hamburger ditekan */
-    }
 
     .main-content {
         margin-left: 270px;
