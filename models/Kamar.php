@@ -55,6 +55,27 @@ class Kamar {
         $stmt->execute();
     }
 
+    // Tambah Kamar
+    public static function insertKamar($tipe_kamar, $harga_perbulan, $status, $deskripsi, $fasilitas, $foto_kos) {
+        $db = Database::getConnection();
+    
+        // Query untuk menambah kamar baru ke database
+        $query = "INSERT INTO kamar (tipe_kamar, harga_perbulan, status, deskripsi, fasilitas, foto_kos) 
+                  VALUES (:tipe_kamar, :harga_perbulan, :status, :deskripsi, :fasilitas, :foto_kos)";
+        $stmt = $db->prepare($query);
+        
+        // Bind parameter
+        $stmt->bindParam(':tipe_kamar', $tipe_kamar);
+        $stmt->bindParam(':harga_perbulan', $harga_perbulan);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':deskripsi', $deskripsi);
+        $stmt->bindParam(':fasilitas', $fasilitas);
+        $stmt->bindParam(':foto_kos', $foto_kos);
+    
+        // Eksekusi query
+        $stmt->execute();
+    }
+    
     // Hapus kamar
     public static function deleteById($id) {
         $db = Database::getConnection();

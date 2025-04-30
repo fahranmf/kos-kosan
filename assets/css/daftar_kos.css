@@ -7,6 +7,17 @@ body {
   padding: 0;
 }
 
+.main-content {
+  margin-left: 300px;
+  margin-right: 20px;
+  padding: 30px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
 /* Table Styles */
 .kamar-table {
   width: 100%;
@@ -18,8 +29,8 @@ body {
 }
 
 .kamar-table th, .kamar-table td {
-  padding: 24px 18px;
-  text-align: left;
+  padding: 18px 18px;
+  text-align: center;
 }
 
 .kamar-table thead {
@@ -43,7 +54,7 @@ body {
 }
 
 .kamar-table .aksi a {
-  padding: 8px 12px;
+  padding: 4px 4px;
   margin-right: 10px;
   text-decoration: none;
   border-radius: 4px;

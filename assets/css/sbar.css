@@ -19,6 +19,7 @@
     z-index: 100;
 }
 
+
 .sidebar-header {
     display: flex;
     justify-content: space-between;
@@ -29,14 +30,12 @@
 .sidebar-header h2 {
     color: #ffffff;
     font-size: 24px;
-    display: none; /* 28 - 4 - 2025 BUAT SEMENTARA AJA YGY KARNA GW UDAH BUNTU EUY*/
     margin-left: 10px;
 }
 
 .sidebar-menu {
     list-style: none;
     padding-left: 0;
-    display: none; /* 28 - 4 - 2025 BUAT SEMENTARA AJA YGY KARNA GW UDAH BUNTU EUY*/
 }
 
 .sidebar-menu li {
@@ -96,21 +95,5 @@
         margin-left: 0;
         padding-left: 20px;
         padding-right: 20px;
-    }
-}
-
-@media (min-width: 768px) {
-    /* Sidebar selalu terbuka di perangkat besar */
-    .sidebar {
-        width: 40px;
-        transition: width 0.3s ease;
-    }
-
-    .sidebar.active {
-        width: 240px; /* Sidebar terbuka saat tombol hamburger ditekan */
-    }
-
-    .main-content {
-        margin-left: 270px;
     }
 }

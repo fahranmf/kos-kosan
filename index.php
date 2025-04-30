@@ -102,6 +102,20 @@ switch ($page) {
         $controller->updateKamar();
         break;
 
+    case 'tambah_kamar':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->tambahKamar();
+        break;
+
+    case 'hapus_kamar':
+        checkRole('admin');
+        $controller = new AdminController();
+        $id = $_GET['id'];
+        $controller->hapusKamar($id);
+        break;
+
+
     // --- Routing Penyewa ---
     case 'penyewa_dashboard':
         checkRole('penyewa');

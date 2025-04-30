@@ -82,7 +82,44 @@ class AdminController {
         exit();
     }
     
-    
+    //tambah kamar
+    public function tambahKamar() {
+        AuthMiddleware::checkAdmin();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validasi input dari form
+            $tipe_kamar = $_POST['tipe_kamar'] ?? '';
+            $harga_perbulan = $_POST['harga_perbulan'] ?? 0;
+            $status = $_POST['status'] ?? '';
+            $deskripsi = $_POST['deskripsi'] ?? '';
+            $fasilitas = $_POST['fasilitas'] ?? '';
+
+            // Cek apakah file foto_kos diupload
+            if (isset($_FILES['foto_kos']) && $_FILES['foto_kos']['error'] === UPLOAD_ERR_OK) {
+                // Proses upload foto
+                $targetDir = "uploads/foto_kos/";
+                $fileName = basename($_FILES['foto_kos']['name']);
+                $targetFile = $targetDir . $fileName;
+
+                if (move_uploaded_file($_FILES['foto_kos']['tmp_name'], $targetFile)) {
+                    // Foto berhasil di-upload
+                    // Masukkan data kamar ke database
+                    Kamar::insertKamar($tipe_kamar, $harga_perbulan, $status, $deskripsi, $fasilitas, $fileName);
+
+                    // Redirect setelah berhasil
+                    header('Location: index.php?page=admin_daftar_kos');
+                    exit();
+                } else {
+                    echo "Gagal meng-upload foto kamar.";
+                    exit();
+                }
+            } else {
+                echo "Tidak ada file yang di-upload atau terjadi kesalahan pada file upload.";
+                exit();
+            }
+        }
+        include 'views/admin/tambah_kamar.php';
+    }
 
     // Proses hapus kamar
     public function hapusKamar($id) {
@@ -91,7 +128,7 @@ class AdminController {
         Kamar::deleteById($id);
 
         // Redirect setelah hapus
-        header('Location: index.php?page=daftar_kos');
+        header('Location: index.php?page=admin_daftar_kos');
         exit();
     }
 }
