@@ -28,3 +28,10 @@
     2. lupa apalagi)
     ![alt text](image-3.png)
     ![alt text](image-4.png)
+
+4. 30 April 2025
+    - Intinya Page Admin Sisa Verif Pengguna dah
+    (Notes :
+    1. Maap gada gambar, males ss
+    2. Teks di status sewa kaya "Selesai" atau "Sewa" nantinya bakal di stylein
+    3. Status pembayaran di history pembayaran juga)

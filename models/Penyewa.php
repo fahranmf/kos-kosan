@@ -34,10 +34,20 @@ class Penyewa {
 
     public static function getTotalPenyewa(): int {
         $db = Database::getConnection();
-        $query = "SELECT COUNT(*) AS total FROM penyewa";
+        $query = "SELECT COUNT(*) AS total FROM penyewa  WHERE status_akun = 'Terverifikasi'";
         $stmt = $db->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return (int) $result['total'];  // Mengembalikan total penyewa
+        return (int) $result['total']; 
+    }
+    
+    public static function getAllPenyewa(): array {
+        $db = Database::getConnection();
+        $query = "SELECT id_penyewa, nama_penyewa, no_telp_penyewa, email_penyewa
+                    FROM penyewa
+                    WHERE status_akun = 'Terverifikasi'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

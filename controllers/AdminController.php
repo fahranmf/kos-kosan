@@ -3,6 +3,8 @@ require_once 'middlewares/AuthMiddleware.php';
 require_once 'models/Kamar.php';
 require_once 'models/Penyewa.php';
 require_once 'models/Feedback.php';
+require_once 'models/Pembayaran.php';
+require_once 'models/Sewa.php';
 
 class AdminController {
     // Menampilkan halaman Dashboard Admin
@@ -131,5 +133,27 @@ class AdminController {
         header('Location: index.php?page=admin_daftar_kos');
         exit();
     }
+
+    public function keluhan() {
+        AuthMiddleware::checkAdmin();
+        $feedbackList = Feedback::getAllKeluhan();
+        require_once 'views/admin/keluhan.php';
+    }
+    public function dataPembayaran() {
+        AuthMiddleware::checkAdmin();
+        $pembayaranList = Pembayaran::getAllPembayaran();
+        require_once 'views/admin/data_pembayaran.php';
+    }
+    public function dataPenyewa() {
+        AuthMiddleware::checkAdmin();
+        $penyewaList = Penyewa::getAllPenyewa();
+        require_once 'views/admin/data_penyewa.php';
+    }
+    public function dataStatusSewa() {
+        AuthMiddleware::checkAdmin();
+        $statusSewaList = Sewa::getAllStatusSewa();
+        require_once 'views/admin/status_sewa.php';
+    }
+    
 }
 ?>

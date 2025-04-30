@@ -77,6 +77,18 @@ switch ($page) {
         $controller->dataPenyewa();
         break;
 
+    case 'admin_data_pembayaran' :
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->dataPembayaran();
+        break;
+
+    case 'admin_status_sewa':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->dataStatusSewa();
+        break;
+
     case 'admin_keluhan':
         checkRole('admin');
         $controller = new AdminController();

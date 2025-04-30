@@ -13,6 +13,8 @@
         <li><a href="index.php?page=admin_dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
         <li><a href="index.php?page=admin_daftar_kos"><i class="fas fa-home"></i> Daftar Kos</a></li>
         <li><a href="index.php?page=admin_data_penyewa"><i class="fas fa-users"></i> Data Penyewa</a></li>
+        <li><a href="index.php?page=admin_status_sewa"><i class="fas fa-tasks"></i> Status Sewa Kos</a></li>
+        <li><a href="index.php?page=admin_data_pembayaran"><i class="fas fa-money-bill-wave"></i> History Pembayaran</a></li>
         <li><a href="index.php?page=admin_keluhan"><i class="fas fa-exclamation-circle"></i> Keluhan Penyewa</a></li>
         <li><a href="index.php?page=admin_verifikasi"><i class="fas fa-check-circle"></i> Verifikasi Penyewa</a></li>
         <li><a href="index.php?page=logout"><i class="fas fa-sign-out-alt"></i>Log Out</a></li>

@@ -5,6 +5,18 @@ const sidebarTitle = document.getElementById('sidebar-title');
 const sidebarMenu = document.querySelector('.sidebar-menu');
 const mainContent = document.querySelector('.main-content');
 
+function showModal(src) {
+    var modal = document.getElementById('myModal');
+    var imgModal = document.getElementById('imgModal');
+    modal.style.display = "block";
+    imgModal.src = src;
+}
+
+function closeModal() {
+    var modal = document.getElementById('myModal');
+    modal.style.display = "none";
+}
+
 sidebarToggle.addEventListener('click', () => {
     sidebar.classList.toggle('active');
 

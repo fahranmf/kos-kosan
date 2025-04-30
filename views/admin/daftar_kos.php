@@ -24,8 +24,11 @@
                     <?php foreach ($kamarList as $kamar): ?>
                         <tr>
                             <td><?= number_format($kamar['no_kamar']) ?></td>
-                            <td><img src="uploads/foto_kos/<?= htmlspecialchars($kamar['foto_kos']) ?>" alt="Foto Kamar"
-                                    class="foto-kamar"></td>
+                            <td><img src="uploads/foto_kos/<?= htmlspecialchars($kamar['foto_kos']) ?>"                                     
+                                     alt="Bukti Pembayaran"
+                                     class="foto-kamar"
+                                     style= "cursor:pointer"
+                                     onclick="showModal(this.src)"></td>
                             <td><?= htmlspecialchars($kamar['tipe_kamar']) ?></td>
                             <td>Rp <?= number_format($kamar['harga_perbulan'], 0, ',', '.') ?></td>
                             <td><?= htmlspecialchars($kamar['deskripsi']) ?></td>
@@ -56,3 +59,9 @@
 
         <div class="tambah-kamar">
             <a href="index.php?page=tambah_kamar" class="btn-tambah">Tambah Kamar</a>
+
+<!-- Modal buat tampilin gambar gede -->
+<div id="myModal">
+    <span onclick="closeModal()" style="position:absolute;top:20px;right:45px;color:white;font-size:40px;font-weight:bold;cursor:pointer">&times;</span>
+    <img id="imgModal" style="margin:auto;display:block;max-width:90%;max-height:80%">
+</div>
