@@ -79,12 +79,75 @@ body {
 }
 
 .kamar-table td.kosong {
+  background-color: #f1bdbd;
   color: #e53935;
+  font-weight: bold;
+
 }
 
 .kamar-table td.isi {
-  color: #43a047;
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+  text-align: center;
 }
+
+.kamar-table td.cicil {
+  background-color: #f1bdbd;
+  color: #e53935;
+  font-weight: bold;
+
+}
+
+.kamar-table td.lunas {
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+  text-align: center;
+}
+
+.kamar-table td.terverifikasi {
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+  text-align: center;
+}
+
+.kamar-table td.menunggu_verifikasi {
+  background-color: #fff3cd;
+  color: #856404;
+  font-weight: bold;
+  text-align: center;
+}
+
+.kamar-table td.status-belum {
+  background-color: #dee2e6;
+  color: #495057;
+  font-weight: bold;
+  text-align: center;
+}
+
+.status-sudah {
+  background-color: #cce5ff;
+  color: #004085;
+  font-weight: bold;
+  text-align: center;
+}
+
+.status-proses {
+  background-color: #fff3cd;
+  color: #856404;
+  font-weight: bold;
+  text-align: center;
+}
+
+.status-selesai {
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+  text-align: center;
+}
+
 
 /* Add Kamar Button */
 .tambah-kamar {

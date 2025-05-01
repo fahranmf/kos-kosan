@@ -95,6 +95,11 @@ switch ($page) {
         $controller->keluhan();
         break;
 
+    case 'update_status_feedback':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->updateStatus();
+
     case 'admin_verifikasi':
         checkRole('admin');
         $controller = new AdminController();

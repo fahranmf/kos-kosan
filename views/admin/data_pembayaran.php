@@ -35,7 +35,8 @@
                                      style="width:100px; height:100px; cursor:pointer"
                                      onclick="showModal(this.src)">
                             </td>
-                            <td><?= htmlspecialchars($pembayaran['status_pembayaran']) ?></td>
+                            <td class="<?= $pembayaran['status_pembayaran'] == 'Lunas' ? 'lunas' : 'cicil' ?>">
+                            <?= htmlspecialchars($pembayaran['status_pembayaran']) ?>
                             <td><?= htmlspecialchars($pembayaran['tenggat_pembayaran']) ?></td>
                         </tr>
                     <?php endforeach; ?>

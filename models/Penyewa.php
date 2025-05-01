@@ -3,14 +3,16 @@
 
 require_once 'config/database.php';
 
-class Penyewa {
+class Penyewa
+{
     public string $nama_penyewa;
     public string $no_telp_penyewa;
     public string $email_penyewa;
     public string $password_penyewa;
     public string $status_akun;
 
-    public static function findByEmail($email) {
+    public static function findByEmail($email)
+    {
         $db = Database::getConnection();
         $query = "SELECT * FROM penyewa WHERE email_penyewa = :email LIMIT 1";
         $stmt = $db->prepare($query);
@@ -19,7 +21,8 @@ class Penyewa {
         return $stmt->fetchObject(self::class);
     }
 
-    public function save(): void {
+    public function save(): void
+    {
         $db = Database::getConnection();
         $query = "INSERT INTO penyewa (nama_penyewa, no_telp_penyewa, email_penyewa, password_penyewa, status_akun)
                   VALUES (:nama_penyewa, :no_telp_penyewa, :email_penyewa, :password_penyewa, :status_akun)";
@@ -32,16 +35,18 @@ class Penyewa {
         $stmt->execute();
     }
 
-    public static function getTotalPenyewa(): int {
+    public static function getTotalPenyewa(): int
+    {
         $db = Database::getConnection();
         $query = "SELECT COUNT(*) AS total FROM penyewa  WHERE status_akun = 'Terverifikasi'";
         $stmt = $db->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return (int) $result['total']; 
+        return (int) $result['total'];
     }
-    
-    public static function getAllPenyewa(): array {
+
+    public static function getAllPenyewa(): array
+    {
         $db = Database::getConnection();
         $query = "SELECT id_penyewa, nama_penyewa, no_telp_penyewa, email_penyewa
                     FROM penyewa
@@ -50,4 +55,25 @@ class Penyewa {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function getAllAkun(): array
+    {
+        $db = Database::getConnection();
+        $query = "SELECT 
+                penyewa.id_penyewa,
+                pembayaran.id_pembayaran,
+                penyewa.email_penyewa,
+                pembayaran.jumlah_bayar,
+                pembayaran.bukti_pembayaran,
+                pembayaran.status_pembayaran,
+                penyewa.status_akun
+            FROM 
+                pembayaran
+            JOIN 
+                penyewa ON pembayaran.id_sewa = penyewa.id_penyewa
+        ";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 }

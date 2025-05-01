@@ -35,3 +35,11 @@
     1. Maap gada gambar, males ss
     2. Teks di status sewa kaya "Selesai" atau "Sewa" nantinya bakal di stylein
     3. Status pembayaran di history pembayaran juga)
+
+5. 1 Mei 2025
+    - Page verif kelar
+    - Done styling di pembayaran, keluhan
+    - Nambah kolom 'Status' di Feedback/keluhan
+    (Notes :
+    1. blm ada fitur kirim ke email saat verif
+    2. blm responsive)

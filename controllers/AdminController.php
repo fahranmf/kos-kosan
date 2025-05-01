@@ -154,6 +154,29 @@ class AdminController {
         $statusSewaList = Sewa::getAllStatusSewa();
         require_once 'views/admin/status_sewa.php';
     }
+
+    public function verifikasi() {
+        AuthMiddleware::checkAdmin();
+        $verifList = Penyewa::getAllAkun();
+        require_once 'views/admin/verifikasi_akun.php';
+    }
+
+    public function updateStatus() {
+        AuthMiddleware::checkAdmin();
+        $id = $_POST['id_feedback'];
+        $status = $_POST['status_feedback'];
+    
+        $db = Database::getConnection();
+        $query = "UPDATE feedback SET status_feedback = :status WHERE id_feedback = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    
+        header('Location: index.php?page=admin_keluhan');
+        exit;
+    }
+    
     
 }
 ?>
