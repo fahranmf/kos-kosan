@@ -106,6 +106,12 @@ switch ($page) {
         $controller->verifikasi();
         break;
 
+    case 'admin_update_status_akun':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->editStatusAkun();
+        break;
+
     case 'edit_kamar':
         checkRole('admin');
         $controller = new AdminController();

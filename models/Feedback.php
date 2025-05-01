@@ -18,5 +18,17 @@ class Feedback {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function editStatus($id, $status): void {
+        $db = Database::getConnection();
+        $query = "UPDATE feedback SET status_feedback = :status WHERE id_feedback = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
+
+    
+    
 }
 ?>

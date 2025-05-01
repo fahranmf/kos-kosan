@@ -76,4 +76,13 @@ class Penyewa
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    public static function updateStatusAkun($id, $status): void {
+        $db = Database::getConnection();
+        $query = "UPDATE penyewa SET status_akun = :status WHERE id_penyewa = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
+    
 }

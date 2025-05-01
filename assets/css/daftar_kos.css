@@ -16,6 +16,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* Table Styles */
@@ -151,7 +152,7 @@ body {
 
 /* Add Kamar Button */
 .tambah-kamar {
-  margin-top: 20px;
+  margin-top: 30px;
   text-align: left;
 }
 

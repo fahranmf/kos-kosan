@@ -126,10 +126,7 @@ class AdminController {
     // Proses hapus kamar
     public function hapusKamar($id) {
         AuthMiddleware::checkAdmin();
-
         Kamar::deleteById($id);
-
-        // Redirect setelah hapus
         header('Location: index.php?page=admin_daftar_kos');
         exit();
     }
@@ -165,18 +162,19 @@ class AdminController {
         AuthMiddleware::checkAdmin();
         $id = $_POST['id_feedback'];
         $status = $_POST['status_feedback'];
-    
-        $db = Database::getConnection();
-        $query = "UPDATE feedback SET status_feedback = :status WHERE id_feedback = :id";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-    
+        Feedback::editStatus($id, $status);
         header('Location: index.php?page=admin_keluhan');
         exit;
     }
     
+    public function editStatusAkun() {
+        AuthMiddleware::checkAdmin();
+        $id = $_POST['id_penyewa'];
+        $status = $_POST['status_akun'];   
+        Penyewa::updateStatusAkun($id, $status); // model
+        header('Location: index.php?page=admin_verifikasi');
+        exit;
+    }
     
 }
 ?>
