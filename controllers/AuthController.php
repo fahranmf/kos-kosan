@@ -24,6 +24,7 @@ class AuthController
             // Cek login penyewa
             $penyewa = Penyewa::findByEmail($email);
             if ($penyewa && $password == $penyewa->password_penyewa) {
+                $no_kamar = Penyewa::getNoKamarByPenyewa($penyewa->id_penyewa);
                 $_SESSION['no_kamar'] = $penyewa->no_kamar; 
                 $_SESSION['role'] = 'penyewa';
                 $_SESSION['user_id'] = $penyewa->id_penyewa;
