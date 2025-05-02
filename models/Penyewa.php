@@ -14,12 +14,29 @@ class Penyewa
     public static function findByEmail($email)
     {
         $db = Database::getConnection();
-        $query = "SELECT * FROM penyewa WHERE email_penyewa = :email LIMIT 1";
+        // Mengambil data dari penyewa dan no_kamar yang terkait di tabel sewa
+        $query = "SELECT penyewa.*, sewa.no_kamar FROM penyewa
+                  LEFT JOIN sewa ON penyewa.id_penyewa = sewa.id_penyewa
+                  WHERE email_penyewa = :email LIMIT 1";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         return $stmt->fetchObject(self::class);
     }
+    
+    public static function getNoKamarByPenyewa($id_penyewa)
+    {
+        $db = Database::getConnection();
+        $query = "SELECT kamar.no_kamar
+              FROM kamar
+              INNER JOIN sewa ON kamar.no_kamar = sewa.no_kamar
+              WHERE sewa.id_penyewa = :id_penyewa AND sewa.status_sewa = 'Sewa'";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id_penyewa', $id_penyewa);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
 
     public function save(): void
     {
@@ -75,8 +92,9 @@ class Penyewa
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    public static function updateStatusAkun($id, $status): void {
+
+    public static function updateStatusAkun($id, $status): void
+    {
         $db = Database::getConnection();
         $query = "UPDATE penyewa SET status_akun = :status WHERE id_penyewa = :id";
         $stmt = $db->prepare($query);
@@ -84,5 +102,5 @@ class Penyewa
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
-    
+
 }
