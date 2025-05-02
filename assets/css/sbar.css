@@ -7,7 +7,7 @@
 /* Sidebar */
 .sidebar {
     width: 240px;
-    background-color: #343a40;
+    background-color: #006a71;
     padding: 20px;
     color: white;
     height: 100%;
@@ -43,7 +43,7 @@
 }
 
 .sidebar-menu li a {
-    color: #b0b8b1;
+    color: #ffffff;
     text-decoration: none;
     font-size: 18px;
     display: flex;

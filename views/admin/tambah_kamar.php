@@ -3,7 +3,7 @@
 <style>
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: #f7f7f7;
+        background-color: #f2efe7;
         padding: 20px;
     }
 
@@ -53,7 +53,7 @@
 
     button[type="submit"] {
         width: 100%;
-        background: #4CAF50;
+        background: #48a6a7;
         color: white;
         border: none;
         padding: 12px;

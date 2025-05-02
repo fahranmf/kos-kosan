@@ -88,7 +88,7 @@ class AuthController
             $penyewa->email_penyewa = $email_penyewa;
             $penyewa->password_penyewa = $password_penyewa;
             $penyewa->status_akun = 'Umum'; // Default status akun
-            $penyewa->save();
+            $penyewa->registerPenyewa();
 
             // Redirect ke halaman login setelah sukses
             $_SESSION['success'] = 'Akun berhasil dibuat, silakan login!';

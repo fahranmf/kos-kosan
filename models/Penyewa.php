@@ -37,8 +37,8 @@ class Penyewa
         return $stmt->fetchColumn();
     }
 
-
-    public function save(): void
+    // method input register ke tabel penyewa
+    public function registerPenyewa(): void
     {
         $db = Database::getConnection();
         $query = "INSERT INTO penyewa (nama_penyewa, no_telp_penyewa, email_penyewa, password_penyewa, status_akun)
