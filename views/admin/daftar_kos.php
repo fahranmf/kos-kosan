@@ -23,16 +23,16 @@
                 <tbody>
                     <?php foreach ($kamarList as $kamar): ?>
                         <tr>
-                            <td><?= number_format($kamar['no_kamar']) ?></td>
-                            <td><img src="uploads/foto_kos/<?= htmlspecialchars($kamar['foto_kos']) ?>"                                     
+                            <td class="kolom"><?= number_format($kamar['no_kamar']) ?></td>
+                            <td class="kolom"><img src="uploads/foto_kos/<?= htmlspecialchars($kamar['foto_kos']) ?>"                                     
                                      alt="Bukti Pembayaran"
                                      class="foto-kamar"
                                      style= "cursor:pointer"
                                      onclick="showModal(this.src)"></td>
-                            <td><?= htmlspecialchars($kamar['tipe_kamar']) ?></td>
-                            <td>Rp <?= number_format($kamar['harga_perbulan'], 0, ',', '.') ?></td>
-                            <td><?= htmlspecialchars($kamar['deskripsi']) ?></td>
-                            <td><?= htmlspecialchars($kamar['fasilitas']) ?></td>
+                            <td class="kolom"><?= htmlspecialchars($kamar['tipe_kamar']) ?></td>
+                            <td class="kolom">Rp <?= number_format($kamar['harga_perbulan'], 0, ',', '.') ?></td>
+                            <td class="kolom"><?= htmlspecialchars($kamar['deskripsi']) ?></td>
+                            <td class="kolom"><?= htmlspecialchars($kamar['fasilitas']) ?></td>
                             <td class="<?= $kamar['status'] == 'Kosong' ? 'kosong' : 'isi' ?>">
                                 <?= htmlspecialchars($kamar['status']) ?>
                             </td>

@@ -43,19 +43,19 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                <?php endif; ?>
 
-                    <form action="index.php?page=penyewa_keluhan" method="POST">
-                        <div class="form-keluhan-group">
-                            <label for="isi_feedback">Ajukan Keluhan</label>
-                            <textarea id="isi_feedback" name="isi_feedback" rows="5"
-                                placeholder="Tulis keluhan Anda di sini..." required></textarea>
-                        </div>
-                        <div class="form-keluhan-group">
-                            <button type="submit" class="btn-kirim">Kirim Keluhan</button>
-                        </div>
-                    </form>
-                </div>
-            <?php endif; ?>
+                <form action="index.php?page=penyewa_keluhan" method="POST">
+                    <div class="form-keluhan-group">
+                        <label for="isi_feedback">Ajukan Keluhan</label>
+                        <textarea id="isi_feedback" name="isi_feedback" rows="5"
+                            placeholder="Tulis keluhan Anda di sini..." required></textarea>
+                    </div>
+                    <div class="form-keluhan-group">
+                        <button type="submit" class="btn-kirim">Kirim Keluhan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

@@ -11,30 +11,26 @@ class Penyewa
     public string $password_penyewa;
     public string $status_akun;
 
-    public static function findByEmail($email)
-    {
+
+    public static function findByEmail($email) {
         $db = Database::getConnection();
-        // Mengambil data dari penyewa dan no_kamar yang terkait di tabel sewa
-        $query = "SELECT penyewa.*, sewa.no_kamar FROM penyewa
-                  LEFT JOIN sewa ON penyewa.id_penyewa = sewa.id_penyewa
-                  WHERE email_penyewa = :email LIMIT 1";
+        $query = "SELECT * FROM penyewa WHERE email_penyewa = :email LIMIT 1";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         return $stmt->fetchObject(self::class);
     }
     
-    public static function getNoKamarByPenyewa($id_penyewa)
+    public static function getNoKamarByPenyewa($email)
     {
         $db = Database::getConnection();
-        $query = "SELECT kamar.no_kamar
-              FROM kamar
-              INNER JOIN sewa ON kamar.no_kamar = sewa.no_kamar
-              WHERE sewa.id_penyewa = :id_penyewa AND sewa.status_sewa = 'Sewa'";
+        $query = "SELECT sewa.no_kamar FROM penyewa
+                  LEFT JOIN sewa ON penyewa.id_penyewa = sewa.id_penyewa
+                  WHERE email_penyewa = :email LIMIT 1";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(':id_penyewa', $id_penyewa);
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
-        return $stmt->fetchColumn();
+        return $stmt->fetchColumn(); // kalau hanya ambil satu kolom: no_kamar
     }
 
     // method input register ke tabel penyewa

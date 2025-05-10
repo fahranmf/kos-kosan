@@ -175,14 +175,14 @@ body {
     font-size: 14px;
   }
 
+  .main-content {
+    width: auto;
+  }
+
   .kamar-table td, .kamar-table th {
     padding: 10px;
   }
 
-  .kamar-table img.foto-kamar {
-    width: 40px;
-    height: 40px;
-  }
 
   .kamar-table .aksi a {
     padding: 6px 10px;
@@ -190,5 +190,17 @@ body {
 
   .tambah-kamar {
     text-align: center;
+  }
+
+  .kosong {
+    font-size: 15px;
+  }
+
+  .isi {
+    font-size: 15pxS;
+  }
+  
+  .kolom {
+    font-size: 14px;
   }
 }

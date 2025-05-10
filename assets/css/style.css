@@ -6,7 +6,8 @@
   }
 
   body {
-    background: linear-gradient(to right, #006A71, #f2efe7);
+    background: #006A71;
+    background: linear-gradient(138deg, rgba(0, 106, 113, 1) 0%, rgba(242, 239, 231, 1) 100%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,8 +84,9 @@
     font-weight: 600;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     .auth-card {
+      width: 85%;
       margin: 1rem;
       padding: 1.5rem;
     }

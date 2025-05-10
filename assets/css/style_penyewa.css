@@ -235,5 +235,10 @@ body {
     .tambah-kamar {
       text-align: center;
     }
+
+    .form-keluhan-group {
+      width: 100%;
+      margin-bottom: 10px;
+    }
   }
   

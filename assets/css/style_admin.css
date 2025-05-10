@@ -60,9 +60,21 @@ body {
 @media (max-width: 768px) {
 
     .main-content {
-        margin-left: 0;
-        padding-left: 20px;
-        padding-right: 20px;
+        width: auto;
+    }
+
+    .stats-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+    }
+
+    .stat-card {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        width: 100%;
     }
 }
 
