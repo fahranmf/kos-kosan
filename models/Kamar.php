@@ -1,9 +1,11 @@
 <?php
 require_once 'config/database.php'; // Pastikan koneksi Database
 
-class Kamar {
+class Kamar
+{
     // Dapatkan total kos
-    public static function getTotalKos(): int {
+    public static function getTotalKos(): int
+    {
         $db = Database::getConnection();
         $query = "SELECT COUNT(*) AS total FROM kamar";
         $stmt = $db->prepare($query);
@@ -13,7 +15,8 @@ class Kamar {
     }
 
     // Ambil semua data kamar
-    public static function getAllKamar(): array {
+    public static function getAllKamar(): array
+    {
         $db = Database::getConnection();
         $query = "SELECT * FROM kamar ORDER BY no_kamar ASC";
         $stmt = $db->prepare($query);
@@ -22,7 +25,8 @@ class Kamar {
     }
 
     // Cari kamar berdasarkan ID
-    public static function findById($id) {
+    public static function findById($id)
+    {
         $db = Database::getConnection();
         $query = "SELECT * FROM kamar WHERE no_kamar = :id";
         $stmt = $db->prepare($query);
@@ -32,10 +36,11 @@ class Kamar {
     }
 
     // Update data kamar
-    public static function update($id, $foto_kos, $tipe_kamar, $harga_perbulan, $status, $deskripsi, $fasilitas) {
+    public static function update($id, $foto_kos, $tipe_kamar, $harga_perbulan, $status, $deskripsi, $fasilitas)
+    {
         $db = Database::getConnection();
 
-        
+
         $query = "UPDATE kamar SET 
                     foto_kos = :foto_kos,
                     tipe_kamar = :tipe_kamar,
@@ -56,14 +61,15 @@ class Kamar {
     }
 
     // Tambah Kamar
-    public static function insertKamar($tipe_kamar, $harga_perbulan, $status, $deskripsi, $fasilitas, $foto_kos) {
+    public static function insertKamar($tipe_kamar, $harga_perbulan, $status, $deskripsi, $fasilitas, $foto_kos)
+    {
         $db = Database::getConnection();
-    
+
         // Query untuk menambah kamar baru ke database
         $query = "INSERT INTO kamar (tipe_kamar, harga_perbulan, status, deskripsi, fasilitas, foto_kos) 
                   VALUES (:tipe_kamar, :harga_perbulan, :status, :deskripsi, :fasilitas, :foto_kos)";
         $stmt = $db->prepare($query);
-        
+
         // Bind parameter
         $stmt->bindParam(':tipe_kamar', $tipe_kamar);
         $stmt->bindParam(':harga_perbulan', $harga_perbulan);
@@ -71,18 +77,36 @@ class Kamar {
         $stmt->bindParam(':deskripsi', $deskripsi);
         $stmt->bindParam(':fasilitas', $fasilitas);
         $stmt->bindParam(':foto_kos', $foto_kos);
-    
+
         // Eksekusi query
         $stmt->execute();
     }
-    
+
     // Hapus kamar
-    public static function deleteById($id) {
+    public static function deleteById($id)
+    {
         $db = Database::getConnection();
         $query = "DELETE FROM kamar WHERE no_kamar = :id";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    public static function getKamarPerTipeDenganJumlahKosong()
+    {
+        $db = Database::getConnection();
+        $query = "SELECT 
+            k1.*,
+            (
+                SELECT COUNT(*) 
+                FROM kamar k2 
+                WHERE k2.tipe_kamar = k1.tipe_kamar AND k2.status = 'Kosong'
+            ) AS jumlah_kosong
+        FROM kamar k1
+        GROUP BY k1.tipe_kamar";
+        $stmt = $db->query($query);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

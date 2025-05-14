@@ -10,7 +10,8 @@ require_once 'controllers/PenyewaController.php'; // Controller Penyewa
 require_once 'controllers/PublicController.php';  // Controller Public (tampilan umum)
 
 // Function untuk cek role user
-function checkRole($requiredRole) {
+function checkRole($requiredRole)
+{
     if (!isset($_SESSION['role']) || $_SESSION['role'] != $requiredRole) {
         header('Location: index.php?page=login');
         exit;
@@ -27,7 +28,7 @@ switch ($page) {
         $controller = new PublicController();
         $controller->home();
         break;
-    
+
     case 'login':
         $controller = new AuthController();
         $controller->login();
@@ -41,6 +42,13 @@ switch ($page) {
     case 'logout':
         $controller = new AuthController();
         $controller->logout();
+        break;
+
+    case 'booking_kamar':
+        checkRole('penyewa');
+        $controller = new PublicController();
+        $tipe_kamar = $_GET['tipe'];
+        $controller->bookingKamar($tipe_kamar);
         break;
 
     case 'daftar_kos':
@@ -77,7 +85,7 @@ switch ($page) {
         $controller->dataPenyewa();
         break;
 
-    case 'admin_data_pembayaran' :
+    case 'admin_data_pembayaran':
         checkRole('admin');
         $controller = new AdminController();
         $controller->dataPembayaran();
