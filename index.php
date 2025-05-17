@@ -47,8 +47,14 @@ switch ($page) {
     case 'booking_kamar':
         checkRole('penyewa');
         $controller = new PublicController();
-        $tipe_kamar = $_GET['tipe'];
-        $controller->bookingKamar($tipe_kamar);
+        $tipe_kamar = $_POST['tipe_kamar'];
+        $controller->bookingKamar();
+        break;
+
+    case 'pembayaran':
+        checkRole('penyewa');
+        $controller = new PublicController();
+        $controller->prosesPembayaran();
         break;
 
     case 'daftar_kos':

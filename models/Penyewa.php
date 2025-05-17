@@ -72,17 +72,20 @@ class Penyewa
     {
         $db = Database::getConnection();
         $query = "SELECT 
-                penyewa.id_penyewa,
-                pembayaran.id_pembayaran,
-                penyewa.email_penyewa,
-                pembayaran.jumlah_bayar,
-                pembayaran.bukti_pembayaran,
-                pembayaran.status_pembayaran,
-                penyewa.status_akun
-            FROM 
-                pembayaran
-            JOIN 
-                penyewa ON pembayaran.id_sewa = penyewa.id_penyewa
+                    penyewa.id_penyewa,
+                    pembayaran.id_pembayaran,
+                    penyewa.email_penyewa,
+                    pembayaran.jumlah_bayar,
+                    pembayaran.bukti_pembayaran,
+                    pembayaran.status_pembayaran,
+                    penyewa.status_akun
+                FROM 
+                    pembayaran
+                JOIN 
+                    sewa ON pembayaran.id_sewa = sewa.id_sewa
+                JOIN 
+                    penyewa ON sewa.id_penyewa = penyewa.id_penyewa;
+
         ";
         $stmt = $db->prepare($query);
         $stmt->execute();

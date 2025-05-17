@@ -47,6 +47,23 @@
       text-decoration: underline;
     }
 
+    .btn-nav-logout {
+        background-color: #f2efe7;
+        padding : 10px;
+        border-radius: 15px;
+        color: #006a71;
+        font-weight: bold;
+    }
+
+    .btn-nav-login {
+        background-color: #eac86a;
+        padding : 10px;
+        border-radius: 15px;
+        color: black;
+        font-weight: bold;
+    }
+
+    
     .container-custom {
         background-color: #f2efe7;
         max-width: 1400px;
@@ -303,5 +320,9 @@
 @media (max-width: 768px) {
         .navbar {
             display: none;
+        }
+
+        .container-custom {
+            margin: 0;
         }
 }

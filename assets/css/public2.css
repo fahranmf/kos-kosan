@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f6f3;
+  padding: 25px 12px;
+  color: #444;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.card {
+  background: #ffffff;
+  max-width: 480px; /* dari 600px jadi 480px */
+  margin: 30px auto;
+  padding: 30px 30px; /* dari 40px 45px jadi 30px 30px */
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.card h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: 600;
+  font-size: 1.8rem; /* dari 2.1rem jadi 1.8rem */
+  color: #2c3e50;
+  letter-spacing: 0.02em;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: #666;
+  font-weight: 600;
+  font-size: 0.9rem; /* dari 0.95rem jadi 0.9rem */
+  letter-spacing: 0.015em;
+  user-select: none;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px; /* dari 14px 18px jadi 12px 14px */
+  border: 2px solid #d7d7d7;
+  border-radius: 10px;
+  font-size: 0.9rem; /* dari 1rem jadi 0.9rem */
+  background: #fcfcfc;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+  font-weight: 400;
+  color: #444;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+input[type="file"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #48a6a7;
+  box-shadow: 0 0 8px rgba(72, 166, 167, 0.4);
+  background: #fff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px; /* dari 120px jadi 100px */
+  line-height: 1.5;
+  font-family: inherit;
+}
+
+img {
+  margin-top: 10px;
+  border-radius: 10px;
+  max-width: 100px; /* dari 120px jadi 100px */
+  height: auto;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  display: block;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background: linear-gradient(135deg, #48a6a7, #3a8f8f);
+  color: white;
+  border: none;
+  padding: 12px 0; /* dari 15px 0 jadi 12px 0 */
+  font-size: 1rem; /* dari 1.15rem jadi 1rem */
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(72, 166, 167, 0.5);
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #3a8f8f, #2f7474);
+  box-shadow: 0 7px 20px rgba(46, 130, 130, 0.7);
+  transform: translateY(-2px);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(46, 130, 130, 0.5);
+}
+
+@media (max-width: 680px) {
+  .card {
+    max-width: 100%;  /* Pastikan full lebar di hp */
+    padding: 20px 15px;
+    margin: 20px 15px;
+  }
+
+  .card h2 {
+    font-size: 1.6rem;
+  }
+
+  button[type="submit"] {
+    font-size: 0.95rem;
+    padding: 11px 0;
+  }
+}

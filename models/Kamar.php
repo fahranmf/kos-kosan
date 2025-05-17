@@ -108,5 +108,26 @@ class Kamar
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getAvailableRoomByType($tipe_kamar)
+    {
+        $db = Database::getConnection();
+        $query = "SELECT * FROM kamar WHERE tipe_kamar = :tipe_kamar AND status = 'Kosong'";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':tipe_kamar', $tipe_kamar);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getHargaByNoKamar($no_kamar)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT harga_perbulan FROM kamar WHERE no_kamar = ?");
+        $stmt->execute([$no_kamar]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['harga_perbulan'] : null;
+    }
+
+
+
 }
 ?>
