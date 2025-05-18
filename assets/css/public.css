@@ -243,12 +243,12 @@
         transition: background-color 0.3s;
     }
 
-    .btn-primary {
+    .btn-book {
         background-color: #007bff;
         color: #fff;
     }
 
-    .btn-primary:hover {
+    .btn-book:hover {
         background-color: #0056b3;
     }
 

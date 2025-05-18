@@ -2,7 +2,7 @@
 const sidebarToggle = document.getElementById('sidebar-toggle');
 const sidebar = document.getElementById('sidebar');
 const sidebarTitle = document.getElementById('sidebar-title');
-const sidebarMenu = document.querySelector('.sidebar-menu');
+const sidebarMenuTexts = document.querySelectorAll('.menu-text');
 const mainContent = document.querySelector('.main-content');
 
 function showModal(src) {
@@ -34,16 +34,24 @@ sidebarToggle.addEventListener('click', () => {
     sidebar.classList.toggle('active');
 
     if (sidebar.classList.contains('active')) {
-        mainContent.style.marginLeft = '300px'; // Margin saat sidebar terbuka
-        sidebarMenu.style.display = 'flex';
-        sidebarMenu.style.flexDirection = 'column';
+        mainContent.style.marginLeft = '300px';
         sidebarTitle.style.display = 'flex';
         sidebar.style.width = '240px';
+        sidebarToggle.style.marginTop = '0';
 
+        // Tampilkan teks
+        sidebarMenuTexts.forEach(text => {
+            text.style.display = 'inline';
+        });
     } else {
-        mainContent.style.marginLeft = '100px'; // Margin saat sidebar tertutup
-        sidebarMenu.style.display = 'none';
+        mainContent.style.marginLeft = '100px';
         sidebarTitle.style.display = 'none';
         sidebar.style.width = '40px';
+        sidebarToggle.style.marginTop = '15px';
+
+        // Sembunyikan teks saja
+        sidebarMenuTexts.forEach(text => {
+            text.style.display = 'none';
+        });
     }
 });

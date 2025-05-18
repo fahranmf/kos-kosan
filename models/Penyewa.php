@@ -102,4 +102,21 @@ class Penyewa
         $stmt->execute();
     }
 
+        public static function sudahAdaOrderAktif($id_penyewa) {
+        $db = Database::getConnection();
+
+        $sql = "SELECT COUNT(*) AS jumlah_order
+                FROM sewa s
+                LEFT JOIN pembayaran p ON p.id_sewa = s.id_sewa
+                WHERE s.id_penyewa = ? 
+                  AND (s.status_sewa = 'Sewa' OR p.status_pembayaran = 'Lunas')";
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id_penyewa]);
+        $row = $stmt->fetch();
+
+        return $row['jumlah_order'] > 0;
+    }
+
+
 }

@@ -65,10 +65,11 @@
 /* Hamburger Button */
 .sidebar-toggle {
     display: block;
+    margin-left: 5px;
     background: transparent;
     border: none;
     color: white;
-    font-size: 30px;
+    font-size: 25px;
     cursor: pointer;
 }
 
@@ -177,8 +178,8 @@
     }
 
     .sidebar-toggle {
+      margin-left: 5px;
       font-size: 25px;
-      margin-left: -15px;
   }
     .sidebar.active {
         width: 240px; /* Sidebar terbuka saat tombol hamburger ditekan */
@@ -188,7 +189,7 @@
       display: none;
     }
 
-    .sidebar-menu {
+    .menu-text {
         display: none;
     }
 

@@ -41,7 +41,7 @@
                     <h2 class="section-title">Tempat Kos Nyaman</h2>
                     <h1 class="carousel-heading">Mencari Kos Yang Nyaman?</h1>
                     <div class="carousel-buttons">
-                        <a href="#" class="btn btn-primary">Our Rooms</a>
+                        <a href="#" class="btn btn-book">Our Rooms</a>
                         <a href="#" class="btn btn-light">Book A Room</a>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                         <p><strong>Sisa kamar:</strong> <?= $kamar['jumlah_kosong'] ?> tersedia</p>
                         <div class="room-buttons">
                             <?php if ($kamar['jumlah_kosong'] > 0): ?>
-                                <a class="btn btn-primary open-booking-modal" href="#"
+                                <a class="btn btn-book open-booking-modal" href="#"
                                     data-tipe="<?= $kamar['tipe_kamar'] ?>">Book Now</a>
                             <?php else: ?>
                                 <a class="btn btn-disabled" href="#"
@@ -111,29 +111,142 @@
 </div>
 
 <!-- Modal HTML di bawah halaman -->
-<div id="bookingModal" class="modal"
-    style="display:none; position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);">
-    <div class="modal-content"
-        style="background:#fff;padding:20px;max-width:400px;margin:10% auto;position:relative;border-radius:8px;">
-        <span id="closeModalBtn"
-            style="position:absolute;top:10px;right:15px;cursor:pointer;font-size:20px;">&times;</span>
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span id="closeModalBtn" class="close-btn">&times;</span>
         <form method="POST" action="index.php?page=booking_kamar">
             <input type="hidden" name="tipe_kamar" id="modalTipeKamar" value="">
-            <label>Pilih No Kamar:</label><br>
+            <label for="dropdownNoKamar">Pilih No Kamar:</label>
             <select name="no_kamar" id="dropdownNoKamar" required>
                 <option value=""></option>
-            </select><br><br>
-            <label>Tanggal Mulai:</label><br>
-            <input type="date" name="tanggal_mulai" required><br><br>
-            <label>Tanggal Selesai:</label><br>
-            <input type="date" name="tanggal_selesai" required readonly><br><br>
-            <button type="submit" class="btn btn-primary">Submit Booking</button>
+            </select>
+            <label for="tanggal_mulai">Tanggal Mulai:</label>
+            <input type="date" name="tanggal_mulai" id="tanggal_mulai" required>
+            <label for="tanggal_selesai">Tanggal Selesai:</label>
+            <input type="date" name="tanggal_selesai" id="tanggal_selesai" required readonly>
+            <button type="submit" class="btn-primary">Submit Booking</button>
             <?php if (!empty($errorMsg)): ?>
-                <p style="color:red"><?= htmlspecialchars($errorMsg) ?></p>
+                <p class="error-message"><?= htmlspecialchars($errorMsg) ?></p>
             <?php endif; ?>
         </form>
     </div>
 </div>
+
+<style>
+    /* Modal backdrop */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 999;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    /* Modal box */
+    .modal-content {
+        background: #ffffff;
+        padding: 30px 25px;
+        max-width: 450px;
+        margin: 10% auto;
+        position: relative;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        animation: slideUp 0.4s ease-out;
+    }
+
+    /* Close button */
+    .close-btn {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #666;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    .close-btn:hover {
+        color: #000;
+    }
+
+    /* Input and select styles */
+    /* Input dan select yang seragam */
+    input[type="date"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        margin-bottom: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+        appearance: none;
+        /* biar tampilan native-nya gak ganggu, opsional */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        transition: border 0.2s ease;
+    }
+
+
+    input:focus,
+    select:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    /* Submit button */
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Error message */
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(40px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+</style>
 
 
 

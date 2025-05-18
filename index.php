@@ -62,9 +62,10 @@ switch ($page) {
         $controller->daftarKos();
         break;
 
-    case 'detail_kos':
-        $controller = new PublicController();
-        $controller->detailKos($_GET['id']);
+    case 'detail_kamar':
+        $controller = new PublicController();;
+        $tipe_kamar = $_GET['tipe'];
+        $controller->detailKamar($tipe_kamar);
         break;
 
     case 'cek_status':
@@ -174,7 +175,8 @@ switch ($page) {
 
     // --- Halaman tidak ditemukan ---
     default:
-        echo "404 Not Found";
+        $controller = new PublicController();
+        $controller->default();  
         break;
 }
 ?>
