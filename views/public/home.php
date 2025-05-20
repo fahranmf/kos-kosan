@@ -1,13 +1,29 @@
 <?php include 'views/templates/public.php'; ?>
-<script>
-    const hasError = <?= !empty($errorMsg) ? 'true' : 'false' ?>;
-    const errorMsg = <?= json_encode($errorMsg ?? '') ?>;
+<?php
 
-    if (hasError) {
-        // Buka modal otomatis kalau ada error (misal validasi tanggal kosong)
-        document.getElementById('bookingModal').style.display = 'block';
-    }
+$errorMsg = $_SESSION['errorMsg'] ?? null;
+$lastTipeKamar = $_SESSION['lastTipeKamar'] ?? '';
+$shouldOpenModal = isset($_GET['openModal']) && $_GET['openModal'] == '1';
+
+
+// Setelah ambil, hapus supaya gak terus muncul
+unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
+
+?>
+
+<script>
+    window.bookingModalError = {
+        hasError: <?= !empty($errorMsg) ? 'true' : 'false' ?>,
+        errorMsg: <?= json_encode($errorMsg ?? '') ?>,
+        shouldOpenModal: <?= isset($_GET['openModal']) ? 'true' : 'false' ?>,
+        tipeKamar: <?= json_encode($_SESSION['last_tipe_kamar'] ?? '') ?>
+    };
 </script>
+
+</script>
+
+
+
 
 
 <div class="container-custom">
@@ -15,14 +31,18 @@
         <nav class="navbar">
             <h1>Kos Putra Agan</h1>
             <div class="nav-links">
-                <a href="#">Beranda</a>
-                <a href="#">Kamar</a>
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    echo '<a href="index.php?page=cek_status">Akun Saya</a>';
+                }
+                ?>
+                <a href="#home">Beranda</a>
+                <a href="#rooms">Kamar</a>
                 <a href="#">Fasilitas</a>
                 <a href="#">Kontak</a>
                 <?php
                 if (isset($_SESSION['user_id'])) {
                     // Kalau sudah login, tampilkan tombol logout
-                    echo '<a href="index.php?page=cek_status">Akun Saya</a>';
                     echo '<a href="index.php?page=logout"><span class="btn-nav-logout">Logout</a>';
                 } else {
                     // Kalau belum login, tampilkan login dan signup
@@ -33,7 +53,7 @@
         </nav>
     </div>
 
-    <div class="carousel-container">
+    <div id="home" class="carousel-container">
         <div class="carousel-slide active">
             <img src="../../uploads/foto_kos/foto1.jpg" alt="Carousel Image">
             <div class="carousel-caption">
@@ -41,7 +61,7 @@
                     <h2 class="section-title">Tempat Kos Nyaman</h2>
                     <h1 class="carousel-heading">Mencari Kos Yang Nyaman?</h1>
                     <div class="carousel-buttons">
-                        <a href="#" class="btn btn-book">Our Rooms</a>
+                        <a href="#rooms" class="btn btn-book">Our Rooms</a>
                         <a href="#" class="btn btn-light">Book A Room</a>
                     </div>
                 </div>
@@ -50,7 +70,7 @@
     </div>
 
 
-    <div id="#room" class="container-rooms">
+    <div id="rooms" class="container-rooms">
         <div class="section-header">
             <h2 class="section-title">Our Rooms</h2>
             <h3>Explore Our <span class="highlight">Rooms</span></h3>
@@ -94,8 +114,8 @@
                         <p><strong>Sisa kamar:</strong> <?= $kamar['jumlah_kosong'] ?> tersedia</p>
                         <div class="room-buttons">
                             <?php if ($kamar['jumlah_kosong'] > 0): ?>
-                                <a class="btn btn-book open-booking-modal" href="#"
-                                    data-tipe="<?= $kamar['tipe_kamar'] ?>">Book Now</a>
+                                <a class="btn btn-book open-booking-modal" href="#" data-tipe="<?= $kamar['tipe_kamar'] ?>">Book
+                                    Now</a>
                             <?php else: ?>
                                 <a class="btn btn-disabled" href="#"
                                     style="pointer-events: none; background-color: #ccc; color: #777;">Book Now</a>
@@ -115,8 +135,9 @@
     <div class="modal-content">
         <span id="closeModalBtn" class="close-btn">&times;</span>
         <form method="POST" action="index.php?page=booking_kamar">
-            <input type="hidden" name="tipe_kamar" id="modalTipeKamar" value="">
-            <label for="dropdownNoKamar">Pilih No Kamar:</label>
+            <label for="tipe_kamar">Tipe Kamar:</label>
+            <input type="text" name="tipe_kamar" id="modalTipeKamar" required readonly>
+            <label for="dropdownNoKamar">No Kamar:</label>
             <select name="no_kamar" id="dropdownNoKamar" required>
                 <option value=""></option>
             </select>
@@ -124,15 +145,24 @@
             <input type="date" name="tanggal_mulai" id="tanggal_mulai" required>
             <label for="tanggal_selesai">Tanggal Selesai:</label>
             <input type="date" name="tanggal_selesai" id="tanggal_selesai" required readonly>
-            <button type="submit" class="btn-primary">Submit Booking</button>
             <?php if (!empty($errorMsg)): ?>
-                <p class="error-message"><?= htmlspecialchars($errorMsg) ?></p>
+                <p style="color:red;"><?= htmlspecialchars($errorMsg) ?></p>
             <?php endif; ?>
+            <button type="submit" class="btn-primary">Submit Booking</button>
         </form>
     </div>
 </div>
 
 <style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .no-scroll {
+        overflow: hidden;
+    }
+
+
     /* Modal backdrop */
     .modal {
         display: none;
@@ -142,7 +172,7 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.6);
-        z-index: 999;
+        z-index: 99999;
         animation: fadeIn 0.3s ease-in-out;
     }
 
@@ -176,6 +206,7 @@
 
     /* Input and select styles */
     /* Input dan select yang seragam */
+    input[type="text"],
     input[type="date"],
     select {
         width: 100%;
@@ -202,9 +233,10 @@
 
     /* Submit button */
     .btn-primary {
+        margin-top: 10px;
         background-color: #007bff;
         color: white;
-        padding: 12px 20px;
+        padding: 10px 20px;
         border: none;
         border-radius: 6px;
         font-size: 16px;
@@ -216,12 +248,6 @@
         background-color: #0056b3;
     }
 
-    /* Error message */
-    .error-message {
-        color: red;
-        font-size: 14px;
-        margin-top: 10px;
-    }
 
     /* Animations */
     @keyframes fadeIn {
@@ -245,7 +271,6 @@
             opacity: 1;
         }
     }
-    
 </style>
 
 

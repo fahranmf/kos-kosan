@@ -2,26 +2,33 @@
 <script>
     const harga = <?= $harga_kamar ?>; // dari database
 
+    function formatRupiah(angka) {
+        return 'Rp. ' + angka.toLocaleString('id-ID');
+    }
+
     function updateJumlahBayar() {
         const status = document.getElementById('status_pembayaran').value;
         const harga = parseFloat(document.getElementById('harga_kamar').value);
-        const jumlahInput = document.getElementById('jumlah_bayar');
+        const jumlahDisplay = document.getElementById('jumlah_bayar_display');
+        const jumlahHidden = document.getElementById('jumlah_bayar');
         const tenggatInput = document.getElementById('tenggat_pembayaran');
         const tenggatWrapper = document.getElementById('tenggatWrapper');
 
         if (status === 'Lunas') {
-            jumlahInput.value = harga;
+            jumlahDisplay.value = formatRupiah(harga);
+            jumlahHidden.value = harga;
             tenggatWrapper.style.display = 'none';
-            tenggatInput.value = ''; // Kosongkan
+            tenggatInput.value = '';
         } else if (status === 'Cicil') {
-            jumlahInput.value = harga / 2;
+            const cicilan = harga / 2;
+            jumlahDisplay.value = formatRupiah(cicilan);
+            jumlahHidden.value = cicilan;
             tenggatWrapper.style.display = 'block';
 
             const tanggal = new Date();
-            tanggal.setDate(tanggal.getDate() + 14); // 2 minggu dari sekarang
-            tanggal.setHours(23, 59, 0, 0); // jam 23:59
+            tanggal.setDate(tanggal.getDate() + 14);
+            tanggal.setHours(23, 59, 0, 0);
 
-            // Format ke "YYYY-MM-DDTHH:MM"
             const yyyy = tanggal.getFullYear();
             const mm = String(tanggal.getMonth() + 1).padStart(2, '0');
             const dd = String(tanggal.getDate()).padStart(2, '0');
@@ -30,11 +37,13 @@
 
             tenggatInput.value = `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
         } else {
-            jumlahInput.value = '';
+            jumlahDisplay.value = '';
+            jumlahHidden.value = '';
             tenggatWrapper.style.display = 'none';
             tenggatInput.value = '';
         }
     }
+
 
 
 </script>
@@ -62,8 +71,10 @@
 
         <div class="form-group">
             <label for="jumlah_bayar">Jumlah Bayar</label>
-            <input type="number" id="jumlah_bayar" name="jumlah_bayar" readonly required>
+            <input type="text" id="jumlah_bayar_display" readonly>
+            <input type="hidden" id="jumlah_bayar" name="jumlah_bayar" required>
         </div>
+
 
         <!-- ✅ Tambahkan elemen hidden untuk menyimpan harga -->
         <input type="hidden" id="harga_kamar" value="<?= $harga_kamar ?>">

@@ -34,9 +34,11 @@ class PublicController
         $id_penyewa = $_SESSION['user_id'];
 
         if (Penyewa::sudahAdaOrderAktif($id_penyewa)) {
-            $_SESSION['errorMsg'] = "Kamu sudah punya sewa aktif atau pembayaran lunas, tidak bisa booking kamar lagi.";
-            header("Location: index.php?page=home");
+            $_SESSION['errorMsg'] = "Kamu sudah melakukan booking sebelumnnya, tidak bisa booking kamar lagi.";
+            $_SESSION['lastTipeKamar'] = $_POST['tipe_kamar'] ?? '';
+            header("Location: index.php?page=home&openModal=1#rooms");
             exit();
+
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -169,7 +171,7 @@ class PublicController
         include 'views/public/notfound.php';
     }
 
-    
+
 
 
 

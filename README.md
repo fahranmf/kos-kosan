@@ -43,3 +43,14 @@
     (Notes :
     1. blm ada fitur kirim ke email saat verif
     2. blm responsive)
+
+6. 20 Mei 2025 
+    - Silahkan liat di commit aja ya teman2 (malas)
+    - Intinya fitur yang belum ada itu :
+        1. Cek Akun
+        2. Cek dan Perpanjang Sewa Penyewa
+        3. Fitur Kirim Email
+        4. Edit data penyewa, admin (kaya email, nama, no telp, dll)
+        5. Responsive (baru beberapa aja)
+        6. Di tampilan home blm ada kontak, fasilitas, sama alamat
+        7. Fitur tambah akun admin lewat akun super admin
