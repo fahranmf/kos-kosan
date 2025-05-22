@@ -28,6 +28,7 @@ class AuthController
                 $penyewa->no_kamar = $no_kamar; // Tambahkan properti baru ke object               
                 $_SESSION['role'] = 'penyewa';
                 $_SESSION['user_id'] = $penyewa->id_penyewa;
+                $_SESSION['nama_penyewa'] = $penyewa->nama_penyewa;
 
 
                 if ($penyewa->status_akun == 'Terverifikasi') {

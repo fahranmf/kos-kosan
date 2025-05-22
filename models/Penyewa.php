@@ -12,7 +12,8 @@ class Penyewa
     public string $status_akun;
 
 
-    public static function findByEmail($email) {
+    public static function findByEmail($email)
+    {
         $db = Database::getConnection();
         $query = "SELECT * FROM penyewa WHERE email_penyewa = :email LIMIT 1";
         $stmt = $db->prepare($query);
@@ -20,7 +21,7 @@ class Penyewa
         $stmt->execute();
         return $stmt->fetchObject(self::class);
     }
-    
+
     public static function getNoKamarByPenyewa($email)
     {
         $db = Database::getConnection();
@@ -102,7 +103,8 @@ class Penyewa
         $stmt->execute();
     }
 
-        public static function sudahAdaOrderAktif($id_penyewa) {
+    public static function sudahAdaOrderAktif($id_penyewa)
+    {
         $db = Database::getConnection();
 
         $sql = "SELECT COUNT(*) AS jumlah_order
@@ -118,5 +120,20 @@ class Penyewa
         return $row['jumlah_order'] > 0;
     }
 
+    public static function getProfilLengkap($id_penyewa)
+    {
+        $db = Database::getConnection();
+        $query = "SELECT 
+                p.nama_penyewa, p.email_penyewa, p.no_telp_penyewa, p.status_akun,
+                k.tipe_kamar, k.no_kamar,
+                s.tanggal_mulai, s.tanggal_selesai, s.status_sewa
+              FROM penyewa p
+              LEFT JOIN sewa s ON p.id_penyewa = s.id_penyewa AND s.status_sewa = 'Sewa'
+              LEFT JOIN kamar k ON s.no_kamar = k.no_kamar
+              WHERE p.id_penyewa = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$id_penyewa]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
 }

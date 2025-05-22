@@ -10,8 +10,8 @@
         </button>
     </div>
     <ul class="sidebar-menu">
-        <li><a href="index.php?page=penyewa_dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-        <li><a href="index.php?page=penyewa_keluhan"><i class="fas fa-exclamation-circle"></i> Ajukan Keluhan</a></li>
-        <li><a href="index.php?page=logout"><i class="fas fa-sign-out-alt"></i>Log Out</a></li>
+        <li><a href="index.php?page=penyewa_dashboard"><i class="fas fa-user"></i> <span class="menu-text">Profile</span></a></li>
+        <li><a href="index.php?page=penyewa_keluhan"><i class="fas fa-exclamation-circle"></i> <span class="menu-text">Ajukan Keluhan</span></a></li>
+        <li><a href="index.php?page=logout"><i class="fas fa-sign-out-alt"></i><span class="menu-text">Log Out</span></a></li>
     </ul>
 </div>

@@ -47,7 +47,7 @@ sidebarToggle.addEventListener('click', () => {
         mainContent.style.marginLeft = '100px';
         sidebarTitle.style.display = 'none';
         sidebar.style.width = '40px';
-        sidebarToggle.style.marginTop = '15px';
+        sidebarToggle.style.marginTop = '17px';
 
         // Sembunyikan teks saja
         sidebarMenuTexts.forEach(text => {
