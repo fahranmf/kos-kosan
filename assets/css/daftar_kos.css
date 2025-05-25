@@ -172,7 +172,7 @@ body {
 }
 
 .btn-tambah:hover {
-  background-color: #388e3c;
+  background: linear-gradient(135deg, #3a8f8f, #2f7474);
 }
 
 /* Responsive Design */

@@ -1,3 +1,4 @@
+<?php $title = 'Profile Penyewa - Kos Putra Agan'; ?>
 <?php require_once 'views/templates/header_admin.php'; ?>
 
 <div class="dashboard-container">

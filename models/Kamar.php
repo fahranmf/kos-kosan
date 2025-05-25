@@ -96,14 +96,16 @@ class Kamar
     {
         $db = Database::getConnection();
         $query = "SELECT 
-            k1.*,
-            (
-                SELECT COUNT(*) 
-                FROM kamar k2 
-                WHERE k2.tipe_kamar = k1.tipe_kamar AND k2.status = 'Kosong'
-            ) AS jumlah_kosong
-        FROM kamar k1
-        GROUP BY k1.tipe_kamar";
+                    tipe_kamar,
+                    MAX(no_kamar) AS no_kamar,
+                    MAX(foto_kos) AS foto_kos,
+                    MAX(harga_perbulan) AS harga_perbulan,
+                    MAX(deskripsi) AS deskripsi,
+                    MAX(fasilitas) AS fasilitas,
+                    SUM(status = 'Kosong') AS jumlah_kosong
+                FROM kamar
+                GROUP BY tipe_kamar
+                ";
         $stmt = $db->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

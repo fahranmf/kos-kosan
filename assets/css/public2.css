@@ -13,7 +13,7 @@ body {
 
 .card {
   background: #ffffff;
-  max-width: 480px; /* dari 600px jadi 480px */
+  max-width: 600px; /* dari 600px jadi 480px */
   margin: 30px auto;
   padding: 30px 30px; /* dari 40px 45px jadi 30px 30px */
   border-radius: 14px;

@@ -1,4 +1,7 @@
 <!-- views/admin/edit_kamar.php -->
+<?php $title = 'Edit Kamar - Kos Putra Agan'; ?>
+<?php include 'views/templates/public2.php'; ?>
+
 <?php
 // Ambil data kamar berdasarkan ID yang dikirimkan melalui GET
 if (isset($_GET['id'])) {
@@ -6,88 +9,6 @@ if (isset($_GET['id'])) {
     $kamar = Kamar::findById($kamarId);
 }
 ?>
-
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #f2efe7;
-        padding: 20px;
-    }
-
-    .card {
-        background: #fff;
-        max-width: 600px;
-        margin: 20px auto;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .card h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-        font-weight: 600;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    input[type="file"],
-    select,
-    textarea {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 14px;
-        background: #fafafa;
-    }
-
-    textarea {
-        resize: vertical;
-        min-height: 100px;
-    }
-
-    img {
-        margin-top: 10px;
-        border-radius: 8px;
-        width: 100px;
-        height: auto;
-    }
-
-    button[type="submit"] {
-        width: 100%;
-        background: #48a6a7;
-        color: white;
-        border: none;
-        padding: 12px;
-        font-size: 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        margin-top: 10px;
-    }
-
-    button[type="submit"]:hover {
-        background: #45a049;
-    }
-
-    @media (max-width: 600px) {
-        .card {
-            padding: 20px;
-        }
-    }
-</style>
 
 <div class="card">
     <h2>Edit Data Kamar</h2>

@@ -1,3 +1,4 @@
+<?php $title = 'Register - Kos Putra Agan'; ?>
 <?php require_once 'views/templates/header.php'; ?>
 
 <!-- Section Register -->

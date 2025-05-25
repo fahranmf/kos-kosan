@@ -1,3 +1,4 @@
+<?php $title = 'Keluhan Penyewa - Kos Putra Agan'; ?>
 <?php require_once 'views/templates/header_penyewa.php'; ?>
 
 

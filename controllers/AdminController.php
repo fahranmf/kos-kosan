@@ -6,22 +6,44 @@ require_once 'models/Feedback.php';
 require_once 'models/Pembayaran.php';
 require_once 'models/Sewa.php';
 
-class AdminController {
+class AdminController
+{
     // Menampilkan halaman Dashboard Admin
-    public function dashboard() {
+    public function dashboard()
+    {
         AuthMiddleware::checkAdmin(); // Pastikan admin yang akses
 
         // Ambil data statistik
         $totalKos = Kamar::getTotalKos();
         $totalPenyewa = Penyewa::getTotalPenyewa();
         $totalKeluhan = Feedback::getTotalKeluhan();
+        $tahunDipilih = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
+        $dataSewaPerBulan = Sewa::getJumlahSewaPerBulanByTahun($tahunDipilih);
+
+        // Siapkan label dan data
+        $labels = [];
+        $jumlah = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $labels[] = DateTime::createFromFormat('!m', $i)->format('F');
+            $jumlah[] = 0; // Default 0
+        }
+
+        foreach ($dataSewaPerBulan as $row) {
+            $index = (int) $row['bulan'] - 1;
+            $jumlah[$index] = $row['jumlah'];
+        }
+
+
+        $maxJumlah = !empty($jumlah) ? max($jumlah) : 0;
+        $maxY = $maxJumlah + 3;
 
         // Load view dashboard
         require_once 'views/admin/dashboard.php';
     }
 
     // Menampilkan daftar kamar kos
-    public function daftarKos() {
+    public function daftarKos()
+    {
         AuthMiddleware::checkAdmin();
 
         $kamarList = Kamar::getAllKamar();
@@ -29,7 +51,8 @@ class AdminController {
     }
 
     // Menampilkan form edit kamar
-    public function editKamar($id) {
+    public function editKamar($id)
+    {
         AuthMiddleware::checkAdmin();
 
         $kamar = Kamar::findById($id);
@@ -41,9 +64,10 @@ class AdminController {
     }
 
     // Proses update data kamar
-    public function updateKamar() {
+    public function updateKamar()
+    {
         AuthMiddleware::checkAdmin();
-    
+
         // Validasi input
         $id = $_POST['id'] ?? null;
         $foto_kos_lama = $_POST['foto_kos_lama'] ?? ''; // Simpan foto lama dari form hidden input
@@ -52,19 +76,19 @@ class AdminController {
         $status = $_POST['status'] ?? '';
         $deskripsi = $_POST['deskripsi'] ?? '';
         $fasilitas = $_POST['fasilitas'] ?? '';
-    
+
         if (!$id) {
             die("ID kamar tidak valid.");
         }
-    
+
         $foto_kos_baru = $foto_kos_lama; // Defaultnya pake foto lama
-    
+
         // Cek kalau ada upload gambar baru
         if (isset($_FILES['foto_kos']) && $_FILES['foto_kos']['error'] == 0) {
             $targetDir = "uploads/foto_kos/";
             $fileName = basename($_FILES['foto_kos']['name']);
             $targetFile = $targetDir . $fileName;
-    
+
             if (move_uploaded_file($_FILES['foto_kos']['tmp_name'], $targetFile)) {
                 // Kalau berhasil upload, hapus gambar lama (kalau ada)
                 if (!empty($foto_kos_lama) && file_exists($targetDir . $foto_kos_lama)) {
@@ -75,17 +99,18 @@ class AdminController {
                 die("Gagal meng-upload gambar.");
             }
         }
-    
+
         // Update data kamar
         Kamar::update($id, $foto_kos_baru, $tipe_kamar, $harga_perbulan, $status, $deskripsi, $fasilitas);
-    
+
         // Redirect setelah update
         header('Location: index.php?page=admin_daftar_kos');
         exit();
     }
-    
+
     //tambah kamar
-    public function tambahKamar() {
+    public function tambahKamar()
+    {
         AuthMiddleware::checkAdmin();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -124,41 +149,48 @@ class AdminController {
     }
 
     // Proses hapus kamar
-    public function hapusKamar($id) {
+    public function hapusKamar($id)
+    {
         AuthMiddleware::checkAdmin();
         Kamar::deleteById($id);
         header('Location: index.php?page=admin_daftar_kos');
         exit();
     }
 
-    public function keluhan() {
+    public function keluhan()
+    {
         AuthMiddleware::checkAdmin();
         $feedbackList = Feedback::getAllKeluhan();
         require_once 'views/admin/keluhan.php';
     }
-    public function dataPembayaran() {
+    public function dataPembayaran()
+    {
         AuthMiddleware::checkAdmin();
         $pembayaranList = Pembayaran::getAllPembayaran();
         require_once 'views/admin/data_pembayaran.php';
     }
-    public function dataPenyewa() {
+    public function dataPenyewa()
+    {
         AuthMiddleware::checkAdmin();
         $penyewaList = Penyewa::getAllPenyewa();
         require_once 'views/admin/data_penyewa.php';
     }
-    public function dataStatusSewa() {
+    public function dataStatusSewa()
+    {
         AuthMiddleware::checkAdmin();
         $statusSewaList = Sewa::getAllStatusSewa();
         require_once 'views/admin/status_sewa.php';
     }
 
-    public function verifikasi() {
+    public function verifikasi()
+    {
         AuthMiddleware::checkAdmin();
         $verifList = Penyewa::getAllAkun();
         require_once 'views/admin/verifikasi_akun.php';
     }
 
-    public function updateStatus() {
+    public function updateStatus()
+    {
         AuthMiddleware::checkAdmin();
         $id = $_POST['id_feedback'];
         $status = $_POST['status_feedback'];
@@ -166,15 +198,16 @@ class AdminController {
         header('Location: index.php?page=admin_keluhan');
         exit;
     }
-    
-    public function editStatusAkun() {
+
+    public function editStatusAkun()
+    {
         AuthMiddleware::checkAdmin();
         $id = $_POST['id_penyewa'];
-        $status = $_POST['status_akun'];   
+        $status = $_POST['status_akun'];
         Penyewa::updateStatusAkun($id, $status); // model
         header('Location: index.php?page=admin_verifikasi');
         exit;
     }
-    
+
 }
 ?>

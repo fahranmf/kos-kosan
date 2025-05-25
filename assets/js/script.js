@@ -54,4 +54,12 @@ sidebarToggle.addEventListener('click', () => {
             text.style.display = 'none';
         });
     }
+
+    // Resize chart setelah layout selesai
+    setTimeout(() => {
+        if (window.chart && typeof window.chart.resize === 'function') {
+            window.chart.resize();
+        }
+    }, 300);
+    
 });

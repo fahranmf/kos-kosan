@@ -1,3 +1,4 @@
+<?php $title = 'Verifikasi Akun Penyewa - Kos Putra Agan'; ?>
 <?php require_once 'views/templates/header_admin_daftarkos.php'; ?>
 
 <div class="dashboard-container">

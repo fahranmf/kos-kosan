@@ -1,5 +1,5 @@
 <!-- views/public/login.php -->
-
+<?php $title = 'Login - Kos Putra Agan'; ?>
 <?php require_once 'views/templates/header.php'; ?>
 
 <!-- Section Login -->
