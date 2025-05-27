@@ -144,7 +144,7 @@ class PublicController
             if ($insertBayar) {
                 Penyewa::updateStatusAkun($dataBooking['id_penyewa'], 'Menunggu Verifikasi');
                 unset($_SESSION['booking']);
-                header("Location: index.php?page=success&id_sewa=" . $id_sewa);
+                header("Location: index.php?page=success&home");
                 exit();
             } else {
                 $_SESSION['errorMsg'] = "Gagal menyimpan data pembayaran.";

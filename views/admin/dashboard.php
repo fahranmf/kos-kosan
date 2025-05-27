@@ -1,17 +1,6 @@
 <?php $title = 'Dashboard Admin - Kos Putra Agan'; ?>
 <?php require_once 'views/templates/header_admin.php'; ?>
-<style>
-    .chart-container {
-        width: 100%;
-    }
 
-    .grafik {
-        position: relative;
-        height: 400px;
-        width: 100%;
-    }
-
-</style>
 <div class="dashboard-container">
     <!-- Sidebar -->
     <?php include('sidebar.php'); ?>
@@ -41,7 +30,7 @@
                 <h2>Grafik Jumlah Sewa per Bulan</h2>
                 <form method="GET" action="index.php">
                     <input type="hidden" name="page" value="admin_dashboard" />
-                    <label for="tahun">Pilih Tahun:</label>
+                    <label for="tahun">Pilih Tahun : </label>
                     <select name="tahun" id="tahun" onchange="this.form.submit()">
                         <?php
                         $tahunSaatIni = date('Y');

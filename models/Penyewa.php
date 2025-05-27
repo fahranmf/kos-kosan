@@ -136,4 +136,26 @@ class Penyewa
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function getDataSewaPenyewaById($id_penyewa)
+    {
+        $db = Database::getConnection();
+        $query = "SELECT 
+					pembayaran.tanggal_pembayaran,
+                    sewa.no_kamar,
+                    sewa.tanggal_mulai,
+                    sewa.tanggal_selesai,
+                    pembayaran.bukti_pembayaran
+                FROM 
+                    pembayaran
+                JOIN 
+                    sewa ON pembayaran.id_sewa = sewa.id_sewa
+                JOIN 
+                    penyewa ON sewa.id_penyewa = penyewa.id_penyewa
+
+                WHERE penyewa.id_penyewa = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$id_penyewa]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
