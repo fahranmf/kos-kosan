@@ -12,7 +12,7 @@
         </div>
     <?php endif; ?>
     
-    <form action="../../index.php?page=login" method="POST" class="w-50 mx-auto">
+    <form action="index.php?page=login" method="POST" class="w-50 mx-auto">
         <div class="form-group">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email" required>
@@ -25,7 +25,7 @@
     </form>
     
     <div class="auth-footer">
-        <p>Belum punya akun? <a href="../../index.php?page=register">Daftar sekarang</a></p>
+        <p>Belum punya akun? <a href="index.php?page=register">Daftar sekarang</a></p>
     </div>
 </div>
 

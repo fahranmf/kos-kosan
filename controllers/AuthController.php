@@ -44,7 +44,7 @@ class AuthController
 
             // Jika login gagal
             $_SESSION['error'] = 'Email atau password salah!';
-            header('Location: ../../index.php?page=login');
+            header('Location: index.php?page=login');
             exit;
         }
 

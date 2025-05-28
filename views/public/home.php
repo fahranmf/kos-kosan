@@ -55,7 +55,7 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
 
     <div id="home" class="carousel-container">
         <div class="carousel-slide active">
-            <img src="../../uploads/foto_kos/foto1.jpg" alt="Carousel Image">
+            <img src="uploads/foto_kos/foto1.jpg" alt="Carousel Image">
             <div class="carousel-caption">
                 <div class="caption-content">
                     <h2 class="section-title">Tempat Kos Nyaman</h2>
