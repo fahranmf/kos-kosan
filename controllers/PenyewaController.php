@@ -38,6 +38,9 @@ class PenyewaController
             $no_kamar = $_SESSION['no_kamar'];
             $isi_feedback = $_POST['isi_feedback'] ?? '';
             Feedback::kirimFeedback($no_kamar, $isi_feedback);
+            // Redirect setelah submit
+            header('Location: index.php?page=penyewa_keluhan');
+            exit();
         }
         $no_kamar = $_SESSION['no_kamar'];
         $feedbackList = Feedback::getFeedbackByNoKamar($no_kamar);
