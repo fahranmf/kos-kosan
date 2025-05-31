@@ -17,7 +17,7 @@
                         <th>Jumlah</th>
                         <th>Metode Pembayaran</th>
                         <th>Bukti Pembayaran</th>
-                        <th>Status Pembayaran</th>
+                        <th>Jenis Pembayaran</th>
                         <th>Tenggat Pembayaran</th>
                     </tr>
                 </thead>
@@ -36,9 +36,9 @@
                                      style="width:100px; height:100px; cursor:pointer"
                                      onclick="showModal(this.src)">
                             </td>
-                            <td class="<?= $pembayaran['status_pembayaran'] == 'Lunas' ? 'lunas' : 'cicil' ?>">
-                            <?= htmlspecialchars($pembayaran['status_pembayaran']) ?>
-                            <td><?= htmlspecialchars($pembayaran['tenggat_pembayaran']) ?></td>
+                            <td class="<?= $pembayaran['jenis_pembayaran'] == 'Lunas' ? 'lunas' : 'cicil' ?>">
+                            <?= htmlspecialchars($pembayaran['jenis_pembayaran']) ?>
+                            <td><?= htmlspecialchars($pembayaran['tenggat_pembayaran'] ?? '-') ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

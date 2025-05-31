@@ -102,10 +102,10 @@ class PublicController
             }
 
             // Hitung jumlah bayar berdasarkan status pembayaran
-            $status_pembayaran = $_POST['status_pembayaran'];
-            if ($status_pembayaran === 'Lunas') {
+            $jenis_pembayaran = $_POST['jenis_pembayaran'];
+            if ($jenis_pembayaran === 'Lunas') {
                 $jumlah_bayar = $harga;
-            } elseif ($status_pembayaran === 'Cicil') {
+            } elseif ($jenis_pembayaran === 'Cicil') {
                 $jumlah_bayar = $harga / 2;
             } else {
                 $_SESSION['errorMsg'] = "Status pembayaran tidak valid.";
@@ -127,7 +127,7 @@ class PublicController
                 }
             }
 
-            if (empty($status_pembayaran) || !is_numeric($jumlah_bayar) || empty($bukti)) {
+            if (empty($jenis_pembayaran) || !is_numeric($jumlah_bayar) || empty($bukti)) {
                 $_SESSION['errorMsg'] = "Semua Form Harus Diisi!.";
                 header('Location: index.php?page=pembayaran');
                 exit;
@@ -142,8 +142,9 @@ class PublicController
                 'jumlah_bayar' => $jumlah_bayar,
                 'metode_pembayaran' => $_POST['metode_pembayaran'],
                 'bukti_pembayaran' => $bukti,
-                'status_pembayaran' => $status_pembayaran,
-                'tenggat_pembayaran' => $_POST['tenggat_pembayaran'] ?: null
+                'jenis_pembayaran' => $jenis_pembayaran,
+                'tenggat_pembayaran' => $_POST['tenggat_pembayaran'] ?: null,
+                'status_pembayaran' => 'Sedang Ditinjau'
             ]);
 
             if ($insertBayar) {

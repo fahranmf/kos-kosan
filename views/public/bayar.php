@@ -7,7 +7,7 @@
     }
 
     function updateJumlahBayar() {
-        const status = document.getElementById('status_pembayaran').value;
+        const status = document.getElementById('jenis_pembayaran').value;
         const harga = parseFloat(document.getElementById('harga_kamar').value);
         const jumlahDisplay = document.getElementById('jumlah_bayar_display');
         const jumlahHidden = document.getElementById('jumlah_bayar');
@@ -61,8 +61,8 @@
     <form action="index.php?page=pembayaran&action=proses" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label for="status_pembayaran">Pilih Pembayaran</label>
-            <select name="status_pembayaran" id="status_pembayaran" required onchange="updateJumlahBayar()">
+            <label for="jenis_pembayaran">Pilih Pembayaran</label>
+            <select name="jenis_pembayaran" id="jenis_pembayaran" required onchange="updateJumlahBayar()">
                 <option value="">-- Pilih --</option>
                 <option value="Lunas">Lunas</option>
                 <option value="Cicil">Cicil</option>

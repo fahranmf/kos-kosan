@@ -78,8 +78,9 @@ class Penyewa
                     penyewa.email_penyewa,
                     pembayaran.jumlah_bayar,
                     pembayaran.bukti_pembayaran,
-                    pembayaran.status_pembayaran,
-                    penyewa.status_akun
+                    pembayaran.jenis_pembayaran,
+                    penyewa.status_akun,
+                    pembayaran.status_pembayaran
                 FROM 
                     pembayaran
                 JOIN 
@@ -92,6 +93,36 @@ class Penyewa
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function updateStatusPembayaranDanAkun($id_penyewa, $status_pembayaran)
+    {
+        $db = Database::getConnection();
+
+        // Update status pembayaran
+        $query1 = "UPDATE pembayaran p
+               JOIN sewa s ON p.id_sewa = s.id_sewa
+               SET p.status_pembayaran = :status_pembayaran
+               WHERE s.id_penyewa = :id_penyewa";
+
+        $stmt1 = $db->prepare($query1);
+        $stmt1->execute(['status_pembayaran' => $status_pembayaran, 'id_penyewa' => $id_penyewa]);
+
+        // Tentukan status akun sesuai status pembayaran
+        if ($status_pembayaran == 'Terverifikasi') {
+            $status_akun = 'Terverifikasi';
+        } elseif ($status_pembayaran == 'Ditolak') {
+            $status_akun = 'Umum';  // Kalau ditolak, akun jadi 'Umum'
+        } else {
+            $status_akun = 'Menunggu Verifikasi'; // Misal status lain seperti 'Sedang Ditinjau'
+        }
+
+        // Update status akun penyewa
+        $query2 = "UPDATE penyewa SET status_akun = :status_akun WHERE id_penyewa = :id_penyewa";
+        $stmt2 = $db->prepare($query2);
+        $stmt2->execute(['status_akun' => $status_akun, 'id_penyewa' => $id_penyewa]);
+    }
+
+
 
     public static function updateStatusAkun($id, $status): void
     {
@@ -111,7 +142,7 @@ class Penyewa
                 FROM sewa s
                 LEFT JOIN pembayaran p ON p.id_sewa = s.id_sewa
                 WHERE s.id_penyewa = ? 
-                  AND (s.status_sewa = 'Sewa' OR p.status_pembayaran = 'Lunas')";
+                  AND (s.status_sewa = 'Sewa' OR p.jenis_pembayaran = 'Lunas')";
 
         $stmt = $db->prepare($sql);
         $stmt->execute([$id_penyewa]);

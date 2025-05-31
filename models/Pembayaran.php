@@ -17,12 +17,12 @@ class Pembayaran
         $db = Database::getConnection();
 
         $query = "INSERT INTO pembayaran (
-            id_sewa, tanggal_pembayaran, jumlah_bayar, metode_pembayaran,
-            bukti_pembayaran, status_pembayaran, tenggat_pembayaran
-        ) VALUES (
-            :id_sewa, :tanggal_pembayaran, :jumlah_bayar, :metode_pembayaran,
-            :bukti_pembayaran, :status_pembayaran, :tenggat_pembayaran
-        )";
+        id_sewa, tanggal_pembayaran, jumlah_bayar, metode_pembayaran,
+        bukti_pembayaran, jenis_pembayaran, tenggat_pembayaran, status_pembayaran
+    ) VALUES (
+        :id_sewa, :tanggal_pembayaran, :jumlah_bayar, :metode_pembayaran,
+        :bukti_pembayaran, :jenis_pembayaran, :tenggat_pembayaran, :status_pembayaran
+    )";
 
         $stmt = $db->prepare($query);
 
@@ -32,9 +32,11 @@ class Pembayaran
             ':jumlah_bayar' => $data['jumlah_bayar'],
             ':metode_pembayaran' => $data['metode_pembayaran'],
             ':bukti_pembayaran' => $data['bukti_pembayaran'],
-            ':status_pembayaran' => $data['status_pembayaran'],
+            ':jenis_pembayaran' => $data['jenis_pembayaran'],
             ':tenggat_pembayaran' => $data['tenggat_pembayaran'],
+            ':status_pembayaran' => $data['status_pembayaran'] ?? 'Sedang Ditinjau', 
         ]);
     }
+
 }
 ?>

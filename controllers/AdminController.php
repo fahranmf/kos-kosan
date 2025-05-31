@@ -202,9 +202,14 @@ class AdminController
     public function editStatusAkun()
     {
         AuthMiddleware::checkAdmin();
-        $id = $_POST['id_penyewa'];
-        $status = $_POST['status_akun'];
-        Penyewa::updateStatusAkun($id, $status); // model
+
+        $id = $_POST['id_penyewa'] ?? null;
+        $statusPembayaran = $_POST['status_pembayaran'] ?? null;
+
+        if ($id && $statusPembayaran) {
+            Penyewa::updateStatusPembayaranDanAkun($id, $statusPembayaran);
+        }
+
         header('Location: index.php?page=admin_verifikasi');
         exit;
     }

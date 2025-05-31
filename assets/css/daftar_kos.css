@@ -99,7 +99,7 @@ body {
   text-align: center;
 }
 
-.kamar-table td.cicil {
+.kamar-table td.cicil,  .kamar-table td.ditolak {
   background-color: #f1bdbd;
   color: #e53935;
   font-weight: bold;
@@ -120,7 +120,7 @@ body {
   text-align: center;
 }
 
-.kamar-table td.menunggu_verifikasi {
+.kamar-table td.menunggu_verifikasi, .kamar-table td.sedang_ditinjau {
   background-color: #fff3cd;
   color: #856404;
   font-weight: bold;
