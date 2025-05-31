@@ -11,6 +11,7 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
 
 ?>
 
+
 <script>
     window.bookingModalError = {
         hasError: <?= !empty($errorMsg) ? 'true' : 'false' ?>,
@@ -18,13 +19,34 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
         shouldOpenModal: <?= isset($_GET['openModal']) ? 'true' : 'false' ?>,
         tipeKamar: <?= json_encode($_SESSION['last_tipe_kamar'] ?? '') ?>
     };
-</script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        });
+    });
 
 </script>
-
-
-
-
 
 <div class="container-custom">
     <div class="navbar-wrapper">
@@ -33,7 +55,11 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
             <div class="nav-links">
                 <?php
                 if (isset($_SESSION['user_id'])) {
+                    if (isset($_SESSION['no_kamar'])) {
+                        echo '<a href="index.php?page=penyewa_dashboard">Akun Saya</a>';
+                    } else {
                     echo '<a href="index.php?page=cek_status">Akun Saya</a>';
+                    }
                 }
                 ?>
                 <a href="#home">Beranda</a>
@@ -58,16 +84,61 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
             <img src="uploads/foto_kos/foto1.jpg" alt="Carousel Image">
             <div class="carousel-caption">
                 <div class="caption-content">
-                    <h2 class="section-title">Tempat Kos Nyaman</h2>
+                    <h2 class="section-title">Kos Putra Agan</h2>
                     <h1 class="carousel-heading">Mencari Kos Yang Nyaman?</h1>
                     <div class="carousel-buttons">
                         <a href="#rooms" class="btn btn-book">Our Rooms</a>
-                        <a href="#" class="btn btn-light">Book A Room</a>
+                        <a href="#about" class="btn btn-light">About Us</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="about" class="about-wrapper">
+        <div class="about-container">
+            <!-- Kiri: Text dan Statistik -->
+            <div class="about-left">
+                <h2 class="about-section-title">About Us</h2>
+                <h3 class="about-main-title">Welcome to <br> Kos Putra Agan</span></h3>
+                <p class="about-text">
+                    Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos.
+                    Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet.
+                </p>
+                <div class="about-stats">
+                    <div class="about-box">
+                        <i class="fa fa-hotel about-icon"></i>
+                        <h2><?php echo $totalKos; ?></h2>
+                        <p>Kamar Kos</p>
+                    </div>
+                    <div class="about-box">
+                        <i class="fas fa-home about-icon"></i>
+                        <h2><?php echo $totalTipeKamar; ?></h2>
+                        <p>Tipe Kos</p>
+                    </div>
+                    <div class="about-box">
+                        <i class="fa fa-users about-icon"></i>
+                        <h2><?php echo $totalPenyewa; ?></h2>
+                        <p>Penghuni <br> (Saat Ini)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kanan: Gambar Slider -->
+            <div class="about-right">
+                <div class="slider">
+                    <img src="uploads/foto_kos/foto1.jpg" class="slide active" alt="Slide 1">
+                    <img src="uploads/foto_kos/foto2.jpg" class="slide" alt="Slide 2">
+                    <img src="uploads/foto_kos/foto4.jpg" class="slide" alt="Slide 3">
+                    <button class="prev"><</button>
+                    <button class="next">></button>
+
+                </div>
+            </div>
+        </div>
+        <!-- <a href="#" class="btn-about">Explore More</a> -->
+    </div>
+
 
 
     <div id="rooms" class="container-rooms">
@@ -128,7 +199,32 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
             <?php endforeach; ?>
         </div>
     </div>
+
+    <!-- Lokasi / Map Section Start -->
+    <div class="location-wrap">
+        <div class="section-container">
+            <div class="left-content">
+                <h2 class="section-title">Our Location</h2>
+                <h3>Find Us!</h3>
+                <p>
+                    Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos.
+                    Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet.
+                </p>
+            </div>
+            <div class="right-content">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.3782500041752!2d106.82499527428435!3d-6.345038162076593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69edb8ae8cfbdd%3A0x2ec23e3fed4355e5!2sKost%20Putra%20Agan!5e0!3m2!1sid!2sid!4v1748594515946!5m2!1sid!2sid"
+                class="map-frame"
+                allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
+
 
 <!-- Modal HTML di bawah halaman -->
 <div id="bookingModal" class="modal">

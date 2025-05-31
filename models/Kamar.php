@@ -129,6 +129,16 @@ class Kamar
         return $result ? $result['harga_perbulan'] : null;
     }
 
+    public static function getTipeKamar(): int
+    {
+        $db = Database::getConnection();
+        $query = "SELECT COUNT(DISTINCT tipe_kamar) as total FROM `kamar`
+                ";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) ($result['total'] ?? 0);
+    }
 
 
 }

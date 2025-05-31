@@ -24,6 +24,11 @@ class PublicController
 
         // Ini bagian default buat nampilin halaman
         $kamarList = Kamar::getKamarPerTipeDenganJumlahKosong();
+        
+        // Ambil data statistik
+        $totalKos = Kamar::getTotalKos();
+        $totalPenyewa = Penyewa::getTotalPenyewa();
+        $totalTipeKamar = Kamar::getTipeKamar();
         require_once 'views/public/home.php';
     }
 

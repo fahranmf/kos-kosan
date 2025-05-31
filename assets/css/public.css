@@ -11,7 +11,6 @@
 
     .navbar-wrapper {
         top: 0;
-        position: sticky;  
         width: 100%;
         z-index: 1000; 
         background-color: #006a71;
@@ -67,7 +66,6 @@
     
     .container-custom {
         background-color: #f2efe7;
-        max-width: 1400px;
         margin: 0 60px;
         padding: 0;
     }
@@ -164,9 +162,6 @@
         transition: transform 0.2s;
     }
 
-    .room-card:hover {
-        transform: translateY(-5px);
-    }
 
     .room-image {
         position: relative;
@@ -326,4 +321,299 @@
         .container-custom {
             margin: 0;
         }
+}
+
+    /* === ABOUT SECTION (Struktur disamakan, nama class tetap) === */
+.about-wrapper {
+    padding: 0px 40px;
+    background-color: #fff;
+}
+
+.about-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.about-left {
+    flex: 1 1 50%;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.about-section-title {
+    color: #007bff;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.about-main-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.about-highlight {
+    color: #007bff;
+    text-transform: uppercase;
+}
+
+.about-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.about-stats {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 30px;
+}
+
+.about-box {
+    flex: 1 1 0;
+    min-width: 20px;
+    text-align: center;
+    border: 2px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.about-icon {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.about-box h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #000;
+}
+
+.about-box p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.about-right {
+    flex: 1 1 50%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* === SLIDER === */
+.slider {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.44);
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 0;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.slider .prev,
+.slider .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.slider .prev:hover,
+.slider .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slider .prev {
+    left: 10px;
+}
+
+.slider .next {
+    right: 10px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .about-wrapper {
+    padding: 60px 40px;
+    background-color: #fff;
+    }
+
+    .about-section-title,
+    .about-main-title {
+        text-align: center;
+    }
+
+    .about-right {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .slider {
+        width: 100%;
+        max-width: 500px;
+        height: 300px;
+        position: relative;
+    } 
+
+    .about-left {
+        padding: 0 10px;
+    }
+
+    .about-stats {
+        gap: 10px;
+    }
+
+    .about-box {
+        padding: 15px;
+    }
+
+    .slider {
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+        height: auto;
+    }
+
+    .about-text {
+        font-size: 14px;
+    }
+
+    .about-main-title {
+        font-size: 28px;
+    }
+}
+
+/* Section Location */
+.location-wrap {
+    background: linear-gradient(135deg, #111, #333); /* Gradasi gelap */
+}
+
+.section-container {
+    align-items: center;
+    justify-content: center;
+    max-width: 1140px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0 auto; /* << Tambahin ini */
+}
+
+
+/* Kiri: Teks Deskripsi */
+.left-content {
+    color: white;
+    padding: 40px;
+    flex: 1 1 50%;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.left-content h2 {
+    color: #007bff;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+
+
+.left-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+/* Kanan: Google Map */
+.right-content {
+    flex: 1 1 50%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.map-frame {
+    width: 100%;
+    height: 300px;
+    border: 0;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+.map-frame:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section-container {
+        flex-direction: column;
+    }
+
+    .left-content h2, .left-content h3 {
+        text-align: center;
+    }
+
+
+    .right-content {
+        padding-top: 0;
+    }
+
+    .map-frame {
+        height: 250px;
+    }
+
+    .left-content {
+        padding: 35px;
+    }
 }
