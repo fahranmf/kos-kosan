@@ -86,8 +86,9 @@ class Penyewa
                 JOIN 
                     sewa ON pembayaran.id_sewa = sewa.id_sewa
                 JOIN 
-                    penyewa ON sewa.id_penyewa = penyewa.id_penyewa;
-
+                    penyewa ON sewa.id_penyewa = penyewa.id_penyewa
+                WHERE 
+                    penyewa.status_akun IN ('Terverifikasi' , 'Menunggu Verifikasi')
         ";
         $stmt = $db->prepare($query);
         $stmt->execute();

@@ -17,6 +17,11 @@ class AuthController
             if ($admin && $password == $admin->password_admin) {
                 $_SESSION['role'] = 'admin';
                 $_SESSION['user_id'] = $admin->id_admin;
+
+                require_once 'models/Sewa.php';
+                $db = Database::getConnection();
+                Sewa::cekDanUpdateSewaSelesai($db);
+                
                 header('Location: index.php?page=admin_dashboard');
                 exit;
             }

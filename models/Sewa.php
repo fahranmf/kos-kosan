@@ -1,7 +1,38 @@
 <?php
 
+use Carbon\Carbon;
+
 class Sewa
 {
+    public static function cekDanUpdateSewaSelesai($db) {
+        $today = Carbon::now();
+
+        $query = $db->query("SELECT * FROM sewa WHERE status_sewa = 'Sewa'");
+        $sewas = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($sewas as $sewa) {
+            $tanggalSelesai = Carbon::parse($sewa['tanggal_selesai']);
+
+            if ($tanggalSelesai->lessThanOrEqualTo($today)) {
+                $id_sewa = $sewa['id_sewa'];
+                $id_penyewa = $sewa['id_penyewa'];
+                $no_kamar = $sewa['no_kamar'];
+
+                // Update status_sewa
+                $stmt = $db->prepare("UPDATE sewa SET status_sewa = 'Selesai' WHERE id_sewa = ?");
+                $stmt->execute([$id_sewa]);
+
+                // Update status_akun penyewa
+                $stmt = $db->prepare("UPDATE penyewa SET status_akun = 'Umum' WHERE id_penyewa = ?");
+                $stmt->execute([$id_penyewa]);
+
+                // Update status kamar
+                $stmt = $db->prepare("UPDATE kamar SET status = 'Kosong' WHERE no_kamar = ?");
+                $stmt->execute([$no_kamar]);
+            }
+        }
+    }
+
     // Fungsi untuk menampilkan semua status sewa
     public static function getAllStatusSewa(): array
     {

@@ -54,3 +54,10 @@
         5. Responsive (baru beberapa aja)
         6. Di tampilan home blm ada kontak, fasilitas, sama alamat
         7. Fitur tambah akun admin lewat akun super admin
+
+
+7. 31 Mei 2025 
+    - Silahkan liat di commit aja ya
+    Notes :
+    1. ada fitur cekDanUpdateSewaSelesai auto, jadi dia bakal ngecek si tanggal selesai nya itu hari ini atau bukan, kalau hari ini dia bakal ngubah status2 yg ada,
+    2. fitur tsb sementara ditaro di authcontroller (jadi sehabis si adminnya login jd ke run itu fitur), kalo mau auto run nantinya pas hosting pake cron job (jadi itu program bakal ke run setiap jam 1 malem misalnya), mirip kaya task scheduler lah
