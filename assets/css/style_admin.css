@@ -41,16 +41,12 @@ body {
 
 .stat-card {
   background-color: #f2efe7;
-  padding: 20px;
+  padding: 20px 0;
   text-align: center;
-  width: 30%;
+  width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-  transform: scale(1.05);
 }
 
 .stat-card h3 {

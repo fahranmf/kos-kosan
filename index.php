@@ -22,6 +22,14 @@ function checkRole($requiredRole)
 // Ambil parameter 'page', default ke 'home'
 $page = $_GET['page'] ?? 'home';
 
+if (
+    isset($_SESSION['otp']) &&
+    !in_array($page, ['register', 'login'])
+) {
+    // Hapus OTP jika user belum selesai registrasi (belum submit form)
+    unset($_SESSION['otp'], $_SESSION['otp_email'], $_SESSION['otp_expiry'], $_SESSION['otp_sent'], $_SESSION['form_input'], $_SESSION['otp_verified']);
+}
+
 // Routing menggunakan switch-case
 switch ($page) {
     // --- Routing Public ---
