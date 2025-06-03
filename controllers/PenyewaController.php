@@ -42,9 +42,51 @@ class PenyewaController
             header('Location: index.php?page=penyewa_keluhan');
             exit();
         }
+        $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
+        $limit = 3;
+        $offset = ($halamanAktif - 1) * $limit;
+
         $no_kamar = $_SESSION['no_kamar'];
-        $feedbackList = Feedback::getFeedbackByNoKamar($no_kamar);
+        $totalData = Feedback::getTotalKeluhanByNoKamar($no_kamar);
+        $feedbackList = Feedback::getFeedbackByNoKamar($no_kamar, $limit, $offset);
+        $totalHalaman = ceil($totalData / $limit);
         include 'views/penyewa/keluhan.php';
+    }
+    public function perpanjangKos()
+    {
+        AuthMiddleware::checkPenyewa();
+        $id_penyewa = $_SESSION['user_id'];
+        $data = Penyewa::getProfilLengkap($id_penyewa);
+        // Hitung sisa hari sewa
+        if (!empty($data['tanggal_selesai'])) {
+            $tanggalSelesai = Carbon::parse($data['tanggal_selesai']);
+            $sekarang = Carbon::now();
+
+            if ($sekarang->greaterThan($tanggalSelesai)) {
+                $data['sisa_hari_jam'] = '0 hari 0 jam';
+                $data['sisa_hari_int'] = 0;
+            } else {
+                $diffInSeconds = $tanggalSelesai->timestamp - $sekarang->timestamp;
+                $diffInDays = floor($diffInSeconds / 86400);
+                $remainingSeconds = $diffInSeconds % 86400;
+                $diffInHours = floor($remainingSeconds / 3600);
+
+                $data['sisa_hari_jam'] = $diffInDays . ' hari ' . $diffInHours . ' jam';
+                $data['sisa_hari_int'] = $diffInDays;
+            }
+        } else {
+            $data['sisa_hari_jam'] = null;
+            $data['sisa_hari_int'] = 0;
+        }
+
+        include 'views/penyewa/perpanjang_kos.php';
+    }
+
+    public function historiPembayaran()
+    {
+        $id_penyewa = $_SESSION['user_id'];
+        $pembayaranList = Penyewa::getDataPembayaranPenyewaById($id_penyewa);
+        require_once 'views/penyewa/histori_pembayaran.php';
     }
 
 }

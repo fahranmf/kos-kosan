@@ -1,12 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
-
 * {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 /* Global Styles */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #f4f7fa;
   color: #333;
   margin: 0;
@@ -35,7 +34,8 @@ body {
   margin-top: 20px;
 }
 
-.kamar-table th, .kamar-table td {
+.kamar-table th,
+.kamar-table td {
   padding: 18px 18px;
   text-align: center;
 }
@@ -71,11 +71,10 @@ body {
 }
 
 .kamar-table td .action-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px; 
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 .kamar-table .aksi a.btn-hapus {
   background-color: #f44336;
@@ -89,7 +88,6 @@ body {
   background-color: #f1bdbd;
   color: #e53935;
   font-weight: bold;
-
 }
 
 .kamar-table td.isi {
@@ -99,11 +97,11 @@ body {
   text-align: center;
 }
 
-.kamar-table td.cicil,  .kamar-table td.ditolak {
+.kamar-table td.cicil,
+.kamar-table td.ditolak {
   background-color: #f1bdbd;
   color: #e53935;
   font-weight: bold;
-
 }
 
 .kamar-table td.lunas {
@@ -120,7 +118,8 @@ body {
   text-align: center;
 }
 
-.kamar-table td.menunggu_verifikasi, .kamar-table td.sedang_ditinjau {
+.kamar-table td.menunggu_verifikasi,
+.kamar-table td.sedang_ditinjau {
   background-color: #fff3cd;
   color: #856404;
   font-weight: bold;
@@ -155,7 +154,6 @@ body {
   text-align: center;
 }
 
-
 /* Add Kamar Button */
 .tambah-kamar {
   margin-top: 30px;
@@ -175,6 +173,34 @@ body {
   background: linear-gradient(135deg, #3a8f8f, #2f7474);
 }
 
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 0 3px;
+  border: 1px solid #ccc;
+  text-decoration: none;
+  color: #333;
+  border-radius: 4px;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  font-weight: bold;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .kamar-table thead {
@@ -185,10 +211,10 @@ body {
     width: auto;
   }
 
-  .kamar-table td, .kamar-table th {
+  .kamar-table td,
+  .kamar-table th {
     padding: 10px;
   }
-
 
   .kamar-table .aksi a {
     padding: 6px 10px;
@@ -205,7 +231,7 @@ body {
   .isi {
     font-size: 15pxS;
   }
-  
+
   .kolom {
     font-size: 14px;
   }

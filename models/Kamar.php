@@ -15,11 +15,13 @@ class Kamar
     }
 
     // Ambil semua data kamar
-    public static function getAllKamar(): array
+    public static function getAllKamar(int $limit, int $offset): array
     {
         $db = Database::getConnection();
-        $query = "SELECT * FROM kamar ORDER BY no_kamar ASC";
+        $query = "SELECT * FROM kamar ORDER BY no_kamar ASC LIMIT :limit OFFSET :offset";
         $stmt = $db->prepare($query);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

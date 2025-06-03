@@ -45,8 +45,14 @@ class AdminController
     public function daftarKos()
     {
         AuthMiddleware::checkAdmin();
+        $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
+        $limit = 3;
+        $offset = ($halamanAktif - 1) * $limit;
 
-        $kamarList = Kamar::getAllKamar();
+        $totalData = Kamar::getTotalKos();
+        $kamarList = Kamar::getAllKamar($limit, $offset);
+        $totalHalaman = ceil($totalData / $limit);
+
         require_once 'views/admin/daftar_kos.php';
     }
 
@@ -160,32 +166,61 @@ class AdminController
     public function keluhan()
     {
         AuthMiddleware::checkAdmin();
-        $feedbackList = Feedback::getAllKeluhan();
+        $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
+        $limit = 7;
+        $offset = ($halamanAktif - 1) * $limit;
+
+        $totalData = Feedback::getTotalKeluhan();
+        $feedbackList = Feedback::getAllKeluhan($limit, $offset);
+        $totalHalaman = ceil($totalData / $limit);
         require_once 'views/admin/keluhan.php';
     }
     public function dataPembayaran()
     {
         AuthMiddleware::checkAdmin();
-        $pembayaranList = Pembayaran::getAllPembayaran();
+        $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
+        $limit = 3;
+        $offset = ($halamanAktif - 1) * $limit;
+
+        $totalData = Pembayaran::getTotalPembayaran();
+        $pembayaranList = Pembayaran::getAllPembayaran($limit, $offset);
+        $totalHalaman = ceil($totalData / $limit);
         require_once 'views/admin/data_pembayaran.php';
     }
     public function dataPenyewa()
     {
         AuthMiddleware::checkAdmin();
-        $penyewaList = Penyewa::getAllPenyewa();
+        $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
+        $limit = 7;
+        $offset = ($halamanAktif - 1) * $limit;
+
+        $totalData = Penyewa::getTotalPenyewa();
+        $penyewaList = Penyewa::getAllPenyewa($limit, $offset);
+        $totalHalaman = ceil($totalData / $limit);
         require_once 'views/admin/data_penyewa.php';
     }
     public function dataStatusSewa()
     {
         AuthMiddleware::checkAdmin();
-        $statusSewaList = Sewa::getAllStatusSewa();
+        $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
+        $limit = 7;
+        $offset = ($halamanAktif - 1) * $limit;
+
+        $totalData = Sewa::getTotalSewa();
+        $statusSewaList = Sewa::getAllStatusSewa($limit, $offset);
+        $totalHalaman = ceil($totalData / $limit);
         require_once 'views/admin/status_sewa.php';
     }
 
     public function verifikasi()
     {
         AuthMiddleware::checkAdmin();
-        $verifList = Penyewa::getAllAkun();
+        $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
+        $limit = 3;
+        $offset = ($halamanAktif - 1) * $limit;
+        $totalData = Penyewa::getTotalVerifPenyewa();
+        $verifList = Penyewa::getAllAkun($limit, $offset);
+        $totalHalaman = ceil($totalData / $limit);
         require_once 'views/admin/verifikasi_akun.php';
     }
 

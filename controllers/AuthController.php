@@ -185,6 +185,9 @@ class AuthController
             $penyewa->status_akun = 'Umum'; // Default status akun
             $penyewa->registerPenyewa();
 
+            $sent = sendRegisterSuccessEmail($email_penyewa);
+
+
             unset($_SESSION['otp'], $_SESSION['otp_email'], $_SESSION['otp_expiry'], $_SESSION['otp_sent'], $_SESSION['form_input']);
 
             // Redirect ke halaman login setelah sukses

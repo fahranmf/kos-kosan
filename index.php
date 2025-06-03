@@ -170,7 +170,7 @@ switch ($page) {
         $controller->dashboard();
         break;
 
-    case 'penyewa_histori':
+    case 'penyewa_riwayat':
         checkRole('penyewa');
         $controller = new PenyewaController();
         $controller->historiPembayaran();
@@ -180,6 +180,12 @@ switch ($page) {
         checkRole('penyewa');
         $controller = new PenyewaController();
         $controller->keluhan();
+        break;
+
+    case 'penyewa_perpanjang_kos':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->perpanjangKos();
         break;
 
     // --- Halaman tidak ditemukan ---

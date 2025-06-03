@@ -4,7 +4,8 @@ use Carbon\Carbon;
 
 class Sewa
 {
-    public static function cekDanUpdateSewaSelesai($db) {
+    public static function cekDanUpdateSewaSelesai($db)
+    {
         $today = Carbon::now();
 
         $query = $db->query("SELECT * FROM sewa WHERE status_sewa = 'Sewa'");
@@ -33,15 +34,29 @@ class Sewa
         }
     }
 
-    // Fungsi untuk menampilkan semua status sewa
-    public static function getAllStatusSewa(): array
+    public static function getTotalSewa(): int
     {
         $db = Database::getConnection();
-        $query = "SELECT * FROM sewa ORDER BY id_sewa ASC";
+        $query = "SELECT COUNT(*) AS total FROM sewa";
         $stmt = $db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) ($result['total'] ?? 0);
+    }
+
+
+    // Fungsi untuk menampilkan semua status sewa
+    public static function getAllStatusSewa(int $limit, int $offset): array
+    {
+        $db = Database::getConnection();
+        $query = "SELECT * FROM sewa ORDER BY id_sewa ASC LIMIT :limit OFFSET :offset";
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public static function insertSewa($id_penyewa, $no_kamar, $tanggal_mulai, $tanggal_selesai)
     {

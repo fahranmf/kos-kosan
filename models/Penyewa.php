@@ -59,17 +59,20 @@ class Penyewa
         return (int) $result['total'];
     }
 
-    public static function getAllPenyewa(): array
+    public static function getAllPenyewa(int $limit, int $offset): array
     {
         $db = Database::getConnection();
         $query = "SELECT id_penyewa, nama_penyewa, no_telp_penyewa, email_penyewa
                     FROM penyewa
-                    WHERE status_akun = 'Terverifikasi'";
+                    WHERE status_akun = 'Terverifikasi'
+                    LIMIT :limit OFFSET :offset";
         $stmt = $db->prepare($query);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public static function getAllAkun(): array
+    public static function getAllAkun(int $limit, int $offset): array
     {
         $db = Database::getConnection();
         $query = "SELECT 
@@ -89,10 +92,32 @@ class Penyewa
                     penyewa ON sewa.id_penyewa = penyewa.id_penyewa
                 WHERE 
                     penyewa.status_akun IN ('Terverifikasi' , 'Menunggu Verifikasi')
+                LIMIT :limit OFFSET :offset
         ";
         $stmt = $db->prepare($query);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getTotalVerifPenyewa(): int
+    {
+        $db = Database::getConnection();
+        $query = "SELECT COUNT(*) AS total
+                FROM 
+                    pembayaran
+                JOIN 
+                    sewa ON pembayaran.id_sewa = sewa.id_sewa
+                JOIN 
+                    penyewa ON sewa.id_penyewa = penyewa.id_penyewa
+                WHERE 
+                    penyewa.status_akun IN ('Terverifikasi', 'Menunggu Verifikasi');
+                ";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) $result['total'];
     }
 
     public static function updateStatusPembayaranDanAkun($id_penyewa, $status_pembayaran)
@@ -168,14 +193,15 @@ class Penyewa
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function getDataSewaPenyewaById($id_penyewa)
+    public static function getDataPembayaranPenyewaById($id_penyewa): array
     {
         $db = Database::getConnection();
         $query = "SELECT 
 					pembayaran.tanggal_pembayaran,
                     sewa.no_kamar,
-                    sewa.tanggal_mulai,
-                    sewa.tanggal_selesai,
+                    pembayaran.jenis_pembayaran,
+                    pembayaran.tenggat_pembayaran,
+                    pembayaran.jumlah_bayar,
                     pembayaran.bukti_pembayaran
                 FROM 
                     pembayaran
@@ -187,7 +213,7 @@ class Penyewa
                 WHERE penyewa.id_penyewa = ?";
         $stmt = $db->prepare($query);
         $stmt->execute([$id_penyewa]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }
