@@ -36,12 +36,10 @@ body {
 .stats-container {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 40px;
 }
 
 .stat-card {
   background-color: #f2efe7;
-  padding: 20px 0;
   text-align: center;
   width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -49,15 +47,17 @@ body {
   transition: transform 0.3s ease;
 }
 
-.stat-card h3 {
+.stat-card h2 {
   color: #333;
+  margin-bottom: 0;
 }
 
 .stat-card p {
   font-size: 2em;
   color: #007bff;
-  margin-top: 10px;
+  margin-top: 0;
   font-weight: bold;
+  margin-bottom: 0.83em;
 }
 
 /* Section Title */
@@ -117,13 +117,18 @@ body {
 
 /*chart */
 .chart-container {
-  width: 99%;
+  width: 100%;
 }
 
 .grafik {
   position: relative;
-  height: 400px;
+  height: 290px;
   width: 100%;
+}
+
+#grafikSewa {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 form {

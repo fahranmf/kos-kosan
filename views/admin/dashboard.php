@@ -102,7 +102,7 @@
                 borderWidth: 1
             },
             {
-                label: ': Garis Tren (Linear Regression)',
+                label: ': Grafik Garis',
                 data: <?= json_encode($jumlah); ?>,
                 type: 'line',
                 fill: false,

@@ -12,6 +12,11 @@ body {
   padding: 0;
 }
 
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
 .main-content {
   margin-left: 300px;
   margin-right: 20px;

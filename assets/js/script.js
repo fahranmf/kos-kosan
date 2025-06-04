@@ -60,6 +60,6 @@ sidebarToggle.addEventListener('click', () => {
         if (window.chart && typeof window.chart.resize === 'function') {
             window.chart.resize();
         }
-    }, 300);
+    }, 350);
     
 });
