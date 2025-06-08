@@ -269,6 +269,7 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
         height: 100%;
         background: rgba(0, 0, 0, 0.6);
         z-index: 99999;
+        align-items: center;
         animation: fadeIn 0.3s ease-in-out;
     }
 
@@ -276,6 +277,7 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
     .modal-content {
         background: #ffffff;
         padding: 30px 25px;
+        width: 70%;
         max-width: 450px;
         margin: 10% auto;
         position: relative;

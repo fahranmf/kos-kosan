@@ -66,13 +66,9 @@ switch ($page) {
         $controller->prosesPembayaran();
         break;
 
-    case 'daftar_kos':
-        $controller = new PublicController();
-        $controller->daftarKos();
-        break;
-
     case 'detail_kamar':
-        $controller = new PublicController();;
+        $controller = new PublicController();
+        ;
         $tipe_kamar = $_GET['tipe'];
         $controller->detailKamar($tipe_kamar);
         break;
@@ -162,6 +158,42 @@ switch ($page) {
         $controller->hapusKamar($id);
         break;
 
+    case 'admin_profile':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->lihatProfile();
+        break;
+
+    case 'ubah_nama':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->ubahNama();
+        break;
+
+    case 'ubah_email':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->ubahEmail();
+        break;
+
+    case 'ubah_telp':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->ubahTelp();
+        break;
+
+    case 'ubah_password':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->ubahPassword();
+        break;
+
+    case 'verifikasi_email_baru':
+        checkRole('admin');
+        $controller = new AdminController();
+        $controller->verifikasiEmailBaru();
+        break;
+
 
     // --- Routing Penyewa ---
     case 'penyewa_dashboard':
@@ -191,7 +223,7 @@ switch ($page) {
     // --- Halaman tidak ditemukan ---
     default:
         $controller = new PublicController();
-        $controller->default();  
+        $controller->default();
         break;
 }
 ?>

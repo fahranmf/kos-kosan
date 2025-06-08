@@ -26,6 +26,7 @@ function sendOTPEmail($to, $otp) {
         <p>Halo,</p>
         <p>Kode OTP kamu adalah: <b>$otp</b></p>
         <p>Gunakan kode ini untuk verifikasi akun kamu.</p>
+        <p>Kode ini berlaku selama 5 menit.</p>
     ";
     return sendEmail($to, $subject, $body);
 }

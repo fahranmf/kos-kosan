@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-    modal.style.display = "block";
+    modal.style.display = "flex";
     document.body.classList.add("no-scroll");
   }
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.bookingModalError.tipeKamar) {
       openBookingModal(window.bookingModalError.tipeKamar);
     } else {
-      modal.style.display = "block";
+      modal.style.display = "flex";
       document.body.classList.add("no-scroll");
     }
 

@@ -30,7 +30,7 @@
                 <h2>Grafik Jumlah Sewa per Bulan</h2>
                 <form method="GET" action="index.php">
                     <input type="hidden" name="page" value="admin_dashboard" />
-                    <label for="tahun">Pilih Tahun : </label>
+                    <label class="form-tahun" for="tahun">Pilih Tahun : </label>
                     <select name="tahun" id="tahun" onchange="this.form.submit()">
                         <?php
                         $tahunSaatIni = date('Y');

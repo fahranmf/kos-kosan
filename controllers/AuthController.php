@@ -185,6 +185,7 @@ class AuthController
             $penyewa->status_akun = 'Umum'; // Default status akun
             $penyewa->registerPenyewa();
 
+            require_once 'helpers/send_mail.php';
             $sent = sendRegisterSuccessEmail($email_penyewa);
 
 

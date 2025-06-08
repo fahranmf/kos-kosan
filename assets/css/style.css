@@ -20,6 +20,25 @@ body {
   min-height: 100vh;
 }
 
+.alert {
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: #e6f4ea;
+  color: #276738;
+  border: 1px solid #b8dfc2;
+}
+
+.alert-danger {
+  background-color: #fcebea;
+  color: #a94442;
+  border: 1px solid #f5c6cb;
+}
+
 .auth-card {
   background: #f2efe7;
   padding: 2rem;

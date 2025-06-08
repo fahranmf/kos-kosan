@@ -16,7 +16,8 @@
         <li><a href="index.php?page=admin_status_sewa"><i class="fas fa-tasks"></i> <span class="menu-text">Status Sewa Kos</span></a></li>
         <li><a href="index.php?page=admin_data_pembayaran"><i class="fas fa-money-bill-wave"></i> <span class="menu-text">History Pembayaran</span></a></li>
         <li><a href="index.php?page=admin_keluhan"><i class="fas fa-exclamation-circle"></i> <span class="menu-text">Keluhan Penyewa</span></a></li>
-        <li><a href="index.php?page=admin_verifikasi"><i class="fas fa-check-circle"></i> <span class="menu-text">Verifikasi Penyewa</span></a></li>
+        <li><a href="index.php?page=admin_verifikasi"><i class="fas fa-check-circle"></i> <span class="menu-text">Verifikasi Pembayaran</span></a></li>
+        <li><a href="index.php?page=admin_profile"><i class="fas fa-user"></i> <span class="menu-text">Profile</span></a></li>
         <li><a href="index.php?page=logout"><i class="fas fa-sign-out-alt"></i> <span class="menu-text">Log Out</span></a></li>
     </ul>
 </div>
