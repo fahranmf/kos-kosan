@@ -84,9 +84,168 @@ class PenyewaController
 
     public function historiPembayaran()
     {
+        AuthMiddleware::checkPenyewa();
         $id_penyewa = $_SESSION['user_id'];
         $pembayaranList = Penyewa::getDataPembayaranPenyewaById($id_penyewa);
         require_once 'views/penyewa/histori_pembayaran.php';
+    }
+
+       public function ubahNama()
+    {
+        AuthMiddleware::checkPenyewa();
+        $id_penyewa = $_SESSION['user_id'];
+        $nama_baru = $_POST['nama_baru'];
+        $password_konfirmasi = $_POST['password_konfirmasi'];
+
+        $Password = penyewa::getPassword($id_penyewa);
+
+        if ($password_konfirmasi == $Password) {
+            penyewa::updateNama($id_penyewa, $nama_baru);
+            $_SESSION['successMsg'] = "Nama berhasil diperbarui.";
+        } else {
+            $_SESSION['errorMsg'] = "Password salah. Gagal memperbarui nama.";
+            $_SESSION['errorModal'] = "EditNama";
+            header("Location: index.php?page=penyewa_dashboard#edit-nama");
+            exit;
+        }
+        header('Location: index.php?page=penyewa_dashboard');
+        exit;
+    }
+
+    public function ubahEmail()
+    {
+        AuthMiddleware::checkPenyewa();
+        $id_penyewa = $_SESSION['user_id'];
+        $email_baru = $_POST['email_baru'];
+        $password_konfirmasi = $_POST['password_konfirmasi'];
+
+        $password_asli = penyewa::getPassword($id_penyewa);
+
+        if ($password_konfirmasi !== $password_asli) {
+            $_SESSION['errorMsg'] = "Password salah.";
+            $_SESSION['errorModal'] = "EditEmail";
+            header("Location: index.php?page=penyewa_dashboard#edit-email");
+            exit;
+        }
+
+        // Generate OTP
+        $otp = rand(100000, 999999);
+        $_SESSION['otp_email_change'] = [
+            'otp' => $otp,
+            'email_baru' => $email_baru,
+            'expiry' => time() + 300
+        ];
+
+        // Kirim OTP
+        require_once 'helpers/send_mail.php';
+        $sent = sendOTPEmail($email_baru, $otp);
+
+        if ($sent) {
+            $_SESSION['successMsg'] = "OTP dikirim ke email baru.";
+        } else {
+            $_SESSION['errorMsg'] = "Gagal mengirim OTP.";
+            $_SESSION['errorModal'] = "EditEmail";
+            header("Location: index.php?page=penyewa_dashboard#edit-email");
+            exit;
+        }
+
+        header("Location: index.php?page=penyewa_dashboard#verifikasi-email");
+        exit;
+    }
+
+    public function verifikasiEmailBaru()
+    {
+        AuthMiddleware::checkPenyewa();
+        $id_penyewa = $_SESSION['user_id'];
+        $otp_input = trim($_POST['otp_kode'] ?? '');
+
+        $otpData = $_SESSION['otp_email_change'] ?? null;
+
+        if (empty($otp_input)) {
+            $_SESSION['errorMsg'] = "OTP harus diisi.";
+            $_SESSION['errorModal'] = "VerifikasiOTP";
+            header("Location: index.php?page=penyewa_dashboard#verifikasi-email");
+            exit;
+        }
+
+        if (!$otpData || time() > $otpData['expiry']) {
+            $_SESSION['errorMsg'] = "OTP tidak valid atau kadaluarsa.";
+            $_SESSION['errorModal'] = "VerifikasiOTP";
+            header("Location: index.php?page=penyewa_dashboard#verifikasi-email");
+            exit;
+        }
+
+        if ($otp_input !== $otpData['otp']) {
+            $_SESSION['errorMsg'] = "OTP tidak valid!";
+            $_SESSION['errorModal'] = "VerifikasiOTP";
+            header("Location: index.php?page=penyewa_dashboard#verifikasi-email");
+            exit;
+        }
+
+        penyewa::updateEmail($id_penyewa, $otpData['email_baru']);
+
+        unset($_SESSION['otp_email_change']);
+        $_SESSION['successMsg'] = "Email berhasil diperbarui.";
+        header("Location: index.php?page=penyewa_dashboard");
+        exit;
+    }
+
+
+
+    public function ubahTelp()
+    {
+        AuthMiddleware::checkPenyewa();
+        $id_penyewa = $_SESSION['user_id'];
+        $telp_baru = $_POST['telp_baru'];
+        $password_konfirmasi = $_POST['password_konfirmasi'];
+
+        $Password = penyewa::getPassword($id_penyewa);
+
+        if ($password_konfirmasi == $Password) {
+            penyewa::updateTelp($id_penyewa, $telp_baru);
+            $_SESSION['successMsg'] = "Nomor Telpon berhasil diperbarui.";
+        } else {
+            $_SESSION['errorMsg'] = "Password salah. Gagal memperbarui no telpon.";
+            $_SESSION['errorModal'] = "EditTelp";
+            header("Location: index.php?page=penyewa_dashboard#edit-telp");
+            exit;
+        }
+        header('Location: index.php?page=penyewa_dashboard');
+        exit;
+    }
+
+    public function ubahPassword()
+    {
+        AuthMiddleware::checkPenyewa();
+        $id_penyewa = $_SESSION['user_id'];
+        $password_lama = $_POST['password_lama'];
+        $password_baru = $_POST['password_baru'];
+        $konfirmasi = $_POST['konfirmasi_password'];
+
+        $Password = penyewa::getPassword($id_penyewa);
+
+        if ($password_lama !== $Password) {
+            $_SESSION['errorMsg'] = "Password lama salah.";
+            $_SESSION['errorModal'] = "EditPass";
+            header("Location: index.php?page=penyewa_dashboard#edit-pass");
+            exit;
+        } elseif ($password_baru !== $konfirmasi) {
+            $_SESSION['errorMsg'] = "Konfirmasi password tidak cocok.";
+            $_SESSION['errorModal'] = "EditPass";
+            header("Location: index.php?page=penyewa_dashboard#edit-pass");
+            exit;
+        } elseif (strlen($password_baru) < 6) {
+            $_SESSION['errorMsg'] = "Password baru minimal 6 karakter.";
+            $_SESSION['errorModal'] = "EditPass";
+            header("Location: index.php?page=penyewa_dashboard#edit-pass");
+            exit;
+        } else {
+            penyewa::updatePassword($id_penyewa, $password_baru);
+            $_SESSION['successMsg'] = "Password berhasil diperbarui.";
+        }
+
+        header('Location: index.php?page=penyewa_dashboard');
+        exit;
     }
 
 }

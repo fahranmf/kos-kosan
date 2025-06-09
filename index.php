@@ -220,6 +220,36 @@ switch ($page) {
         $controller->perpanjangKos();
         break;
 
+    case 'penyewa_ubah_nama':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->ubahNama();
+        break;
+
+    case 'penyewa_ubah_email':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->ubahEmail();
+        break;
+
+    case 'penyewa_ubah_telp':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->ubahTelp();
+        break;
+
+    case 'penyewa_ubah_password':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->ubahPassword();
+        break;
+
+    case 'penyewa_verifikasi_email_baru':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->verifikasiEmailBaru();
+        break;
+
     // --- Halaman tidak ditemukan ---
     default:
         $controller = new PublicController();

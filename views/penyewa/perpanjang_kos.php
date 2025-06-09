@@ -29,7 +29,7 @@
                 font-size: 18px;
                 z-index: 10;
                 text-align: center;
-                padding: 10px;
+                padding: 10px 0;
                 border-radius: 8px;
             ">
                 Fitur ini akan tersedia saat sisa hari sewa kos kamu tinggal 5 hari atau kurang.

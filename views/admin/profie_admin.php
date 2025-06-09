@@ -175,157 +175,157 @@
             </form>
         </div>
     </div>
-
-
-
-
-    <style>
-        .alert {
-            padding: 10px 15px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            font-weight: 500;
-        }
-
-        .alert.success {
-            background-color: #e6f4ea;
-            color: #276738;
-            border: 1px solid #b8dfc2;
-        }
-
-        .alert.error {
-            background-color: #fcebea;
-            color: #a94442;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* Modal backdrop */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Modal card-style content */
-        .modal-content {
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .modal-content,
-        .form-group,
-        input {
-            box-sizing: border-box;
-        }
-
-        /* Form layout */
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 0.95rem;
-        }
-
-        /* Buttons */
-        .modal-buttons {
-            display: flex;
-            justify-content: start;
-            margin-top: 20px;
-        }
-
-        .btn-primary {
-            background-color: #2e8b57;
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .btn-secondary {
-            background-color: #ccc;
-            color: black;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        /* Edit button inline dengan data */
-        .edit-btn {
-            background: none;
-            color: #007BFF;
-            border: none;
-            font-size: 0.9rem;
-            margin-left: 10px;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 0;
-        }
-    </style>
-
-    <script>
-        // Cek kalau ada hash #verifikasi-email di URL → buka modal OTP
-        document.addEventListener("DOMContentLoaded", function () {
-            const errorModal = '<?= $_SESSION['errorModal'] ?? '' ?>';
-            const hash = window.location.hash;
-
-            if (errorModal === 'EditNama' || window.location.hash === '#edit-nama') {
-                showEditModal('modalEditNama');
-            }
-
-            if (errorModal === 'EditEmail' || window.location.hash === '#edit-email') {
-                showEditModal('modalEditEmail');
-            }
-
-            if (errorModal === 'EditTelp' || window.location.hash === '#edit-telp') {
-                showEditModal('modalEditTelp');
-            }
-
-            if (errorModal === 'VerifikasiOTP' || window.location.hash === '#verifikasi-email') {
-                showEditModal('modalVerifikasiOTP');
-            }
-
-            if (errorModal === 'EditPass' || window.location.hash === '#edit-pass') {
-                showEditModal('modalEditPass');
-            }
-
-            // Reset error modal di JS biar gak ke-trigger ulang kalau reload
-            <?= "unset(\$_SESSION['errorModal']);" ?>
-        });
-
-        function showEditModal(id) {
-            document.getElementById(id).classList.remove('hidden');
-        }
-        function hideModal(id) {
-            document.getElementById(id).classList.add('hidden');
-        }
-    </script>
 </div>
+
+
+<style>
+    .alert {
+        padding: 10px 15px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    .alert.success {
+        background-color: #e6f4ea;
+        color: #276738;
+        border: 1px solid #b8dfc2;
+    }
+
+    .alert.error {
+        background-color: #fcebea;
+        color: #a94442;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* Modal backdrop */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Modal card-style content */
+    .modal-content {
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-content,
+    .form-group,
+    input {
+        box-sizing: border-box;
+    }
+
+    /* Form layout */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 0.95rem;
+    }
+
+    /* Buttons */
+    .modal-buttons {
+        display: flex;
+        justify-content: start;
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        background-color: #2e8b57;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .btn-secondary {
+        background-color: #ccc;
+        color: black;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    /* Edit button inline dengan data */
+    .edit-btn {
+        background: none;
+        color: #007BFF;
+        border: none;
+        font-size: 0.9rem;
+        margin-left: 10px;
+        cursor: pointer;
+        text-decoration: underline;
+        padding: 0;
+    }
+</style>
+
+<?php
+unset($_SESSION['errorModal']);
+?>
+
+<script>
+    // Cek kalau ada hash #verifikasi-email di URL → buka modal OTP
+    document.addEventListener("DOMContentLoaded", function () {
+        const errorModal = '<?= $_SESSION['errorModal'] ?? '' ?>';
+        const hash = window.location.hash;
+
+        if (errorModal === 'EditNama' || window.location.hash === '#edit-nama') {
+            showEditModal('modalEditNama');
+        }
+
+        if (errorModal === 'EditEmail' || window.location.hash === '#edit-email') {
+            showEditModal('modalEditEmail');
+        }
+
+        if (errorModal === 'EditTelp' || window.location.hash === '#edit-telp') {
+            showEditModal('modalEditTelp');
+        }
+
+        if (errorModal === 'VerifikasiOTP' || window.location.hash === '#verifikasi-email') {
+            showEditModal('modalVerifikasiOTP');
+        }
+
+        if (errorModal === 'EditPass' || window.location.hash === '#edit-pass') {
+            showEditModal('modalEditPass');
+        }
+
+    });
+
+    function showEditModal(id) {
+        document.getElementById(id).classList.remove('hidden');
+    }
+    function hideModal(id) {
+        document.getElementById(id).classList.add('hidden');
+    }
+</script>

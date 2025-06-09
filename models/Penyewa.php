@@ -181,7 +181,7 @@ class Penyewa
     {
         $db = Database::getConnection();
         $query = "SELECT 
-                p.nama_penyewa, p.email_penyewa, p.no_telp_penyewa, p.status_akun,
+                *,
                 k.tipe_kamar, k.no_kamar,
                 s.tanggal_mulai, s.tanggal_selesai, s.status_sewa
               FROM penyewa p
@@ -216,4 +216,44 @@ class Penyewa
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+        public static function updateNama($id_penyewa, $nama_baru)
+    {
+        $db = Database::getConnection();
+        $query = "UPDATE penyewa SET nama_penyewa = ? WHERE id_penyewa = ?";
+        $stmt = $db->prepare($query);
+        return $stmt->execute([$nama_baru, $id_penyewa]);
+    }
+
+    public static function updateEmail($id_penyewa, $email_baru)
+    {
+        $db = Database::getConnection();
+        $query = "UPDATE penyewa SET email_penyewa = ? WHERE id_penyewa = ?";
+        $stmt = $db->prepare($query);
+        return $stmt->execute([$email_baru, $id_penyewa]);
+    }
+
+    public static function updateTelp($id_penyewa, $telp_baru)
+    {
+        $db = Database::getConnection();
+        $query = "UPDATE penyewa SET no_telp_penyewa = ? WHERE id_penyewa = ?";
+        $stmt = $db->prepare($query);
+        return $stmt->execute([$telp_baru, $id_penyewa]);
+    }
+
+    public static function getPassword($id_penyewa)
+    {
+        $db = Database::getConnection();
+        $query = "SELECT password_penyewa FROM penyewa WHERE id_penyewa = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$id_penyewa]);
+        return $stmt->fetchColumn();
+    }
+
+    public static function updatePassword($id_penyewa, $password_baru)
+    {
+        $db = Database::getConnection();
+        $query = "UPDATE penyewa SET password = ? WHERE id_penyewa = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$password_baru, $id_penyewa]);
+    }
 }
