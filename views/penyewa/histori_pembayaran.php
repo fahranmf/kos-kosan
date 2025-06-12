@@ -17,6 +17,7 @@
                         <th>Jumlah Bayar</th>
                         <th>Jenis Pembayaran</th>
                         <th>Tenggat Pembayaran</th>
+                        <th>Status Pembayaran</th>
                         <th>Bukti Pembayaran</th>
                     </tr>
                 </thead>
@@ -29,6 +30,14 @@
                             <td class="<?= $pembayaran['jenis_pembayaran'] == 'Lunas' ? 'lunas' : 'cicil' ?>">
                                 <?= htmlspecialchars($pembayaran['jenis_pembayaran']) ?>
                             <td><?= htmlspecialchars($pembayaran['tenggat_pembayaran'] ?? '-') ?></td>
+                            <td class="<?=
+                                $pembayaran['status_pembayaran'] == 'Terverifikasi' ? 'terverifikasi' : (
+                                    $pembayaran['status_pembayaran'] == 'Sedang Ditinjau' ? 'sedang_ditinjau' : (
+                                        $pembayaran['status_pembayaran'] == 'Ditolak' ? 'ditolak' : 'status_lain'
+                                    ))
+                                ?>">
+                                <?= htmlspecialchars($pembayaran['status_pembayaran']) ?>
+                            </td>
                             <td>
                                 <img src="uploads/bukti_pembayaran/<?= htmlspecialchars($pembayaran['bukti_pembayaran']) ?>"
                                     alt="Bukti Pembayaran" class="foto-kamar"

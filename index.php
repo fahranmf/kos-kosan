@@ -220,6 +220,25 @@ switch ($page) {
         $controller->perpanjangKos();
         break;
 
+    case 'form_perpanjang_kos':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->formPerpanjangKos();
+        break;
+
+    case 'form_pembayaran_perpanjang':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->formPembayaranPerpanjang();
+        break;
+
+    case 'submit_pembayaran_perpanjang':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->submitPembayaranPerpanjang();
+        break;
+
+
     case 'penyewa_ubah_nama':
         checkRole('penyewa');
         $controller = new PenyewaController();

@@ -1,11 +1,6 @@
 <?php $title = 'Verifikasi Akun Penyewa - Kos Putra Agan'; ?>
 <?php require_once 'views/templates/header_admin_daftarkos.php'; ?>
 
-<style>
-    .main-content {
-        width: auto;
-    }
-</style>
 
 <div class="dashboard-container">
     <!-- Include Sidebar -->
@@ -21,7 +16,6 @@
                         <tr>
                             <th>Id Penyewa</th>
                             <th>Id Pembayaran</th>
-                            <th>Email Penyewa</th>
                             <th>Jumlah Bayar</th>
                             <th>Bukti Pembayaran</th>
                             <th>Jenis Pembayaran</th>
@@ -35,7 +29,6 @@
                             <tr>
                                 <td><?= number_format($verif['id_penyewa']) ?></td>
                                 <td><?= number_format($verif['id_pembayaran']) ?></td>
-                                <td><?= htmlspecialchars($verif['email_penyewa']) ?></td>
                                 <td>Rp <?= number_format($verif['jumlah_bayar'], 0, ',', '.') ?></td>
                                 <td>
                                     <img src="uploads/bukti_pembayaran/<?= htmlspecialchars($verif['bukti_pembayaran']) ?>"
@@ -60,8 +53,8 @@
                                 <td class="aksi">
                                     <div class="action-buttons">
                                         <!-- Tombol Edit dengan Icon Font Awesome -->
-                                        <a href="#" class="btn-edit"
-                                            onclick="openEditModal(<?= $verif['id_penyewa'] ?>, '<?= $verif['status_pembayaran'] ?>')">
+                                        <a class="btn-edit"
+                                            onclick="openVerifModal(<?= $verif['id_pembayaran'] ?>, '<?= addslashes($verif['status_pembayaran']) ?>', <?= $verif['id_penyewa'] ?>)">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </div>
@@ -80,7 +73,7 @@
                     </tbody>
                 </table>
 
-                 <?php
+                <?php
                 $startPage = max(1, $halamanAktif - 1);
                 $endPage = min($totalHalaman, $startPage + 2);
 
@@ -128,12 +121,13 @@
         <span class="close-btn" onclick="closeEditModal()">&times;</span>
         <h3>Edit Status Pembayaran</h3>
         <form action="index.php?page=admin_update_status_akun" method="POST">
-            <input type="hidden" name="id_penyewa" id="edit_id_feedback">
+            <input type="hidden" name="id_pembayaran" id="modal_id_pembayaran">
+            <input type="hidden" name="id_penyewa" id="modal_id_penyewa">
 
-            <label for="edit_status_feedback">Status</label>
-            <select name="status_pembayaran" id="edit_status_feedback" required>
-                <option value="Terverifikasi">Terverifikasi</option>
+            <label for="status_pembayaran">Status Pembayaran</label>
+            <select name="status_pembayaran" id="modal_status_pembayaran" required>
                 <option value="Sedang Ditinjau">Sedang Ditinjau</option>
+                <option value="Terverifikasi">Terverifikasi</option>
                 <option value="Ditolak">Ditolak</option>
             </select>
 
@@ -144,3 +138,17 @@
         </form>
     </div>
 </div>
+
+<script>
+    function openVerifModal(idPembayaran, statusPembayaran, idPenyewa) {
+        document.getElementById('modal_id_pembayaran').value = idPembayaran;
+        document.getElementById('modal_id_penyewa').value = idPenyewa;
+        document.getElementById('modal_status_pembayaran').value = statusPembayaran;
+
+        document.getElementById('editModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+</script>

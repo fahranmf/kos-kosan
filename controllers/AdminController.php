@@ -234,20 +234,21 @@ class AdminController
         exit;
     }
 
-    public function editStatusAkun()
-    {
-        AuthMiddleware::checkAdmin();
+public function editStatusAkun()
+{
+    AuthMiddleware::checkAdmin();
 
-        $id = $_POST['id_penyewa'] ?? null;
-        $statusPembayaran = $_POST['status_pembayaran'] ?? null;
-
-        if ($id && $statusPembayaran) {
-            Penyewa::updateStatusPembayaranDanAkun($id, $statusPembayaran);
-        }
-
-        header('Location: index.php?page=admin_verifikasi');
-        exit;
+    $id_pembayaran = $_POST['id_pembayaran'] ?? null;
+    $statusPembayaran = $_POST['status_pembayaran'] ?? null;
+    $id_penyewa = $_POST['id_penyewa'];
+    
+    if ($id_penyewa && $statusPembayaran && $id_pembayaran) {
+        Penyewa::updateStatusPembayaranDanAkun($id_pembayaran, $statusPembayaran, $id_penyewa);
     }
+
+    header('Location: index.php?page=admin_verifikasi');
+    exit;
+}
 
     public function lihatProfile()
     {

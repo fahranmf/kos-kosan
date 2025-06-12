@@ -109,6 +109,40 @@ class Sewa
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getSewaAktifByPenyewa($id_penyewa)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT * FROM sewa WHERE id_penyewa = ? AND status_sewa = 'Sewa'");
+        $stmt->execute([$id_penyewa]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function getSewaByIdSewa($id_sewa)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT * FROM sewa WHERE id_sewa = ?");
+        $stmt->execute([$id_sewa]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+
+    public static function updateTanggalSelesai($id_sewa, $tanggal_baru)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("UPDATE sewa SET tanggal_selesai = ? WHERE id_sewa = ?");
+        return $stmt->execute([$tanggal_baru, $id_sewa]);
+    }
+
+    public static function updateTanggalDanKamar($id_sewa, $tanggal_baru, $no_kamar_baru)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("UPDATE sewa SET tanggal_selesai = ?, no_kamar = ? WHERE id_sewa = ?");
+        return $stmt->execute([$tanggal_baru, $no_kamar_baru, $id_sewa]);
+    }
+
+    
+
 
 
 

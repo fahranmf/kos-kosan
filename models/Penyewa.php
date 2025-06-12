@@ -76,14 +76,10 @@ class Penyewa
     {
         $db = Database::getConnection();
         $query = "SELECT 
+                     *,
                     penyewa.id_penyewa,
-                    pembayaran.id_pembayaran,
                     penyewa.email_penyewa,
-                    pembayaran.jumlah_bayar,
-                    pembayaran.bukti_pembayaran,
-                    pembayaran.jenis_pembayaran,
-                    penyewa.status_akun,
-                    pembayaran.status_pembayaran
+                    penyewa.status_akun
                 FROM 
                     pembayaran
                 JOIN 
@@ -92,6 +88,7 @@ class Penyewa
                     penyewa ON sewa.id_penyewa = penyewa.id_penyewa
                 WHERE 
                     penyewa.status_akun IN ('Terverifikasi' , 'Menunggu Verifikasi')
+                ORDER BY pembayaran.tanggal_pembayaran DESC
                 LIMIT :limit OFFSET :offset
         ";
         $stmt = $db->prepare($query);
@@ -120,7 +117,7 @@ class Penyewa
         return (int) $result['total'];
     }
 
-    public static function updateStatusPembayaranDanAkun($id_penyewa, $status_pembayaran)
+    public static function updateStatusPembayaranDanAkun($id_pembayaran, $status_pembayaran, $id_penyewa)
     {
         $db = Database::getConnection();
 
@@ -128,25 +125,32 @@ class Penyewa
         $query1 = "UPDATE pembayaran p
                JOIN sewa s ON p.id_sewa = s.id_sewa
                SET p.status_pembayaran = :status_pembayaran
-               WHERE s.id_penyewa = :id_penyewa";
+               WHERE p.id_pembayaran = :id_pembayaran";
 
         $stmt1 = $db->prepare($query1);
-        $stmt1->execute(['status_pembayaran' => $status_pembayaran, 'id_penyewa' => $id_penyewa]);
+        $stmt1->execute([
+            'id_pembayaran' => $id_pembayaran,
+            'status_pembayaran' => $status_pembayaran
+        ]);
 
-        // Tentukan status akun sesuai status pembayaran
-        if ($status_pembayaran == 'Terverifikasi') {
+        // Tentukan status akun
+        if ($status_pembayaran === 'Terverifikasi') {
             $status_akun = 'Terverifikasi';
-        } elseif ($status_pembayaran == 'Ditolak') {
-            $status_akun = 'Umum';  // Kalau ditolak, akun jadi 'Umum'
+        } elseif ($status_pembayaran === 'Ditolak') {
+            $status_akun = 'Umum';
         } else {
-            $status_akun = 'Menunggu Verifikasi'; // Misal status lain seperti 'Sedang Ditinjau'
+            $status_akun = 'Menunggu Verifikasi';
         }
 
         // Update status akun penyewa
         $query2 = "UPDATE penyewa SET status_akun = :status_akun WHERE id_penyewa = :id_penyewa";
         $stmt2 = $db->prepare($query2);
-        $stmt2->execute(['status_akun' => $status_akun, 'id_penyewa' => $id_penyewa]);
+        $stmt2->execute([
+            'status_akun' => $status_akun,
+            'id_penyewa' => $id_penyewa
+        ]);
     }
+
 
 
 
@@ -197,12 +201,8 @@ class Penyewa
     {
         $db = Database::getConnection();
         $query = "SELECT 
-					pembayaran.tanggal_pembayaran,
-                    sewa.no_kamar,
-                    pembayaran.jenis_pembayaran,
-                    pembayaran.tenggat_pembayaran,
-                    pembayaran.jumlah_bayar,
-                    pembayaran.bukti_pembayaran
+					*,
+                    sewa.no_kamar
                 FROM 
                     pembayaran
                 JOIN 
@@ -216,7 +216,7 @@ class Penyewa
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-        public static function updateNama($id_penyewa, $nama_baru)
+    public static function updateNama($id_penyewa, $nama_baru)
     {
         $db = Database::getConnection();
         $query = "UPDATE penyewa SET nama_penyewa = ? WHERE id_penyewa = ?";

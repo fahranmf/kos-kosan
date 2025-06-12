@@ -78,9 +78,136 @@ class PenyewaController
             $data['sisa_hari_jam'] = null;
             $data['sisa_hari_int'] = 0;
         }
-
+        $data['kamar_kosong'] = Kamar::getKamarKosong();
         include 'views/penyewa/perpanjang_kos.php';
     }
+
+    public function formPerpanjangKos()
+    {
+        AuthMiddleware::checkPenyewa();
+
+        $id_sewa = $_POST['id_sewa'];
+        $tanggal_baru = $_POST['tanggal_selesai_baru'];
+        $ganti_kamar = isset($_POST['ganti_kamar']);
+        $id_kamar_baru = $ganti_kamar ? $_POST['id_kamar_baru'] : null;
+
+        if ($ganti_kamar && $id_kamar_baru) {
+            $harga = Kamar::getHargaByNoKamar($id_kamar_baru);
+        } else {
+            $harga = Kamar::getHargaByIdSewa($id_sewa);
+        }
+
+        $_SESSION['perpanjang'] = [
+            'id_sewa' => $id_sewa,
+            'tanggal_baru' => $tanggal_baru,
+            'ganti_kamar' => $ganti_kamar,
+            'id_kamar_baru' => $id_kamar_baru,
+            'harga' => $harga
+        ];
+        // Redirect ke halaman pembayaran khusus perpanjang
+        header('Location: index.php?page=form_pembayaran_perpanjang');
+        exit;
+    }
+
+    public function formPembayaranPerpanjang()
+    {
+        AuthMiddleware::checkPenyewa();
+
+        if (!isset($_SESSION['perpanjang'])) {
+            header('Location: index.php?page=dashboard'); // atau ke error page
+            exit;
+        }
+
+        $data = $_SESSION['perpanjang'];
+        var_dump($data);
+        require 'views/penyewa/form_pembayaran_perpanjang.php';
+    }
+
+    public function submitPembayaranPerpanjang()
+    {
+        AuthMiddleware::checkPenyewa();
+
+        if (!isset($_SESSION['perpanjang'])) {
+            $_SESSION['errorMsg'] = 'Data perpanjangan tidak valid.';
+            header('Location: index.php?page=dashboard');
+            exit;
+        }
+
+        $data = $_SESSION['perpanjang'];
+        $id_sewa = $data['id_sewa'];
+        $tanggal_baru = $data['tanggal_baru'];
+        $ganti_kamar = $data['ganti_kamar'];
+        $id_kamar_baru = $data['id_kamar_baru'];
+        $jumlah_bayar = $_POST['jumlah_bayar'];
+        $metode = $_POST['metode_pembayaran'];
+        $tanggal_pembayaran = date('Y-m-d H:i:s');
+
+        // Upload file bukti
+        $bukti = null;
+        if (!empty($_FILES['bukti_pembayaran']['name'])) {
+            $targetDir = "uploads/bukti_pembayaran/";
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            // Ambil ekstensi file
+            $originalName = $_FILES['bukti_pembayaran']['name'];
+            $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+            // Daftar ekstensi yang diizinkan
+            $allowed = ['jpg', 'jpeg', 'png', 'pdf'];
+
+            if (in_array($ext, $allowed)) {
+                $fileName = uniqid() . "_" . preg_replace("/[^a-zA-Z0-9_\.-]/", "_", basename($originalName)); // sanitasi nama file
+                $targetFile = $targetDir . $fileName;
+
+                if (move_uploaded_file($_FILES['bukti_pembayaran']['tmp_name'], $targetFile)) {
+                    $bukti = $fileName; // berhasil upload
+                }
+            } else {
+                echo "Format file tidak diizinkan. Hanya jpg, jpeg, png, atau pdf yang diperbolehkan.";
+            }
+        }
+
+
+
+        // Insert ke tabel pembayaran
+        $pembayaran = new Pembayaran();
+        $insertBayar = $pembayaran->insertPembayaran([
+            'id_sewa' => $id_sewa,
+            'tanggal_pembayaran' => $tanggal_pembayaran,
+            'jumlah_bayar' => $jumlah_bayar,
+            'metode_pembayaran' => $metode,
+            'bukti_pembayaran' => $bukti,
+            'jenis_pembayaran' => 'Lunas',
+            'tenggat_pembayaran' => null,
+            'status_pembayaran' => 'Sedang Ditinjau'
+        ]);
+
+
+        // Proses update sewa dan kamar
+        if ($insertBayar) {
+            if ($ganti_kamar && $id_kamar_baru) {
+                $sewa = Sewa::getSewaByIdSewa($id_sewa);
+                $kamar_lama = $sewa['no_kamar'];
+
+                // Update sewa
+                Sewa::updateTanggalDanKamar($id_sewa, $tanggal_baru, $id_kamar_baru);
+
+                // Update kamar status
+                Kamar::setStatusKamar($kamar_lama, 'kosong');
+                Kamar::setStatusKamar($id_kamar_baru, 'isi');
+            } else {
+                Sewa::updateTanggalSelesai($id_sewa, $tanggal_baru);
+            }
+        }
+
+        unset($_SESSION['perpanjang']);
+        $_SESSION['successMsg'] = 'Pembayaran berhasil dikirim. Menunggu verifikasi admin.';
+        header('Location: index.php?page=penyewa_riwayat');
+        exit;
+    }
+
 
     public function historiPembayaran()
     {
@@ -90,7 +217,7 @@ class PenyewaController
         require_once 'views/penyewa/histori_pembayaran.php';
     }
 
-       public function ubahNama()
+    public function ubahNama()
     {
         AuthMiddleware::checkPenyewa();
         $id_penyewa = $_SESSION['user_id'];

@@ -7,7 +7,7 @@ class Pembayaran
     public static function getAllPembayaran(int $limit, int $offset): array
     {
         $db = Database::getConnection();
-        $query = "SELECT * FROM pembayaran ORDER BY id_pembayaran ASC LIMIT :limit OFFSET :offset";
+        $query = "SELECT * FROM pembayaran ORDER BY id_pembayaran DESC LIMIT :limit OFFSET :offset";
         $stmt = $db->prepare($query);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);

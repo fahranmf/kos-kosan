@@ -142,6 +142,45 @@ class Kamar
         return (int) ($result['total'] ?? 0);
     }
 
+    public static function setStatusKamar($no_kamar, $status)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("UPDATE kamar SET status = ? WHERE no_kamar = ?");
+        return $stmt->execute([$status, $no_kamar]);
+    }
+
+    public static function getKamarKosongByTipe($tipe)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT * FROM kamar WHERE status = 'Kosong' AND tipe_kamar = ?");
+        $stmt->execute([$tipe]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getHargaByIdSewa($id_sewa)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("
+            SELECT k.harga_perbulan 
+            FROM sewa s
+            JOIN kamar k ON s.no_kamar = k.no_kamar
+            WHERE s.id_sewa = ?
+        ");
+        $stmt->execute([$id_sewa]);
+        return $stmt->fetchColumn();
+    }
+
+    public static function getKamarKosong()
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT * FROM kamar WHERE status = 'Kosong'");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+
 
 }
 ?>
