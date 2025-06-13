@@ -20,6 +20,7 @@
                             <th>Bukti Pembayaran</th>
                             <th>Jenis Pembayaran</th>
                             <th>Tenggat Pembayaran</th>
+                            <th>Tipe Pembayaran</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,6 +39,7 @@
                                 <td class="<?= $pembayaran['jenis_pembayaran'] == 'Lunas' ? 'lunas' : 'cicil' ?>">
                                     <?= htmlspecialchars($pembayaran['jenis_pembayaran']) ?>
                                 <td><?= htmlspecialchars($pembayaran['tenggat_pembayaran'] ?? '-') ?></td>
+                                <td><?= htmlspecialchars($pembayaran['tipe_pembayaran'] ?? '-') ?></td>
                             </tr>
                         <?php endforeach; ?>
 

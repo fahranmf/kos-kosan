@@ -18,6 +18,7 @@
                             <th>No. Kamar</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Selesai</th>
+                            <th>Tanggal Selesai Lama</th>
                             <th>Status Sewa</th>
                         </tr>
                     </thead>
@@ -29,6 +30,7 @@
                                 <td><?= number_format($sewa['no_kamar']) ?></td>
                                 <td><?= htmlspecialchars($sewa['tanggal_mulai']) ?></td>
                                 <td><?= htmlspecialchars($sewa['tanggal_selesai']) ?></td>
+                                <td><?= htmlspecialchars($sewa['tanggal_selesai_lama']  ?? '-') ?></td>
                                 <td><?= htmlspecialchars($sewa['status_sewa']) ?></td>
                                 </td>
                             </tr>

@@ -144,7 +144,8 @@ class PublicController
                 'bukti_pembayaran' => $bukti,
                 'jenis_pembayaran' => $jenis_pembayaran,
                 'tenggat_pembayaran' => $_POST['tenggat_pembayaran'] ?: null,
-                'status_pembayaran' => 'Sedang Ditinjau'
+                'status_pembayaran' => 'Sedang Ditinjau',
+                'tipe_pembayaran' => 'Sewa Baru',
             ]);
 
             if ($insertBayar) {

@@ -181,24 +181,26 @@ class PenyewaController
             'bukti_pembayaran' => $bukti,
             'jenis_pembayaran' => 'Lunas',
             'tenggat_pembayaran' => null,
-            'status_pembayaran' => 'Sedang Ditinjau'
+            'status_pembayaran' => 'Sedang Ditinjau',
+            'tipe_pembayaran' => 'Perpanjang'
         ]);
 
 
         // Proses update sewa dan kamar
         if ($insertBayar) {
+            $sewa = Sewa::getSewaByIdSewa($id_sewa);
+            $tanggal_lama = $sewa['tanggal_selesai'];
             if ($ganti_kamar && $id_kamar_baru) {
-                $sewa = Sewa::getSewaByIdSewa($id_sewa);
                 $kamar_lama = $sewa['no_kamar'];
 
                 // Update sewa
-                Sewa::updateTanggalDanKamar($id_sewa, $tanggal_baru, $id_kamar_baru);
+                Sewa::updateTanggalDanKamar($id_sewa, $tanggal_baru, $id_kamar_baru, $tanggal_lama);
 
                 // Update kamar status
                 Kamar::setStatusKamar($kamar_lama, 'kosong');
                 Kamar::setStatusKamar($id_kamar_baru, 'isi');
             } else {
-                Sewa::updateTanggalSelesai($id_sewa, $tanggal_baru);
+                Sewa::updateTanggalSelesai($id_sewa, $tanggal_baru, $tanggal_lama);
             }
         }
 

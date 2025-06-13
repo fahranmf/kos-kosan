@@ -2,6 +2,7 @@
 // models/Penyewa.php
 
 require_once 'config/database.php';
+use Carbon\Carbon;
 
 class Penyewa
 {
@@ -121,6 +122,32 @@ class Penyewa
     {
         $db = Database::getConnection();
 
+        // Ambil data pembayaran & sewa terkait
+        $stmt = $db->prepare("SELECT p.*, s.id_sewa, s.tanggal_selesai, s.tanggal_selesai_lama 
+                          FROM pembayaran p 
+                          JOIN sewa s ON p.id_sewa = s.id_sewa 
+                          WHERE p.id_pembayaran = :id_pembayaran");
+        $stmt->execute(['id_pembayaran' => $id_pembayaran]);
+        $pembayaran = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$pembayaran)
+            return; // validasi gagal ambil data
+
+        // Logika tambahan khusus perpanjang
+        if ($pembayaran['tipe_pembayaran'] === 'Perpanjang') {
+            $id_sewa = $pembayaran['id_sewa'];
+
+            if ($status_pembayaran === 'Ditolak') {
+                // Kembalikan tanggal_selesai ke tanggal_selesai_lama & reset
+                $stmt = $db->prepare("UPDATE sewa 
+                              SET tanggal_selesai = tanggal_selesai_lama, 
+                                  tanggal_selesai_lama = NULL 
+                              WHERE id_sewa = :id_sewa");
+                $stmt->execute(['id_sewa' => $id_sewa]);
+            }
+        }
+
+
         // Update status pembayaran
         $query1 = "UPDATE pembayaran p
                JOIN sewa s ON p.id_sewa = s.id_sewa
@@ -134,21 +161,24 @@ class Penyewa
         ]);
 
         // Tentukan status akun
-        if ($status_pembayaran === 'Terverifikasi') {
-            $status_akun = 'Terverifikasi';
-        } elseif ($status_pembayaran === 'Ditolak') {
-            $status_akun = 'Umum';
-        } else {
-            $status_akun = 'Menunggu Verifikasi';
+        if ($pembayaran['tipe_pembayaran'] === 'Sewa Baru') {
+            if ($status_pembayaran === 'Terverifikasi') {
+                $status_akun = 'Terverifikasi';
+            } elseif ($status_pembayaran === 'Ditolak') {
+                $status_akun = 'Umum';
+            } else {
+                $status_akun = 'Menunggu Verifikasi';
+            }
+            
+            // Update status akun penyewa
+            $query2 = "UPDATE penyewa SET status_akun = :status_akun WHERE id_penyewa = :id_penyewa";
+            $stmt2 = $db->prepare($query2);
+            $stmt2->execute([
+                'status_akun' => $status_akun,
+                'id_penyewa' => $id_penyewa
+            ]);
         }
 
-        // Update status akun penyewa
-        $query2 = "UPDATE penyewa SET status_akun = :status_akun WHERE id_penyewa = :id_penyewa";
-        $stmt2 = $db->prepare($query2);
-        $stmt2->execute([
-            'status_akun' => $status_akun,
-            'id_penyewa' => $id_penyewa
-        ]);
     }
 
 

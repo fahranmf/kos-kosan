@@ -21,6 +21,7 @@
                             <th>Jenis Pembayaran</th>
                             <th>Status Akun</th>
                             <th>Status Pembayaran</th>
+                            <th>Tipe Pembayaran</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -50,6 +51,7 @@
                                     ?>">
                                     <?= htmlspecialchars($verif['status_pembayaran']) ?>
                                 </td>
+                                <td><?= htmlspecialchars($verif['tipe_pembayaran']) ?></td>
                                 <td class="aksi">
                                     <div class="action-buttons">
                                         <!-- Tombol Edit dengan Icon Font Awesome -->

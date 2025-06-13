@@ -125,23 +125,30 @@ class Sewa
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-
-
-    public static function updateTanggalSelesai($id_sewa, $tanggal_baru)
+    public static function updateTanggalSelesai($id_sewa, $tanggal_baru, $tanggal_lama)
     {
         $db = Database::getConnection();
-        $stmt = $db->prepare("UPDATE sewa SET tanggal_selesai = ? WHERE id_sewa = ?");
-        return $stmt->execute([$tanggal_baru, $id_sewa]);
+        $stmt = $db->prepare("UPDATE sewa 
+        SET tanggal_selesai_lama = ?, 
+            tanggal_selesai = ? 
+        WHERE id_sewa = ?");
+        return $stmt->execute([$tanggal_lama, $tanggal_baru, $id_sewa]);
     }
 
-    public static function updateTanggalDanKamar($id_sewa, $tanggal_baru, $no_kamar_baru)
+
+    public static function updateTanggalDanKamar($id_sewa, $tanggal_baru, $no_kamar_baru, $tanggal_lama)
     {
         $db = Database::getConnection();
-        $stmt = $db->prepare("UPDATE sewa SET tanggal_selesai = ?, no_kamar = ? WHERE id_sewa = ?");
-        return $stmt->execute([$tanggal_baru, $no_kamar_baru, $id_sewa]);
+        $db = Database::getConnection();
+        $stmt = $db->prepare("UPDATE sewa 
+        SET tanggal_selesai = ?, 
+            tanggal_selesai_lama = ?, 
+            no_kamar = ? 
+        WHERE id_sewa = ?");
+        return $stmt->execute([$tanggal_baru, $tanggal_lama, $no_kamar_baru, $id_sewa]);
     }
 
-    
+
 
 
 

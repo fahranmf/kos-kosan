@@ -31,10 +31,10 @@ class Pembayaran
 
         $query = "INSERT INTO pembayaran (
         id_sewa, tanggal_pembayaran, jumlah_bayar, metode_pembayaran,
-        bukti_pembayaran, jenis_pembayaran, tenggat_pembayaran, status_pembayaran
+        bukti_pembayaran, jenis_pembayaran, tenggat_pembayaran, status_pembayaran, tipe_pembayaran
     ) VALUES (
         :id_sewa, :tanggal_pembayaran, :jumlah_bayar, :metode_pembayaran,
-        :bukti_pembayaran, :jenis_pembayaran, :tenggat_pembayaran, :status_pembayaran
+        :bukti_pembayaran, :jenis_pembayaran, :tenggat_pembayaran, :status_pembayaran, :tipe_pembayaran
     )";
 
         $stmt = $db->prepare($query);
@@ -48,6 +48,7 @@ class Pembayaran
             ':jenis_pembayaran' => $data['jenis_pembayaran'],
             ':tenggat_pembayaran' => $data['tenggat_pembayaran'],
             ':status_pembayaran' => $data['status_pembayaran'] ?? 'Sedang Ditinjau',
+            ':tipe_pembayaran' => $data['tipe_pembayaran']
         ]);
     }
 
