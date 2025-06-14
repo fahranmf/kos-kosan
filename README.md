@@ -3,17 +3,15 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-php.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
 
 ## 🌟 Fitur 
----
 - CRUD Daftar Kos
 - Banyak dah, males jabarin 
 ## 🧰 Teknologi
----
 - ⚙️ PHP OOP + MVC architecture (PHP v 8.2.0 or later)
 - 🗄️ MySQL database
 - 🎨 Vanilla CSS (tanpa framework)
 
 ## 🛠️ Instalasi
----
+
 
 
 > Pastikan udah install: PHP, MySQL, Composer, dan web server seperti Laragon/XAMPP.
