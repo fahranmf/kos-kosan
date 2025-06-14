@@ -45,10 +45,10 @@ class PenyewaController
         $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
         $limit = 3;
         $offset = ($halamanAktif - 1) * $limit;
-
+        $id_penyewa = $_SESSION['user_id'];
         $no_kamar = $_SESSION['no_kamar'];
-        $totalData = Feedback::getTotalKeluhanByNoKamar($no_kamar);
-        $feedbackList = Feedback::getFeedbackByNoKamar($no_kamar, $limit, $offset);
+        $totalData = Feedback::getTotalKeluhanByPenyewaAndKamar($id_penyewa, $no_kamar);
+        $feedbackList = Feedback::getFeedbackByPenyewaAndKamar($id_penyewa, $no_kamar, $limit, $offset);
         $totalHalaman = ceil($totalData / $limit);
         include 'views/penyewa/keluhan.php';
     }
