@@ -1,6 +1,7 @@
 # Sistem Informasi Kos-Kosan
----
 [![forthebadge](https://forthebadge.com/images/badges/made-with-php.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
+
+---
 
 ## 🌟 Fitur 
 - CRUD Daftar Kos
