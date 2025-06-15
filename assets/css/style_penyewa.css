@@ -113,14 +113,14 @@ body {
   text-align: center;
 }
 
-.kamar-table td.menunggu_verifikasi {
+.kamar-table td.menunggu_verifikasi, td.sedang_ditinjau {
   background-color: #fff3cd;
   color: #856404;
   font-weight: bold;
   text-align: center;
 }
 
-.kamar-table td.status-belum {
+.kamar-table td.status-belum, td.status_lain {
   background-color: #dee2e6;
   color: #495057;
   font-weight: bold;

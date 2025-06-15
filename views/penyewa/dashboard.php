@@ -49,7 +49,14 @@
                 </div>
                 <div class="profile-row">
                     <span>Status Akun</span>
-                    <span class="status"><?= $data['status_akun']; ?></span>
+                    <span class="status-<?=
+                        $data['status_akun'] == 'Terverifikasi' ? 'terverifikasi' : (
+                            $data['status_akun'] == 'Menunggu Verifikasi' ? 'menunggu_verifikasi' : (
+                                $data['status_akun'] == 'Umum' ? 'umum' : 'status_lain'
+                            ))
+                        ?>">
+                        <?= $data['status_akun']; ?>
+                    </span>
                 </div>
             </div>
 

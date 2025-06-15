@@ -215,13 +215,33 @@ class Penyewa
     {
         $db = Database::getConnection();
         $query = "SELECT 
-                *,
-                k.tipe_kamar, k.no_kamar,
-                s.tanggal_mulai, s.tanggal_selesai, s.status_sewa
-              FROM penyewa p
-              LEFT JOIN sewa s ON p.id_penyewa = s.id_penyewa AND s.status_sewa = 'Sewa'
-              LEFT JOIN kamar k ON s.no_kamar = k.no_kamar
-              WHERE p.id_penyewa = ?";
+                    p.*, 
+                    k.tipe_kamar, 
+                    k.no_kamar,
+                    s.tanggal_mulai, 
+                    s.tanggal_selesai, 
+                    s.status_sewa,
+                    pb.tanggal_pembayaran, 
+                    pb.jumlah_bayar, 
+                    pb.status_pembayaran,
+                    pb.metode_pembayaran,
+                    pb.jenis_pembayaran
+                FROM penyewa p
+                LEFT JOIN sewa s 
+                    ON p.id_penyewa = s.id_penyewa 
+                    AND s.status_sewa = 'Sewa'
+                LEFT JOIN (
+                    SELECT * FROM pembayaran
+                    WHERE (tanggal_pembayaran, id_sewa) IN (
+                        SELECT MAX(tanggal_pembayaran), id_sewa 
+                        FROM pembayaran 
+                        GROUP BY id_sewa
+                    )
+                ) pb ON s.id_sewa = pb.id_sewa
+                LEFT JOIN kamar k 
+                    ON s.no_kamar = k.no_kamar
+                WHERE p.id_penyewa = ?
+                ";
         $stmt = $db->prepare($query);
         $stmt->execute([$id_penyewa]);
         return $stmt->fetch(PDO::FETCH_ASSOC);

@@ -84,7 +84,8 @@ body {
 .profile-row {
   display: flex;
   justify-content: flex-start;
-  align-items: baseline;
+  align-items: center;
+  /* align-items: baseline; */
   padding: 10px 0;
   border-bottom: 1px dashed #e0e0e0;
   font-size: 1em;
@@ -103,8 +104,23 @@ body {
 }
 
 .sisa-hari,
-.status {
+.status-terverifikasi {
   color: rgb(0, 123, 53);
+  font-weight: bold;
+}
+
+.status-menunggu_verifikasi, .status-sedang_ditinjau {
+  color: #f3b703;
+  font-weight: bold;
+}
+
+.status-umum {
+  color: #495057;
+  font-weight: bold;
+}
+
+.status-ditolak {
+  color: #e53935;
   font-weight: bold;
 }
 

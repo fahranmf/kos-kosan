@@ -78,6 +78,31 @@ switch ($page) {
         $controller->cekStatus();
         break;
 
+    case 'public_ubah_nama':
+        $controller = new PublicController();
+        $controller->ubahNama();
+        break;
+
+    case 'public_ubah_email':
+        $controller = new PublicController();
+        $controller->ubahEmail();
+        break;
+
+    case 'public_ubah_telp':
+        $controller = new PublicController();
+        $controller->ubahTelp();
+        break;
+
+    case 'public_ubah_password':
+        $controller = new PublicController();
+        $controller->ubahPassword();
+        break;
+
+    case 'public_verifikasi_email_baru':
+        $controller = new PublicController();
+        $controller->verifikasiEmailBaru();
+        break;
+
     // --- Routing Admin ---
     case 'admin_dashboard':
         checkRole('admin');

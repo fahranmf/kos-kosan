@@ -49,36 +49,7 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
 </script>
 
 <div class="container-custom">
-    <div class="navbar-wrapper">
-        <nav class="navbar">
-            <h1>Kos Putra Agan</h1>
-            <div class="nav-links">
-                <?php
-                if (isset($_SESSION['user_id'])) {
-                    if (isset($_SESSION['no_kamar'])) {
-                        echo '<a href="index.php?page=penyewa_dashboard">Akun Saya</a>';
-                    } else {
-                    echo '<a href="index.php?page=cek_status">Akun Saya</a>';
-                    }
-                }
-                ?>
-                <a href="#home">Beranda</a>
-                <a href="#rooms">Kamar</a>
-                <a href="#">Fasilitas</a>
-                <a href="#">Kontak</a>
-                <?php
-                if (isset($_SESSION['user_id'])) {
-                    // Kalau sudah login, tampilkan tombol logout
-                    echo '<a href="index.php?page=logout"><span class="btn-nav-logout">Logout</a>';
-                } else {
-                    // Kalau belum login, tampilkan login dan signup
-                    echo '<a href="index.php?page=login"><span class="btn-nav-login">Login/SignUp</a>';
-                }
-                ?>
-            </div>
-        </nav>
-    </div>
-
+    <?php include 'views/templates/navbar.php'; ?>
     <div id="home" class="carousel-container">
         <div class="carousel-slide active">
             <img src="uploads/foto_kos/foto1.jpg" alt="Carousel Image">
@@ -214,8 +185,7 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
             <div class="right-content">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.3782500041752!2d106.82499527428435!3d-6.345038162076593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69edb8ae8cfbdd%3A0x2ec23e3fed4355e5!2sKost%20Putra%20Agan!5e0!3m2!1sid!2sid!4v1748594515946!5m2!1sid!2sid"
-                class="map-frame"
-                allowfullscreen="" loading="lazy">
+                    class="map-frame" allowfullscreen="" loading="lazy">
                 </iframe>
             </div>
         </div>

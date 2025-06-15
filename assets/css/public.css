@@ -9,62 +9,7 @@
         background-color: white;
     }
 
-    .navbar-wrapper {
-        top: 0;
-        width: 100%;
-        z-index: 1000; 
-        background-color: #006a71;
-        position: fixed;
-    }
 
-    .navbar {
-        max-width: 1400px;
-        margin: 0 auto;  
-        padding: 1.5rem;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-
-    .navbar h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
-    .navbar a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-size: 1rem;
-    }
-
-    .navbar .nav-links {
-      display: flex;
-    }
-
-    .navbar a:hover {
-      text-decoration: underline;
-    }
-
-    .btn-nav-logout {
-        background-color: #f2efe7;
-        padding : 10px;
-        border-radius: 15px;
-        color: #006a71;
-        font-weight: bold;
-    }
-
-    .btn-nav-login {
-        background-color: #eac86a;
-        padding : 10px;
-        border-radius: 15px;
-        color: black;
-        font-weight: bold;
-    }
-
-    
     .container-custom {
         background-color: #f2efe7;
         margin: 0 0px;
@@ -143,7 +88,7 @@
     /* Room List */
     .container-rooms {
         margin-top: 20px;
-        padding: 50px 20px;
+        padding: 50px 40px;
     }
 
     .room-list {
@@ -314,15 +259,7 @@
         background-color: #e2e6ea;
     }
 
-@media (max-width: 768px) {
-        .navbar {
-            display: none;
-        }
 
-        .container-custom {
-            margin: 0;
-        }
-}
 
     /* === ABOUT SECTION (Struktur disamakan, nama class tetap) === */
 .about-wrapper {
@@ -608,6 +545,7 @@
 
     .right-content {
         padding-top: 0;
+        width: 100%;
     }
 
     .map-frame {
