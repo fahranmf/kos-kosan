@@ -5,6 +5,7 @@ require_once 'models/Penyewa.php';
 require_once 'models/Feedback.php';
 require_once 'models/Pembayaran.php';
 require_once 'models/Sewa.php';
+require_once 'helpers/send_mail.php';
 
 class AdminController
 {
@@ -234,21 +235,27 @@ class AdminController
         exit;
     }
 
-public function editStatusAkun()
-{
-    AuthMiddleware::checkAdmin();
+    public function editStatusAkun()
+    {
+        AuthMiddleware::checkAdmin();
 
-    $id_pembayaran = $_POST['id_pembayaran'] ?? null;
-    $statusPembayaran = $_POST['status_pembayaran'] ?? null;
-    $id_penyewa = $_POST['id_penyewa'];
-    
-    if ($id_penyewa && $statusPembayaran && $id_pembayaran) {
-        Penyewa::updateStatusPembayaranDanAkun($id_pembayaran, $statusPembayaran, $id_penyewa);
+        $id_pembayaran = $_POST['id_pembayaran'] ?? null;
+        $statusPembayaran = $_POST['status_pembayaran'] ?? null;
+        $id_penyewa = $_POST['id_penyewa'];
+
+        if ($id_penyewa && $statusPembayaran && $id_pembayaran) {
+            Penyewa::updateStatusPembayaranDanAkun($id_pembayaran, $statusPembayaran, $id_penyewa);
+            $data = Penyewa::getProfilLengkap($id_penyewa);
+            $email_penyewa = $data['email_penyewa'];
+            $nama_penyewa = $data['nama_penyewa'];
+            $status_akun = $data['status_akun'];
+            require_once 'helpers/send_mail.php';
+            $sent = sendStatusUpdateEmail($email_penyewa, $nama_penyewa, $status_akun);
+        }
+
+        header('Location: index.php?page=admin_verifikasi');
+        exit;
     }
-
-    header('Location: index.php?page=admin_verifikasi');
-    exit;
-}
 
     public function lihatProfile()
     {

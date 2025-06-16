@@ -6,6 +6,8 @@ require_once 'models/Feedback.php';
 require_once 'models/Pembayaran.php';
 require_once 'models/Sewa.php';
 require_once 'vendor/autoload.php';
+require_once 'helpers/send_mail.php';
+
 
 use Carbon\Carbon;
 
@@ -151,7 +153,11 @@ class PublicController
             if ($insertBayar) {
                 Penyewa::updateStatusAkun($dataBooking['id_penyewa'], 'Menunggu Verifikasi');
                 unset($_SESSION['booking']);
-                header("Location: index.php?page=success&home");
+                header("Location: index.php?page=cek_status");
+                $data = Penyewa::getProfilLengkap($_SESSION['user_id']);
+                $email_penyewa = $data['email_penyewa'];
+                $nama_penyewa = $data['nama_penyewa'];
+                $sent = sendPaymentSuccessEmail($email_penyewa, $nama_penyewa);
                 exit();
             } else {
                 $_SESSION['errorMsg'] = "Gagal menyimpan data pembayaran.";
@@ -363,6 +369,9 @@ class PublicController
 
     public function default()
     {
+        var_dump($_SESSION);
+        $data = Penyewa::getProfilLengkap($_SESSION['user_id']);
+        var_dump($data);
         include 'views/public/notfound.php';
     }
 
