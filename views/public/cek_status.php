@@ -85,8 +85,30 @@
             <?php if ($data['status_sewa']): ?>
                 <div class="card profile-card">
                     <div class="profile-row"><span>Tanggal Pembayaran</span><span>
-                            <?= date('d M Y', strtotime($data['tanggal_pembayaran'])); ?></span></div>
+                            <?= !empty($data['tanggal_pembayaran']) ? date('d M Y', strtotime($data['tanggal_pembayaran'])) : '-' ?>
+                        </span></div>
+                    <div class="profile-row"><span>Tenggat Pembayaran</span><span>
+                            <?= date('d M Y', strtotime($data['tenggat_pembayaran'])); ?>
+                        </span>
+                    </div>
+                    <div class="profile-row">
+                        <span>Jenis Pembayaran</span>
+                        <span class="status-<?=
+                            $data['jenis_pembayaran'] == 'Lunas' ? 'terverifikasi' : (
+                                $data['jenis_pembayaran'] == 'Sedang Ditinjau' ? 'sedang_ditinjau' : (
+                                    $data['jenis_pembayaran'] == 'Cicil' ? 'ditolak' : 'status_lain'
+                                ))
+                            ?>">
+                            <?= $data['jenis_pembayaran']; ?>
+                        </span>
+                    </div>
                     <div class="profile-row"><span>Jumlah Bayar</span><span><?= $data['jumlah_bayar']; ?></span></div>
+                     <div class="profile-row">
+                        <span>Sisa Hari Pembayaran</span>
+                        <span class="sisa-hari">
+                            <?= empty($data['sisa_hari_jam_tenggat']) ? 'Tidak tersedia' : $data['sisa_hari_jam_tenggat']; ?>
+                        </span>
+                    </div>
                     <div class="profile-row">
                         <span>Status Pembayaran</span>
                         <span class="status-<?=

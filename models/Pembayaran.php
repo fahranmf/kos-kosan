@@ -52,5 +52,32 @@ class Pembayaran
         ]);
     }
 
+    public static function getCicilanTerakhir($id_sewa)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("
+        SELECT jumlah_bayar 
+        FROM pembayaran 
+        WHERE id_sewa = ? 
+        AND jenis_pembayaran = 'cicil' 
+        ORDER BY tanggal_pembayaran DESC 
+        LIMIT 1
+    ");
+        $stmt->execute([$id_sewa]);
+        $row = $stmt->fetch();
+        return $row ? (int) $row['jumlah_bayar'] : 0;
+    }
+    public static function getTerakhirBySewa($id_sewa)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("
+        SELECT * FROM pembayaran 
+        WHERE id_sewa = ? 
+        ORDER BY tanggal_pembayaran DESC 
+        LIMIT 1
+        ");
+        $stmt->execute([$id_sewa]);
+        return $stmt->fetch();
+    }
 }
 ?>

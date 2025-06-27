@@ -161,7 +161,7 @@ class Penyewa
         ]);
 
         // Tentukan status akun
-        if ($pembayaran['tipe_pembayaran'] === 'Sewa Baru') {
+        if ($pembayaran['tipe_pembayaran'] === 'Sewa Baru' || $pembayaran['tipe_pembayaran'] === 'Pelunasan') {
             if ($status_pembayaran === 'Terverifikasi') {
                 $status_akun = 'Terverifikasi';
             } elseif ($status_pembayaran === 'Ditolak') {
@@ -221,11 +221,7 @@ class Penyewa
                     s.tanggal_mulai, 
                     s.tanggal_selesai, 
                     s.status_sewa,
-                    pb.tanggal_pembayaran, 
-                    pb.jumlah_bayar, 
-                    pb.status_pembayaran,
-                    pb.metode_pembayaran,
-                    pb.jenis_pembayaran
+                    pb.*
                 FROM penyewa p
                 LEFT JOIN sewa s 
                     ON p.id_penyewa = s.id_penyewa 

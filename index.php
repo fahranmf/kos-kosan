@@ -264,6 +264,18 @@ switch ($page) {
         break;
 
 
+    case 'penyewa_pelunasan_kos':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->pelunasanKos();
+        break;
+
+    case 'submit_pembayaran_pelunasan':
+        checkRole('penyewa');
+        $controller = new PenyewaController();
+        $controller->submitPelunasan();
+        break;
+
     case 'penyewa_ubah_nama':
         checkRole('penyewa');
         $controller = new PenyewaController();

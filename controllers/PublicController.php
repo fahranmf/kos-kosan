@@ -197,14 +197,32 @@ class PublicController
             if ($sekarang->greaterThan($tanggalSelesai)) {
                 $data['sisa_hari_jam'] = '0 hari 0 jam';
             } else {
-                $diffInSeconds = $tanggalSelesai->timestamp - $sekarang->timestamp; // total detik sisa
-                $diffInDays = floor($diffInSeconds / 86400); // 86400 detik per hari
+                $diffInSeconds = $tanggalSelesai->timestamp - $sekarang->timestamp;
+                $diffInDays = floor($diffInSeconds / 86400);
                 $remainingSeconds = $diffInSeconds % 86400;
-                $diffInHours = floor($remainingSeconds / 3600); // 3600 detik per jam
+                $diffInHours = floor($remainingSeconds / 3600);
                 $data['sisa_hari_jam'] = $diffInDays . ' hari ' . $diffInHours . ' jam';
             }
         } else {
-            $data['sisa_hari'] = null; // atau 0, sesuaikan
+            $data['sisa_hari_jam'] = '-';
+        }
+
+        // Hitung sisa waktu tenggat pembayaran
+        if (!empty($data['tenggat_pembayaran'])) {
+            $tanggalTenggat = Carbon::parse($data['tenggat_pembayaran']);
+            $sekarang = Carbon::now();
+
+            if ($sekarang->greaterThan($tanggalTenggat)) {
+                $data['sisa_hari_jam_tenggat'] = '0 hari 0 jam';
+            } else {
+                $diffInSeconds = $tanggalTenggat->timestamp - $sekarang->timestamp;
+                $diffInDays = floor($diffInSeconds / 86400);
+                $remainingSeconds = $diffInSeconds % 86400;
+                $diffInHours = floor($remainingSeconds / 3600);
+                $data['sisa_hari_jam_tenggat'] = $diffInDays . ' hari ' . $diffInHours . ' jam';
+            }
+        } else {
+            $data['sisa_hari_jam_tenggat'] = '-';
         }
         include 'views/public/cek_status.php';
     }

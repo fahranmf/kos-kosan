@@ -2,6 +2,8 @@
 require_once 'middlewares/AuthMiddleware.php';
 require_once 'models/Feedback.php';
 require_once 'models/Penyewa.php';
+require_once 'models/Pembayaran.php';
+require_once 'helpers/AccessHelper.php';
 use Carbon\Carbon;
 
 class PenyewaController
@@ -34,6 +36,7 @@ class PenyewaController
     public function keluhan()
     {
         AuthMiddleware::checkPenyewa();
+        AccessHelper::blokirJikaCicilBelumLunas($_SESSION['user_id']);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $no_kamar = $_SESSION['no_kamar'];
             $isi_feedback = $_POST['isi_feedback'] ?? '';
@@ -55,6 +58,7 @@ class PenyewaController
     public function perpanjangKos()
     {
         AuthMiddleware::checkPenyewa();
+        AccessHelper::blokirJikaCicilBelumLunas($_SESSION['user_id']);
         $id_penyewa = $_SESSION['user_id'];
         $data = Penyewa::getProfilLengkap($id_penyewa);
         // Hitung sisa hari sewa
@@ -85,7 +89,7 @@ class PenyewaController
     public function formPerpanjangKos()
     {
         AuthMiddleware::checkPenyewa();
-
+        AccessHelper::blokirJikaCicilBelumLunas($_SESSION['user_id']);
         $id_sewa = $_POST['id_sewa'];
         $tanggal_baru = $_POST['tanggal_selesai_baru'];
         $ganti_kamar = isset($_POST['ganti_kamar']);
@@ -112,6 +116,7 @@ class PenyewaController
     public function formPembayaranPerpanjang()
     {
         AuthMiddleware::checkPenyewa();
+        AccessHelper::blokirJikaCicilBelumLunas($_SESSION['user_id']);
 
         if (!isset($_SESSION['perpanjang'])) {
             header('Location: index.php?page=dashboard'); // atau ke error page
@@ -119,13 +124,13 @@ class PenyewaController
         }
 
         $data = $_SESSION['perpanjang'];
-        var_dump($data);
         require 'views/penyewa/form_pembayaran_perpanjang.php';
     }
 
     public function submitPembayaranPerpanjang()
     {
         AuthMiddleware::checkPenyewa();
+        AccessHelper::blokirJikaCicilBelumLunas($_SESSION['user_id']);
 
         if (!isset($_SESSION['perpanjang'])) {
             $_SESSION['errorMsg'] = 'Data perpanjangan tidak valid.';
@@ -218,6 +223,112 @@ class PenyewaController
         $pembayaranList = Penyewa::getDataPembayaranPenyewaById($id_penyewa);
         require_once 'views/penyewa/histori_pembayaran.php';
     }
+
+    public function pelunasanKos()
+    {
+        AccessHelper::blokirJikaBukanCicilanAktif($_SESSION['user_id']);
+        AuthMiddleware::checkPenyewa();
+        $id_penyewa = $_SESSION['user_id'];
+        $sewa = Sewa::getSewaAktifByPenyewa($id_penyewa);
+        if (!$sewa) {
+            $_SESSION['errorMsg'] = 'Sewa aktif tidak ditemukan';
+            header('Location: index.php?page=penyewa_dashboard');
+            exit;
+        }
+
+        $harga = Kamar::getHargaByNoKamar($sewa['no_kamar']); // ambil harga kamar
+        $cicilan_terakhir = Pembayaran::getCicilanTerakhir($sewa['id_sewa']);
+        $sisa = $harga - $cicilan_terakhir;
+
+        // Cegah nilai minus
+        if ($sisa <= 0) {
+            $_SESSION['errorMsg'] = 'Tidak ada pelunasan yang perlu dibayar. Sudah lunas.';
+            header('Location: index.php?page=penyewa_dashboard');
+            exit;
+        }
+
+        $data = [
+            'harga' => $sisa
+        ];
+
+        include 'views/penyewa/pelunasan_kos.php';
+    }
+
+    public function submitPelunasan()
+    {
+        AuthMiddleware::checkPenyewa();
+        AccessHelper::blokirJikaBukanCicilanAktif($_SESSION['user_id']);
+        $id_penyewa = $_SESSION['user_id'];
+        $sewa = Sewa::getSewaAktifByPenyewa($id_penyewa);
+
+        if (!$sewa) {
+            $_SESSION['errorMsg'] = 'Sewa tidak ditemukan';
+            header('Location: index.php?page=penyewa_dashboard');
+            exit;
+        }
+
+        $id_sewa = $sewa['id_sewa'];
+
+        // Proses pembayaran pelunasan
+        $jumlah_bayar = $_POST['jumlah_bayar'];
+        $metode = $_POST['metode_pembayaran'];
+        // Upload file bukti
+        $bukti = null;
+        if (!empty($_FILES['bukti_pembayaran']['name'])) {
+            $targetDir = "uploads/bukti_pembayaran/";
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+
+            // Ambil ekstensi file
+            $originalName = $_FILES['bukti_pembayaran']['name'];
+            $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+            // Daftar ekstensi yang diizinkan
+            $allowed = ['jpg', 'jpeg', 'png', 'pdf'];
+
+            if (in_array($ext, $allowed)) {
+                $fileName = uniqid() . "_" . preg_replace("/[^a-zA-Z0-9_\.-]/", "_", basename($originalName)); // sanitasi nama file
+                $targetFile = $targetDir . $fileName;
+                if (move_uploaded_file($_FILES['bukti_pembayaran']['tmp_name'], $targetFile)) {
+                    $bukti = $fileName; // berhasil upload
+                } else {
+                    echo "❌ Gagal upload file ke: " . $targetFile;
+                    exit;
+                }
+            } else {
+                echo "Format file tidak diizinkan. Hanya jpg, jpeg, png, atau pdf yang diperbolehkan.";
+            }
+        }
+
+        $tanggal_pembayaran = date('Y-m-d H:i:s');
+
+        $pembayaran = new Pembayaran();
+        $result = $pembayaran->insertPembayaran([
+            'id_sewa' => $id_sewa,
+            'tanggal_pembayaran' => $tanggal_pembayaran,
+            'jumlah_bayar' => $jumlah_bayar,
+            'metode_pembayaran' => $metode,
+            'bukti_pembayaran' => $bukti,
+            'jenis_pembayaran' => 'Lunas',
+            'tenggat_pembayaran' => null,
+            'status_pembayaran' => 'Sedang Ditinjau',
+            'tipe_pembayaran' => 'Pelunasan'
+        ]);
+
+        if ($result) {
+            $_SESSION['successMsg'] = 'Pembayaran pelunasan berhasil dikirim.';
+            header('Location: index.php?page=penyewa_dashboard');
+            exit;
+        } else {
+            $_SESSION['errorMsg'] = 'Gagal menyimpan pembayaran ke database.';
+            header('Location: index.php?page=penyewa_pelunasan_kos');
+            exit;
+        }
+
+    }
+
+
 
     public function ubahNama()
     {
