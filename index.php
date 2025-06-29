@@ -68,7 +68,6 @@ switch ($page) {
 
     case 'detail_kamar':
         $controller = new PublicController();
-        ;
         $tipe_kamar = $_GET['tipe'];
         $controller->detailKamar($tipe_kamar);
         break;

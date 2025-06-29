@@ -177,7 +177,13 @@ class PublicController
 
     public function detailKamar($tipe_kamar)
     {
-        echo 'halo bang';
+        $kamar = Kamar::getKamarByTipe($tipe_kamar);
+        if (!$kamar) {
+            die("Kamar dengan tipe tersebut tidak ditemukan.");
+        }
+        $foto_detail = Kamar::getFotoByTipeKamar($kamar['no_kamar']);
+        $kamar_kosong = Kamar::getKamarKosongByTipe($tipe_kamar);
+        include 'views/public/detail_kos.php';
     }
 
     public function cekStatus()

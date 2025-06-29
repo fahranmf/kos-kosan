@@ -178,9 +178,32 @@ class Kamar
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getKamarByTipe($tipe_kamar)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("
+            SELECT no_kamar, foto_kos, tipe_kamar, harga_perbulan, deskripsi, fasilitas
+            FROM kamar
+            WHERE tipe_kamar = ?
+            LIMIT 1
+        ");
+        $stmt->execute([$tipe_kamar]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
+    public static function getFotoByTipeKamar($no_kamar)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("
+            SELECT f.nama_file 
+            FROM foto_detail_kamar f
+            JOIN kamar k ON k.no_kamar = f.no_kamar
+            WHERE k.no_kamar = ?
+        ");
+        $stmt->execute([$no_kamar]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
+    }
 
 }
 ?>

@@ -16,6 +16,7 @@ body {
 .dashboard-container {
   display: flex;
   min-height: 100vh;
+  background-color: #f2efe7;
 }
 
 /* Main content */
@@ -109,7 +110,8 @@ body {
   font-weight: bold;
 }
 
-.status-menunggu_verifikasi, .status-sedang_ditinjau {
+.status-menunggu_verifikasi,
+.status-sedang_ditinjau {
   color: #f3b703;
   font-weight: bold;
 }
@@ -170,7 +172,6 @@ select:focus {
   outline: none;
   background-color: #fff;
 }
-
 
 /* Responsive */
 @media (max-width: 768px) {
