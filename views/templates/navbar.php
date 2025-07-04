@@ -11,28 +11,52 @@
     <div class="navbar-wrapper">
         <nav class="navbar">
             <h2>Kos Putra Agan</h2>
-            <div class="nav-links">
-                <?php
-                if (isset($_SESSION['user_id'])) {
-                    echo '<a href="index.php?page=cek_status">Akun Saya</a>';
-                }
-                ?>
+
+            <!-- Tombol hamburger -->
+            <div class="menu-toggle" onclick="toggleMenu()">
+                ☰
+            </div>
+
+            <div class="nav-links" id="navLinks">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="index.php?page=cek_status">Akun Saya</a>
+                <?php endif; ?>
                 <a href="index.php?page=home#home">Beranda</a>
                 <a href="index.php?page=home#rooms">Kamar</a>
                 <a href="#">Fasilitas</a>
                 <a href="#">Kontak</a>
-                <?php
-                if (isset($_SESSION['user_id'])) {
-                    // Kalau sudah login, tampilkan tombol logout
-                    echo '<a href="index.php?page=logout"><span class="btn-nav-logout">Logout</a>';
-                } else {
-                    // Kalau belum login, tampilkan login dan signup
-                    echo '<a href="index.php?page=login"><span class="btn-nav-login">Login/SignUp</a>';
-                }
-                ?>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="index.php?page=logout"><span class="btn-nav-logout">Logout</span></a>
+                <?php else: ?>
+                    <a href="index.php?page=login"><span class="btn-nav-login">Login/SignUp</span></a>
+                <?php endif; ?>
             </div>
         </nav>
     </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Tutup menu saat salah satu link diklik (mobile)
+        /* document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.getElementById('menuToggle');
+            const navItems = navLinks.querySelectorAll('a');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Cuma berlaku kalau menu lagi aktif (di mode mobile)
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
+                });
+            });
+        }); */
+    </script>
 </body>
 
 </html>
@@ -61,11 +85,13 @@
         height: 25px;
     }
 
-
+    /* Default: desktop */
     .navbar h2 {
         margin: 0;
         font-size: 1.5rem;
         color: white;
+        text-align: left;
+        /* default */
     }
 
     .navbar a {
@@ -77,9 +103,10 @@
 
     }
 
-    .navbar .nav-links {
+    .nav-links {
         display: flex;
     }
+
 
     .navbar a:hover {
         text-decoration: underline;
@@ -101,13 +128,71 @@
         font-weight: bold;
     }
 
+    .menu-toggle {
+        display: none;
+        font-size: 2rem;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* Responsive behavior */
     @media (max-width: 768px) {
-        .navbar {
-            display: none;
+        .menu-toggle {
+            display: block;
         }
 
-        .container-custom {
-            margin: 0;
+        .nav-links {
+            flex-direction: column;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background-color: #006a71;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+            z-index: 1;
         }
-}
+
+        .nav-links.active {
+            display: flex;
+            max-height: 500px;
+        }
+
+        .nav-links a {
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #ffffff22;
+        }
+
+        .navbar {
+            flex-direction: row;
+            align-items: center;
+            position: relative;
+            justify-content: space-between;
+        }
+
+        .navbar h2 {
+            text-align: center;
+            width: 100%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+
+        .menu-toggle {
+            z-index: 1;
+            /* biar gak ketiban sama h2 */
+        }
+
+        .menu-toggle {
+            display: block;
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+    }
 </style>
