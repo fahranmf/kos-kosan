@@ -9,6 +9,7 @@
 .dashboard-container {
     display: flex;
     min-height: 100vh;
+    background-color: #f2efe7;
 }
 
 /* Sidebar */

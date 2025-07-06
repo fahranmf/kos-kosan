@@ -169,7 +169,7 @@ class Penyewa
             } else {
                 $status_akun = 'Menunggu Verifikasi';
             }
-            
+
             // Update status akun penyewa
             $query2 = "UPDATE penyewa SET status_akun = :status_akun WHERE id_penyewa = :id_penyewa";
             $stmt2 = $db->prepare($query2);
@@ -243,24 +243,51 @@ class Penyewa
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function getDataPembayaranPenyewaById($id_penyewa): array
+    public static function getTotalDataPembayaranByIdPenyewa($id_penyewa): int
     {
         $db = Database::getConnection();
-        $query = "SELECT 
-					*,
-                    sewa.no_kamar
+        $query = "SELECT COUNT(*) AS total
                 FROM 
                     pembayaran
                 JOIN 
                     sewa ON pembayaran.id_sewa = sewa.id_sewa
                 JOIN 
                     penyewa ON sewa.id_penyewa = penyewa.id_penyewa
-
-                WHERE penyewa.id_penyewa = ?";
+                WHERE 
+                    penyewa.id_penyewa = :id_penyewa";
         $stmt = $db->prepare($query);
-        $stmt->execute([$id_penyewa]);
+        $stmt->bindValue(':id_penyewa', $id_penyewa, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) $result['total'];
+    }
+
+
+    public static function getDataPembayaranPenyewaById($id_penyewa, $limit, $offset): array
+    {
+        $db = Database::getConnection();
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        $query = "SELECT 
+                  pembayaran.*, 
+                  sewa.no_kamar
+              FROM 
+                  pembayaran
+              JOIN 
+                  sewa ON pembayaran.id_sewa = sewa.id_sewa
+              JOIN 
+                  penyewa ON sewa.id_penyewa = penyewa.id_penyewa
+              WHERE 
+                  penyewa.id_penyewa = :id_penyewa
+              LIMIT $limit OFFSET $offset";
+
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':id_penyewa', $id_penyewa, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public static function updateNama($id_penyewa, $nama_baru)
     {

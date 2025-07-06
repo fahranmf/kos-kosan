@@ -47,6 +47,36 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <?php
+            $startPage = max(1, $halamanAktif - 1);
+            $endPage = min($totalHalaman, $startPage + 2);
+
+            // Kalau di akhir, geser supaya tetap 3 halaman muncul
+            if ($endPage - $startPage < 2) {
+                $startPage = max(1, $endPage - 2);
+            }
+            ?>
+
+            <div class="pagination">
+                <a href="index.php?page=penyewa_riwayat&hal=1">&laquo;</a>
+
+                <?php if ($halamanAktif > 1): ?>
+                    <a href="index.php?page=penyewa_riwayat&hal=<?= $halamanAktif - 1 ?>"> &lsaquo;</a>
+                <?php endif; ?>
+
+                <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
+                    <a href="index.php?page=penyewa_riwayat&hal=<?= $i ?>"
+                        class="<?= $i == $halamanAktif ? 'active' : '' ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+
+                <?php if ($halamanAktif < $totalHalaman): ?>
+                    <a href="index.php?page=penyewa_riwayat&hal=<?= $halamanAktif + 1 ?>">&rsaquo;</a>
+                <?php endif; ?>
+                <a href="index.php?page=penyewa_riwayat&hal=<?= $totalHalaman ?>">&raquo;</a>
+            </div>
         </div>
     </div>
 </div>

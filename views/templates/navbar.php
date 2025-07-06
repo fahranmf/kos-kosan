@@ -68,6 +68,7 @@
     .navbar-wrapper {
         font-family: "Poppins", sans-serif !important;
         top: 0;
+        left: 0;
         width: 100%;
         z-index: 1000;
         background-color: #006a71;
@@ -115,7 +116,7 @@
     .btn-nav-logout {
         background-color: #f2efe7;
         padding: 10px;
-        border-radius: 15px;
+        border-radius: 10px;
         color: #006a71;
         font-weight: bold;
     }
@@ -123,7 +124,7 @@
     .btn-nav-login {
         background-color: #eac86a;
         padding: 10px;
-        border-radius: 15px;
+        border-radius: 10px;
         color: black;
         font-weight: bold;
     }
@@ -194,5 +195,8 @@
             transform: translateY(-50%);
         }
 
+        .btn-nav-login, .btn-nav-logout {
+            padding: 5px 10px;
+        }
     }
 </style>

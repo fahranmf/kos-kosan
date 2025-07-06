@@ -219,8 +219,13 @@ class PenyewaController
     public function historiPembayaran()
     {
         AuthMiddleware::checkPenyewa();
+        $halamanAktif = isset($_GET['hal']) ? (int) $_GET['hal'] : 1;
+        $limit = 3;
+        $offset = ($halamanAktif - 1) * $limit;
         $id_penyewa = $_SESSION['user_id'];
-        $pembayaranList = Penyewa::getDataPembayaranPenyewaById($id_penyewa);
+        $totalData = Penyewa::getTotalDataPembayaranByIdPenyewa($id_penyewa);
+        $pembayaranList = Penyewa::getDataPembayaranPenyewaById($id_penyewa, $limit, $offset);
+        $totalHalaman = ceil($totalData / $limit);
         require_once 'views/penyewa/histori_pembayaran.php';
     }
 
