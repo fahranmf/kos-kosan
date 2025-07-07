@@ -365,5 +365,3 @@ unset($_SESSION['errorModal']);
         document.getElementById(id).classList.add('hidden');
     }
 </script>
-
-<?php require_once 'views/templates/footer.php'; ?>

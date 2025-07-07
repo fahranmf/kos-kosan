@@ -64,5 +64,15 @@ class Admin
         $stmt = $db->prepare($query);
         $stmt->execute([$password_baru, $id_admin]);
     }
+
+    public static function getNamadanNoTelpAdmin()
+    {
+        $db = Database::getConnection();
+        $query = "SELECT nama_admin, no_telp_admin FROM admin";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
 }
 

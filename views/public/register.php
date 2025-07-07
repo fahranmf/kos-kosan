@@ -126,5 +126,3 @@
         <p>Sudah punya akun? <a href="index.php?page=login">Login sekarang</a></p>
     </div>
 </div>
-
-<?php require_once 'views/templates/footer.php'; ?>

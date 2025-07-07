@@ -28,5 +28,3 @@
         <p>Belum punya akun? <a href="index.php?page=register">Daftar sekarang</a></p>
     </div>
 </div>
-
-<?php require_once 'views/templates/footer.php'; ?>

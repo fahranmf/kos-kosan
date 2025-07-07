@@ -31,6 +31,8 @@ class PublicController
         $totalKos = Kamar::getTotalKos();
         $totalPenyewa = Penyewa::getTotalPenyewa();
         $totalTipeKamar = Kamar::getTipeKamar();
+        $dataFasilitas = Kamar::getInfoKos();
+        $dataAdmin = Admin :: getNamadanNoTelpAdmin();
         require_once 'views/public/home.php';
     }
 

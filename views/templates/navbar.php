@@ -23,8 +23,8 @@
                 <?php endif; ?>
                 <a href="index.php?page=home#home">Beranda</a>
                 <a href="index.php?page=home#rooms">Kamar</a>
-                <a href="#">Fasilitas</a>
-                <a href="#">Kontak</a>
+                <a href="index.php?page=home#fasilitas">Fasilitas</a>
+                <a href="index.php?page=home#kontak">Kontak</a>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <a href="index.php?page=logout"><span class="btn-nav-logout">Logout</span></a>
                 <?php else: ?>

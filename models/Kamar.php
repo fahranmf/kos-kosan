@@ -205,5 +205,12 @@ class Kamar
 
     }
 
+    public static function getInfoKos()
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT * FROM info_kos WHERE kategori = 'fasilitas'");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

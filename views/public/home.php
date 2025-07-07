@@ -191,8 +191,236 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
         </div>
     </div>
 
+    <section id="fasilitas" class="services-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Our Services</h2>
+            <h3>Explore Our <span class="highlight">Services</span></h3>
+        </div>
+        <div class="services-grid">
+            <?php 
+                $iconMap = [
+                    'Parkiran' => 'fa-car',
+                    'WiFi Cepat' => 'fa-wifi',
+                    'Warung Makan' => 'fa-utensils',
+                    'Ruang Tamu' => 'fa-couch',
+                    'Gazebo Santai' => 'fa-tree',
+                    'Dapur Umum' => 'fa-dumpster-fire',
+                ];
+            ?>
+            <?php foreach ($dataFasilitas as $fasilitas): ?>
+                <?php 
+                    // Tempatkan di dalam foreach agar tiap item dapat icon sesuai
+                    $iconClass = isset($iconMap[$fasilitas['keterangan']]) ? $iconMap[$fasilitas['keterangan']] : 'fa-check';
+                ?>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas <?= $iconClass ?>"></i>
+                    </div>
+                    <h5><?= htmlspecialchars($fasilitas['keterangan']) ?></h5>
+                    <p><?= htmlspecialchars($fasilitas['deskripsi']) ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    </section>
+
+    <div id="kontak" class="team-section">
+        <div class="section-header">
+            <h2 class="section-title">Our Team</h2>
+            <h3>Explore Our <span class="highlight">Staffs</span></h3>
+        </div>
+        <div class="team-grid">
+            <?php foreach ($dataAdmin as $Admin): ?>
+                <div class="team-card">
+                    <div class="team-image-wrapper">
+                        <img src="assets/img/admin.jpg" alt="Team Member">
+                        <div class="whatsapp-button">
+                            <a href="https://wa.me/<?= htmlspecialchars($Admin['no_telp_admin']) ?>"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h5><?= htmlspecialchars($Admin['nama_admin']) ?></h5>
+                        <small>Admin</small>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
 </div>
 
+
+
+
+<style>
+    /* Container utama */
+.services-section {
+  padding: 60px 20px;
+}
+
+/* Container dalam */
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+
+
+/* Grid layanan */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+
+/* Card layanan */
+.service-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon layanan */
+.service-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-icon i {
+  font-size: 24px;
+  color: #007bff;
+}
+
+.service-card h5 {
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.service-card p {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 10px;
+}
+
+
+.team-section {
+    padding: 60px 40px;
+    max-width: 1140px;
+    margin: auto;
+    text-align: center;
+}
+
+.team-header h6 {
+    text-transform: uppercase;
+    color: #007bff;
+    margin-bottom: 10px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.team-header h1 {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.team-header h1 span {
+    color: #007bff;
+    text-transform: uppercase;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.team-image-wrapper img {
+    width: 100%;
+    height: 250px; /* Atau sesuaikan, misal 250px */
+    object-fit: cover;
+    display: block;
+}
+
+.team-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+}
+
+.team-image-wrapper {
+    position: relative;
+}
+
+.team-image-wrapper img {
+    width: 100%;
+    display: block;
+}
+
+.whatsapp-button {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #007bff;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+.whatsapp-button a {
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.team-info {
+    padding: 20px 10px;
+}
+
+.team-info h5 {
+    margin: 10px 0 0;
+    font-weight: bold;
+}
+
+.team-info small {
+    color: #777;
+}
+
+/* Optional animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.team-card {
+    animation: fadeInUp 0.6s ease both;
+}
+
+</style>
 
 
 
@@ -340,7 +568,6 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
         }
     }
 </style>
-
 
 
 
