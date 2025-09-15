@@ -98,12 +98,17 @@ unset($_SESSION['errorMsg'], $_SESSION['lastTipeKamar']);
             <!-- Kanan: Gambar Slider -->
             <div class="about-right">
                 <div class="slider">
-                    <img src="uploads/foto_kos/foto1.jpg" class="slide active" alt="Slide 1">
-                    <img src="uploads/foto_kos/foto2.jpg" class="slide" alt="Slide 2">
-                    <img src="uploads/foto_kos/foto4.jpg" class="slide" alt="Slide 3">
+                    <?php
+                    $first = true;
+                    foreach ($dataFasilitas as $fasilitas):
+                        $class = $first ? 'slide active' : 'slide';
+                        $first = false;
+                    ?>
+                        <img src="uploads/foto_info_kos/<?= htmlspecialchars($fasilitas['gambar']) ?>" class="<?= $class ?>" alt="Slide">
+                    <?php endforeach; ?>
+
                     <button class="prev"><</button>
                     <button class="next">></button>
-
                 </div>
             </div>
         </div>

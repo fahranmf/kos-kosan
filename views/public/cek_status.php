@@ -88,7 +88,8 @@
                             <?= !empty($data['tanggal_pembayaran']) ? date('d M Y', strtotime($data['tanggal_pembayaran'])) : '-' ?>
                         </span></div>
                     <div class="profile-row"><span>Tenggat Pembayaran</span><span>
-                            <?= date('d M Y', strtotime($data['tenggat_pembayaran'])); ?>
+                            <?= !empty($data['tenggat_pembayaran']) ? date('d M Y', strtotime($data['tenggat_pembayaran'])) : '-' ?>
+
                         </span>
                     </div>
                     <div class="profile-row">

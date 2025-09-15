@@ -17,13 +17,5 @@ class AuthMiddleware {
             exit;
         }
     }
-
-    public static function checkAuth() {
-        if (!isset($_SESSION['role'])) {
-            $_SESSION['error'] = 'Silakan login terlebih dahulu.';
-            header('Location: index.php?page=login');
-            exit;
-        }
-    }
 }
 ?>

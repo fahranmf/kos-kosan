@@ -16,7 +16,7 @@ class Feedback
     public static function getAllKeluhan(int $limit, int $offset): array
     {
         $db = Database::getConnection();
-        $query = "SELECT * FROM feedback ORDER BY id_feedback ASC LIMIT :limit OFFSET :offset";
+        $query = "SELECT * FROM feedback ORDER BY tanggal_feedback DESC LIMIT :limit OFFSET :offset";
         $stmt = $db->prepare($query);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
@@ -35,16 +35,17 @@ class Feedback
     }
 
     // method untuk mengirimkan / input keluhan 
-    public static function kirimFeedback($no_kamar, $isi_feedback): bool
+    public static function kirimFeedback($id_penyewa, $no_kamar, $isi_feedback): bool
     {
         // Ambil koneksi database
         $db = Database::getConnection();
 
         //query 
-        $query = "INSERT INTO feedback (no_kamar, tanggal_feedback, isi_feedback, status_feedback) 
-                  VALUES (:no_kamar, NOW(), :isi_feedback, 'Belum Dibaca')";
+        $query = "INSERT INTO feedback (id_penyewa, no_kamar, tanggal_feedback, isi_feedback, status_feedback) 
+                  VALUES (:id_penyewa, :no_kamar, NOW(), :isi_feedback, 'Belum Dibaca')";
 
         $stmt = $db->prepare($query);
+        $stmt->bindValue(':id_penyewa', $id_penyewa, PDO::PARAM_INT);
         $stmt->bindParam(':no_kamar', $no_kamar, PDO::PARAM_INT);
         $stmt->bindParam(':isi_feedback', $isi_feedback, PDO::PARAM_STR);
         return $stmt->execute();

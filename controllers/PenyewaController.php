@@ -40,7 +40,8 @@ class PenyewaController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $no_kamar = $_SESSION['no_kamar'];
             $isi_feedback = $_POST['isi_feedback'] ?? '';
-            Feedback::kirimFeedback($no_kamar, $isi_feedback);
+            $id_penyewa = $_SESSION['user_id'];
+            Feedback::kirimFeedback($id_penyewa, $no_kamar, $isi_feedback);
             // Redirect setelah submit
             header('Location: index.php?page=penyewa_keluhan');
             exit();
